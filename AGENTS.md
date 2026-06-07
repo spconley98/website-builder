@@ -6,16 +6,21 @@
 
 ---
 
-## 0. Status & the one hard rule
+## 0. Status
 
-**Phase:** pre-scaffold. Project conventions, skills, memory, and reference material are established —
-but the actual application scaffolding (framework, app structure, tooling) has **not** been built yet.
+**Phase: scaffold BUILT and validated live.** ✅ The architecture was approved via `/grill-me`
+(2026-06-07) and the `leadpipe` package now exists in `src/leadpipe/` — a working Python CLI that
+runs end-to-end on real data (see `MEMORY.md` "What exists now" for the live validation result:
+it found a real business with no website and produced a clickable report).
 
-> 🚫 **HARD RULE — do NOT build project scaffolding yet.** The scaffold will be designed in a dedicated
-> session where Sean provides full project context and we run `/grill-me` to pressure-test the
-> structure against the reference library. Until that session produces an approved scaffold, do not
-> create app folders, pick a framework, or generate boilerplate. If asked to "start building," confirm
-> the grill-me scaffolding session has happened first.
+**The original "don't scaffold yet" gate is LIFTED — that was for the initial build, which is done.**
+Pick this project up and run with it: `MEMORY.md` has a "How to pick this up cold" section with the
+exact commands (`uv sync`, `uv run pytest`, `uv run leadpipe ...`).
+
+What's still open is normal ongoing work, not a gate: real hunts (`config/targets.yaml`), topping up
+Firecrawl credits, building further agents. None of that requires a special approval session — just
+follow the established pattern (one module in `agents/`, one line in `pipeline.STAGES`, cross-challenge
+non-trivial logic via `three-brain` per §3/feedback memory before/while building).
 
 This document is an **evolving rough draft** — it will gain detail (especially the project vision) over
 time. Keep it current.
