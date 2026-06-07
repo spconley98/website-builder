@@ -16,6 +16,13 @@ dist-ssr
 build/
 out/
 
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+
 # --- Large generated audio (lives in NotebookLM brain instead — keeps repo lean) ---
 *.mp3
 *.wav
