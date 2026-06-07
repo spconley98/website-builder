@@ -4,14 +4,14 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T16:42:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding complete, real lead hunts run, 166 leads generated
+**Last updated:** 2026-06-07T16:44:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt Obsidian and NotebookLM synced, memory uploaded
 **Phase:** scaffold BUILT and working — `leadpipe` CLI runs end-to-end on real data
 
 ---
 
 ## 👤 Contributors
 - **Sean** — owner, sole approver. Set up the repo, skills, reference library, NotebookLM brain, MCP.
-- **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
+- **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (local apps/MCP/env/NotebookLM set up, Obsidian vault active).
 
 ## ✅ What exists now
 - GitHub repo (public, shared) + `.gitignore` + `.mcp.json.example` + `.env.example`.
