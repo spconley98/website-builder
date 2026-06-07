@@ -9,7 +9,7 @@ from datetime import date
 import pytest
 
 from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus
-from leadpipe.store import LeadStore
+from leadpipe.store import LeadStore, normalize_profile
 
 
 def _create(place_id="p1", name="Joe's Pizza", has_website=False) -> LeadCreate:
@@ -116,3 +116,11 @@ def test_save_is_atomic_and_survives_reload(tmp_path):
     reloaded = LeadStore(tmp_path / "leads.jsonl").load()
     assert len(reloaded) == 5
     assert {l.place_id for l in reloaded.values()} == {f"p{i}" for i in range(5)}
+
+
+def test_profiles_are_limited_to_known_owners():
+    assert normalize_profile("Sean") == "sean"
+    assert normalize_profile(" matt ") == "matt"
+
+    with pytest.raises(ValueError, match="unknown profile"):
+        normalize_profile("shared")

@@ -1,4 +1,4 @@
-"""The master lead store — data/leads.jsonl.
+"""The profile lead store — data/<profile>/leads.jsonl.
 
 One JSON record per line, keyed by place_id. Single source of truth
 (ARCHITECTURE.md §9): Lead Finder CREATES, Lead Prioritizer ENRICHES the same
@@ -23,6 +23,22 @@ from .models import Lead, LeadCreate, LeadPrioritization, LeadStatus
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_STORE_PATH = ROOT / "data" / "leads.jsonl"
+DEFAULT_PROFILE = "sean"
+PROFILE_STORE_DIR = ROOT / "data"
+ALLOWED_PROFILES = {"sean", "matt"}
+
+
+def normalize_profile(profile: str | None) -> str:
+    """Normalize the human owner profile used to isolate agent writes."""
+    value = (profile or DEFAULT_PROFILE).strip().lower()
+    if value not in ALLOWED_PROFILES:
+        raise ValueError(f"unknown profile {profile!r}; choices: {', '.join(sorted(ALLOWED_PROFILES))}")
+    return value
+
+
+def profile_store_path(profile: str | None) -> Path:
+    """Return the profile-owned lead store path."""
+    return PROFILE_STORE_DIR / normalize_profile(profile) / "leads.jsonl"
 
 
 class LeadStore:
@@ -30,6 +46,10 @@ class LeadStore:
         self.path = path or DEFAULT_STORE_PATH
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = FileLock(str(self.path) + ".lock")
+
+    @classmethod
+    def for_profile(cls, profile: str | None) -> "LeadStore":
+        return cls(profile_store_path(profile))
 
     # ---- low-level I/O -------------------------------------------------
 
@@ -74,6 +94,13 @@ class LeadStore:
 
     def by_status(self, status: LeadStatus) -> list[Lead]:
         return [l for l in self.load().values() if l.status == status]
+
+    def active(self) -> list[Lead]:
+        return [
+            l
+            for l in self.load().values()
+            if l.status not in {LeadStatus.INVALID, LeadStatus.ARCHIVED}
+        ]
 
     # ---- public write API — stage-scoped, allowlisted -------------------
 

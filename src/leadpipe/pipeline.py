@@ -30,20 +30,26 @@ class RunReport:
         return "\n".join(r.summary() for r in self.results)
 
 
-def run_stage(stage: str, store: LeadStore, targets: list[Target]) -> RunReport:
+def run_stage(stage: str, store: LeadStore, targets: list[Target], *, limit: int | None = None) -> RunReport:
     """Run a single named stage across every target."""
     if stage not in STAGES:
         raise ValueError(f"unknown stage {stage!r} — choices: {', '.join(STAGES)}")
     module = STAGES[stage]
-    results = [module.run(store, target) for target in targets]
+    if stage == "find" and limit is not None:
+        results = [module.run(store, target, limit=limit) for target in targets]
+    else:
+        results = [module.run(store, target) for target in targets]
     return RunReport(results)
 
 
-def run_all(store: LeadStore, targets: list[Target]) -> RunReport:
+def run_all(store: LeadStore, targets: list[Target], *, limit: int | None = None) -> RunReport:
     """Run every stage, in pipeline order, across every target."""
     results: list[AgentResult] = []
     for name, module in STAGES.items():
-        results.extend(module.run(store, target) for target in targets)
+        if name == "find" and limit is not None:
+            results.extend(module.run(store, target, limit=limit) for target in targets)
+        else:
+            results.extend(module.run(store, target) for target in targets)
     return RunReport(results)
 
 

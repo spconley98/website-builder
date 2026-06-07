@@ -25,7 +25,7 @@ from enum import StrEnum
 from pydantic import BaseModel, Field
 
 # Ordered lifecycle — used to prevent status from moving backwards.
-_STATUS_ORDER = ["found", "prioritized", "contacted", "sold"]
+_STATUS_ORDER = ["found", "prioritized", "contacted", "sold", "invalid", "archived"]
 
 
 class LeadStatus(StrEnum):
@@ -33,6 +33,8 @@ class LeadStatus(StrEnum):
     PRIORITIZED = "prioritized"
     CONTACTED = "contacted"
     SOLD = "sold"
+    INVALID = "invalid"
+    ARCHIVED = "archived"
 
     @property
     def rank(self) -> int:

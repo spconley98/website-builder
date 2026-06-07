@@ -47,13 +47,13 @@ def _normalize_industry(name: str, search_industry: str) -> str:
         return search_industry
 
 
-def run(store: LeadStore, target: Target) -> AgentResult:
+def run(store: LeadStore, target: Target, *, limit: int = google_places.DEFAULT_RESULT_LIMIT) -> AgentResult:
     processed = created_or_updated = skipped = 0
     errors: list[str] = []
 
     for industry in target.industries:
         try:
-            candidates = google_places.find_leads_without_website(target.area, industry)
+            candidates = google_places.find_leads_without_website(target.area, industry, limit=limit)
         except google_places.PlacesError as e:
             errors.append(f"{target.area}/{industry}: {e}")
             continue

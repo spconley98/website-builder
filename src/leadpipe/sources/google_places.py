@@ -21,6 +21,7 @@ _SEARCH_FIELDS = "places.id,places.displayName,places.formattedAddress,places.go
 _DETAILS_FIELDS = "id,websiteUri,googleMapsUri"
 
 DEFAULT_TIMEOUT = 30.0
+DEFAULT_RESULT_LIMIT = 20
 
 
 class PlacesError(RuntimeError):
@@ -35,7 +36,13 @@ def _client(api_key: str) -> httpx.Client:
     )
 
 
-def search_businesses(area: str, industry: str, *, api_key: str | None = None) -> list[dict]:
+def search_businesses(
+    area: str,
+    industry: str,
+    *,
+    api_key: str | None = None,
+    limit: int = DEFAULT_RESULT_LIMIT,
+) -> list[dict]:
     """Text-search Places for `<industry> in <area>`. Returns raw candidate dicts
     with id/name/address/maps_url — NOT yet filtered by website presence (that
     requires a details call per place, done in `enrich_with_website`)."""
@@ -48,12 +55,13 @@ def search_businesses(area: str, industry: str, *, api_key: str | None = None) -
         )
 
     query = f"{industry} in {area}"
+    limit = max(1, min(limit, DEFAULT_RESULT_LIMIT))
     try:
         with _client(key) as client:
             resp = client.post(
                 "/places:searchText",
                 headers={"X-Goog-FieldMask": _SEARCH_FIELDS},
-                json={"textQuery": query},
+                json={"textQuery": query, "pageSize": limit},
             )
             resp.raise_for_status()
     except httpx.TimeoutException as e:
@@ -63,7 +71,7 @@ def search_businesses(area: str, industry: str, *, api_key: str | None = None) -
             f"Places search failed for {query!r}: HTTP {e.response.status_code} — {e.response.text}"
         ) from e
 
-    places = resp.json().get("places", [])
+    places = resp.json().get("places", [])[:limit]
     return [
         {
             "place_id": p["id"],
@@ -100,7 +108,12 @@ def fetch_website(place_id: str, *, api_key: str | None = None) -> str | None:
     return resp.json().get("websiteUri")
 
 
-def find_leads_without_website(area: str, industry: str) -> list[dict]:
+def find_leads_without_website(
+    area: str,
+    industry: str,
+    *,
+    limit: int = DEFAULT_RESULT_LIMIT,
+) -> list[dict]:
     """The full acquisition step Lead Finder calls: search, then check each
     candidate's website field. Returns only candidates with NO website —
     these are the only ones that should ever reach the store.
@@ -108,7 +121,7 @@ def find_leads_without_website(area: str, industry: str) -> list[dict]:
     Each returned dict has everything `LeadCreate` needs except `industry`
     (the agent knows that — it's the search parameter) and `found_date`.
     """
-    candidates = search_businesses(area, industry)
+    candidates = search_businesses(area, industry, limit=limit)
     leads_without_site = []
     for c in candidates:
         website = fetch_website(c["place_id"])

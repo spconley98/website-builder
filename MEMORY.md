@@ -63,7 +63,7 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
    Prioritizer now works on Fresh Brew Cafe.
 6. **Design budget-safe scheduled operation** before any 24/7 run: cap Firecrawl usage, prefer Finder-only
    frequent runs, run Prioritizer less often/on limited batches.
-7. **Implement Sean/Matt profile protocol** before parallel autonomous use:
+7. ~~Implement Sean/Matt profile protocol~~ ✅ **Done**:
    `data/sean/leads.jsonl`, `data/matt/leads.jsonl`, generated `(Sean)`/`(Matt)`/`(Shared)` reports,
    automatic shared sync/dedup by `place_id`, and soft-delete/archive rather than hard delete.
 8. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
@@ -130,3 +130,5 @@ operation so Sean and Matt's agents do not overlap.
 - Collaboration protocol: Sean and Matt agents should write separate stores; shared visibility comes
   from generated Obsidian reports. Leads may auto-update and auto-archive/soft-delete; no autonomous
   hard delete from shared history.
+- Automation safety: no Firecrawl-backed scraping unless explicitly prompted or committed in a future
+  schedule; Finder defaults to 20 Google Places candidates per industry/request.

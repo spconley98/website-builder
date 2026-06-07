@@ -14,17 +14,18 @@ import typer
 from rich.console import Console
 
 from . import pipeline, reports
-from .config import load_settings
+from .config import load_settings, targets_path_for_profile
 from .llm import LLMError, generate
 from .sources import google_places
-from .store import LeadStore
+from .store import DEFAULT_PROFILE, LeadStore, normalize_profile
 
 app = typer.Typer(help="Local-AI lead pipeline — find businesses with no website, rate by photo availability.")
 console = Console()
+DEFAULT_LEAD_LIMIT = 20
 
 
-def _targets_or_exit(area: str | None, industry: str | None, radius: str | None):
-    settings = load_settings()
+def _targets_or_exit(area: str | None, industry: str | None, radius: str | None, profile: str):
+    settings = load_settings(targets_path_for_profile(profile))
     targets = pipeline.resolve_targets(settings, area=area, industry=industry, radius=radius)
     if not targets:
         console.print(
@@ -45,6 +46,28 @@ def _print_report(report: pipeline.RunReport) -> None:
         for r in report.results:
             for e in r.errors:
                 console.print(f"    [dim]{r.agent}:[/dim] {e}")
+
+
+def _store_for_profile(profile: str) -> LeadStore:
+    try:
+        return LeadStore.for_profile(profile)
+    except ValueError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(code=1) from e
+
+
+def _profile_or_exit(profile: str) -> str:
+    try:
+        return normalize_profile(profile)
+    except ValueError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(code=1) from e
+
+
+def _refresh_reports(store: LeadStore, profile: str) -> None:
+    reports.write_reports(store, profile=profile)
+    reports.write_shared_reports()
+    console.print("[dim]Profile + shared reports refreshed in reports/[/dim]")
 
 
 @app.command()
@@ -92,14 +115,21 @@ def find(
     area: str | None = typer.Option(None, help='e.g. "Austin, TX" — overrides targets.yaml for one run'),
     industry: str | None = typer.Option(None, help='e.g. "restaurants" — used with --area'),
     radius: str | None = typer.Option(None, help='e.g. "5km" — used with --area'),
+    profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose agents may write this run: sean or matt"),
+    limit: int = typer.Option(
+        DEFAULT_LEAD_LIMIT,
+        min=1,
+        max=20,
+        help="Maximum Google Places candidates per industry. Default safety cap is 20.",
+    ),
 ):
-    """Run Lead Finder — search an area/industry, store businesses with no website."""
-    targets = _targets_or_exit(area, industry, radius)
-    store = LeadStore()
-    console.print(f"[bold]Lead Finder[/bold] — {len(targets)} target(s)")
-    _print_report(pipeline.run_stage("find", store, targets))
-    reports.write_reports(store)
-    console.print("[dim]Reports refreshed in reports/[/dim]")
+    """Run Lead Finder on prompt only — default cap is 20 candidates per industry."""
+    profile = _profile_or_exit(profile)
+    targets = _targets_or_exit(area, industry, radius, profile)
+    store = _store_for_profile(profile)
+    console.print(f"[bold]Lead Finder[/bold] — {len(targets)} target(s), profile={profile}, limit={limit}")
+    _print_report(pipeline.run_stage("find", store, targets, limit=limit))
+    _refresh_reports(store, profile)
 
 
 @app.command()
@@ -107,14 +137,15 @@ def prioritize(
     area: str | None = typer.Option(None, help="restrict to leads found in this area"),
     industry: str | None = typer.Option(None, help="restrict to this industry"),
     radius: str | None = typer.Option(None),
+    profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose leads may be prioritized: sean or matt"),
 ):
-    """Run Lead Prioritizer — rate existing 'found' leads by photo availability."""
-    targets = _targets_or_exit(area, industry, radius)
-    store = LeadStore()
-    console.print(f"[bold]Lead Prioritizer[/bold] — {len(targets)} target(s)")
+    """Run Lead Prioritizer on prompt only — this stage uses Firecrawl credits."""
+    profile = _profile_or_exit(profile)
+    targets = _targets_or_exit(area, industry, radius, profile)
+    store = _store_for_profile(profile)
+    console.print(f"[bold]Lead Prioritizer[/bold] — {len(targets)} target(s), profile={profile}")
     _print_report(pipeline.run_stage("prioritize", store, targets))
-    reports.write_reports(store)
-    console.print("[dim]Reports refreshed in reports/[/dim]")
+    _refresh_reports(store, profile)
 
 
 @app.command()
@@ -122,23 +153,38 @@ def run(
     area: str | None = typer.Option(None, help="override targets.yaml for one run"),
     industry: str | None = typer.Option(None),
     radius: str | None = typer.Option(None),
+    profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose agents may write this run: sean or matt"),
+    limit: int = typer.Option(
+        DEFAULT_LEAD_LIMIT,
+        min=1,
+        max=20,
+        help="Maximum Google Places candidates per industry. Default safety cap is 20.",
+    ),
 ):
-    """Run the full pipeline (find -> prioritize) across every target."""
-    targets = _targets_or_exit(area, industry, radius)
-    store = LeadStore()
-    console.print(f"[bold]Full pipeline[/bold] — {len(targets)} target(s)")
-    _print_report(pipeline.run_all(store, targets))
-    reports.write_reports(store)
-    console.print("[dim]Reports refreshed in reports/[/dim]")
+    """Run the full pipeline on prompt only (find -> prioritize) across every target."""
+    profile = _profile_or_exit(profile)
+    targets = _targets_or_exit(area, industry, radius, profile)
+    store = _store_for_profile(profile)
+    console.print(f"[bold]Full pipeline[/bold] — {len(targets)} target(s), profile={profile}, limit={limit}")
+    _print_report(pipeline.run_all(store, targets, limit=limit))
+    _refresh_reports(store, profile)
 
 
 @app.command()
-def report():
-    """Regenerate the clickable Markdown reports from the current store (no agents run)."""
-    store = LeadStore()
-    all_path, prioritized_path = reports.write_reports(store)
+def report(
+    profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile to render: sean or matt"),
+    shared: bool = typer.Option(True, "--shared/--no-shared", help="Also regenerate shared Sean/Matt reports."),
+):
+    """Regenerate profile + shared clickable Markdown reports from current stores."""
+    profile = _profile_or_exit(profile)
+    store = _store_for_profile(profile)
+    all_path, prioritized_path = reports.write_reports(store, profile=profile)
     console.print(f"Wrote {all_path.relative_to(reports.ROOT)}")
     console.print(f"Wrote {prioritized_path.relative_to(reports.ROOT)}")
+    if shared:
+        shared_all_path, shared_prioritized_path = reports.write_shared_reports()
+        console.print(f"Wrote {shared_all_path.relative_to(reports.ROOT)}")
+        console.print(f"Wrote {shared_prioritized_path.relative_to(reports.ROOT)}")
 
 
 if __name__ == "__main__":

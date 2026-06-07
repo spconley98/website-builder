@@ -111,6 +111,17 @@ is **not** a decision to use it. Each doc has three tiers:
   - ⚠️ Account is currently **out of credits** — scrapes return "Insufficient credits" until topped up.
 - **NotebookLM CLI** — `py -m notebooklm ...` (auth at `C:\Users\mysis\.notebooklm\storage_state.json`).
 
+### Agent run safety
+- **No autonomous scraping by default.** Local agents must not run Firecrawl-backed enrichment or
+  scheduled scraping unless Sean explicitly prompts for that run or a committed schedule says so.
+- **Default lead acquisition cap: 20 candidates per request.** Finder commands default to 20 Google
+  Places candidates per industry; raise it only by explicit prompt/CLI flag.
+- **Profiles isolate writers:** Sean agents write `data/sean/leads.jsonl`; Matt agents write
+  `data/matt/leads.jsonl`. Shared Obsidian visibility comes from generated reports, not a shared
+  writable store.
+- **No hard deletes from automation.** Agents may mark leads `invalid`/`archived`; shared reports hide
+  those by default while preserving recovery/audit history.
+
 ---
 
 ## 7. Git & secrets

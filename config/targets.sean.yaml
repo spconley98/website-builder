@@ -1,0 +1,15 @@
+# Sean's hunt list. `leadpipe run --profile sean` uses this file.
+# One-off CLI flags (`--area`, `--industry`) override this file.
+
+targets:
+  - area: "Austin, TX"
+    radius: 5km
+    industries:
+      - restaurants
+      - landscaping
+
+  - area: "San Antonio, TX"
+    radius: 8km
+    industries:
+      - plumbers
+      - roofing

@@ -93,6 +93,13 @@ def _load_targets(path: Path) -> list[Target]:
         raise TargetsConfigError(f"{path}: {e}") from e
 
 
+def targets_path_for_profile(profile: str | None) -> Path:
+    """Profile-specific batch target list; falls back to the shared starter file."""
+    suffix = (profile or "").strip().lower()
+    candidate = ROOT / "config" / f"targets.{suffix}.yaml" if suffix else ROOT / "config" / "targets.yaml"
+    return candidate if candidate.exists() else ROOT / "config" / "targets.yaml"
+
+
 def load_settings(targets_path: Path | None = None) -> Settings:
     """Single entry point every module/agent uses to read config."""
     targets_path = targets_path or ROOT / "config" / "targets.yaml"
