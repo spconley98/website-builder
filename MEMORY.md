@@ -38,7 +38,7 @@ place_id) + generated clickable Markdown reports. Typer CLI. Full detail + appro
 ## ➡️ Next (do NOT pre-empt — needs Sean's go-ahead)
 1. **Build the approved scaffold** (tree in ARCHITECTURE §5) — files/stubs/CLI/schema/config.
 2. Sean picks the **Ollama model**.
-3. Sean + Matt get their **own** Google Places + Firecrawl keys.
+3. Sean + Matt get their **own** Google Places + Firecrawl keys. (Matt's keys are configured ✅)
 4. Implement Lead Finder, then Lead Prioritizer.
 
 ## Context for next agent
