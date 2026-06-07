@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T13:37:44-07:00 · **Last agent:** Codex — lead generator/local model setup + live prioritizer fix (Sean)
+**Last updated:** 2026-06-07T13:55:00-07:00 · **Last agent:** Codex — lead generator/local model setup + live prioritizer fix + collaboration protocol (Sean)
 **Phase:** lead generator operational — `leadpipe` find/check/prioritize validated live on real data
 
 ---
@@ -40,13 +40,12 @@
 
 ## 🔨 In progress
 - Sean — deciding the broader 24/7/scheduled-agent strategy after validating the lead generator.
-- Sean — reference-library visualization for `Local_AI_Agents_for_Leadpipe` is approved but not
-  generated yet because NotebookLM auth expired during the attempt.
+- Sean — approved separate Sean/Matt agent profiles with shared generated Obsidian reports.
+- Sean — reference-library visualization for `Local_AI_Agents_for_Leadpipe` generated after
+  NotebookLM auth was restored.
 
 ## 🚫 Blocked / waiting
-- NotebookLM CLI auth expired. `py -m notebooklm source list` redirects to Google login; run
-  `py -m notebooklm login` interactively, then generate the mind map + infographic for
-  `Local_AI_Agents_for_Leadpipe`.
+- None currently. NotebookLM CLI auth was restored after the previous failed sync attempt.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places
@@ -64,7 +63,10 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
    Prioritizer now works on Fresh Brew Cafe.
 6. **Design budget-safe scheduled operation** before any 24/7 run: cap Firecrawl usage, prefer Finder-only
    frequent runs, run Prioritizer less often/on limited batches.
-7. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
+7. **Implement Sean/Matt profile protocol** before parallel autonomous use:
+   `data/sean/leads.jsonl`, `data/matt/leads.jsonl`, generated `(Sean)`/`(Matt)`/`(Shared)` reports,
+   automatic shared sync/dedup by `place_id`, and soft-delete/archive rather than hard delete.
+8. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
 
 ## 📋 REQUIRED — every session, every contributor
 Run the **`context-transfer`** skill at the END of every session (say "wrap up" / "/context-transfer").
@@ -108,9 +110,10 @@ does; don't "simplify" them away without re-reading the reasoning).
 
 ## Context for next agent
 Architecture is locked AND BUILT. Lead Finder and Prioritizer now run end-to-end on real data with
-local `gemma4-fast`, Google Places, and Firecrawl. Next agent should first design budget-safe
-scheduling/limits before "24/7" operation so Firecrawl credits do not burn unexpectedly. NotebookLM
-visualization for the new Local AI Agents reference doc is pending manual re-auth.
+local `gemma4-fast`, Google Places, and Firecrawl. Sean chose the collaboration protocol: separate
+Sean/Matt stores, shared generated Obsidian reports, automatic update/dedup, and soft-delete/archive
+instead of hard delete. Next agent should plan/implement profile-aware stores/reports before "24/7"
+operation so Sean and Matt's agents do not overlap.
 
 ## 👤 Contributors this session
 - **Sean** — directed lead-generator-first setup, approved reference research/visualization, validated
@@ -124,3 +127,6 @@ visualization for the new Local AI Agents reference doc is pending manual re-aut
   lightweight `leadpipe` agent-stage pattern.
 - Before automation, add budget/scheduling guardrails so Finder can run often and Firecrawl-heavy
   Prioritizer can run selectively.
+- Collaboration protocol: Sean and Matt agents should write separate stores; shared visibility comes
+  from generated Obsidian reports. Leads may auto-update and auto-archive/soft-delete; no autonomous
+  hard delete from shared history.
