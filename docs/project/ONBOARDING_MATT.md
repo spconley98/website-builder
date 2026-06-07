@@ -46,6 +46,29 @@ cd website-builder
 - [ ] Run `uv run pytest tests/ -q` and expect the core scaffold tests to pass.
 - [ ] Run `uv run leadpipe --help` to confirm the CLI is available.
 
+### Before every work session — sync safely
+Before your agent edits anything, have it check whether your local copy is stale:
+
+```powershell
+git status --short --branch
+git fetch origin
+git log --oneline HEAD..origin/main
+git log --oneline origin/main..HEAD
+```
+
+If you have no local edits and you are behind, run:
+
+```powershell
+git pull --ff-only
+uv sync --group dev
+uv run pytest tests/ -q
+```
+
+If you do have local edits, your agent should preserve them first on a Matt branch or Matt-attributed
+WIP commit, then reconcile with `origin/main`. It should never reset, overwrite, or delete your local
+work just to make a pull succeed. After any pull/rebase/merge, re-read `AGENTS.md` + `MEMORY.md`
+because Sean may have updated the project rules.
+
 ## Step 4 — Your API keys (you get your OWN — do not share/commit)
 We each use our **own** keys. They live in a local `.env` (gitignored — never committed).
 - [ ] **Google Places API key** — Google Cloud Console → enable Places API → create key. (Cheap /

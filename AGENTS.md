@@ -131,6 +131,27 @@ is **not** a decision to use it. Each doc has three tiers:
 - Commit format: `[PHASE][AREA] Description` (e.g. `[0][setup] Add multi-agent constitution`).
 - 🔒 **NEVER commit** `.mcp.json`, `.env*`, `*.key`, or `storage_state.json` — already in `.gitignore`.
 
+### Stale working-copy protocol
+When Matt or Matt's agent starts work, pulls, or notices the local repo is behind `origin/main`, the
+agent must pause feature work and reconcile safely before editing pipeline code.
+
+Required checks:
+1. Run `git status --short --branch`.
+2. Run `git fetch origin`.
+3. Compare local vs remote with `git log --oneline HEAD..origin/main` and
+   `git log --oneline origin/main..HEAD`.
+
+If Matt has no local edits and is behind, update with `git pull --ff-only`, then run `uv sync --group dev`
+and `uv run pytest tests/ -q`. Re-read `AGENTS.md` + `MEMORY.md` after the pull because the rules may
+have changed.
+
+If Matt has local edits, the agent must **not overwrite, reset, or discard them**. It should identify
+the files, summarize what changed, then preserve the work on a Matt branch or Matt-attributed WIP
+commit before rebasing/merging remote changes. If conflicts appear, resolve them in favor of the
+newer project protocol (`AGENTS.md`/`MEMORY.md`) while preserving Matt's intended feature work. Run
+tests after reconciliation and regenerate reports only when the task actually touched lead data or
+report logic.
+
 ---
 
 ## 8. Session protocol

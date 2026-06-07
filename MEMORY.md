@@ -132,3 +132,7 @@ operation so Sean and Matt's agents do not overlap.
   hard delete from shared history.
 - Automation safety: no Firecrawl-backed scraping unless explicitly prompted or committed in a future
   schedule; Finder defaults to 20 Google Places candidates per industry/request.
+- Matt stale-copy protocol: when Matt or Matt's agent notices his local repo is behind `origin/main`,
+  pause feature work, inspect status/fetch/log divergence, pull fast-forward if clean, or preserve
+  Matt's local edits on a Matt branch/WIP commit before reconciling. Never reset or overwrite Matt's
+  local work just to pull.
