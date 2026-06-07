@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T13:40:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding verification and model pull
+**Last updated:** 2026-06-07T14:30:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt Places API key verification
 **Phase:** pre-scaffold (architecture APPROVED, app not yet built)
 
 ---
@@ -30,7 +30,7 @@
 
 ## 🚫 Blocked / waiting
 - Firecrawl scraping — account out of credits.
-- Google Places API (Matt) — key returns `LegacyApiNotActivatedMapError`. Matt needs to enable the legacy "Places API" in his Google Cloud Console.
+- Google Places API (Matt) — key returns API restriction error (`This API key is not authorized to use this service or API`). Matt needs to update the API restrictions settings for his key in the Google Cloud Console to authorize the legacy "Places API".
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me)
 Local-AI **lead pipeline** (Python). Lead Finder → Lead Prioritizer → future agents. Google Places API
