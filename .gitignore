@@ -1,0 +1,25 @@
+# --- Secrets / local config (NEVER commit) ---
+# .mcp.json contains live API keys (Firecrawl etc.) — keep local only
+.mcp.json
+.env
+.env.local
+.env.*.local
+*.key
+# NotebookLM auth state
+storage_state.json
+
+# --- Dependencies / build ---
+node_modules/
+.next/
+dist/
+build/
+out/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.log
+
+# --- Obsidian (keep config, ignore volatile UI state) ---
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json

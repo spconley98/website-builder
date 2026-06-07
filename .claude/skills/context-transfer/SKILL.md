@@ -1,0 +1,125 @@
+---
+name: context-transfer
+description: >
+  website-builder session wrapup skill. Verifies build health (if applicable), updates
+  MEMORY.md with session summary, optionally uploads to NotebookLM project brain, and
+  commits all changes. Trigger when user says "wrap up", "end session", "context transfer",
+  "close session", "/context-transfer", or "update memory".
+---
+
+# Context Transfer — website-builder Session Wrapup
+
+Closes out a work session cleanly so the next agent (or future you) has full context.
+
+---
+
+## Step 1: Health Check
+
+If build/lint/typecheck scripts exist (check `package.json`), run them and report results
+before continuing. Fix failures before proceeding. Skip silently if no such tooling exists yet.
+
+```powershell
+npm run lint
+npx tsc --noEmit
+```
+
+---
+
+## Step 2: MEMORY.md Update
+
+Update `MEMORY.md` (project root) with:
+
+- **Last Updated:** current datetime (ISO 8601)
+- **Last Agent:** model name + task area (e.g., "Claude Sonnet 4.6 — Phase 1 content")
+- **Phase:** current phase
+- **✅ Completed:** move anything finished from In Progress → Completed — tag each item with the contributor who did it (e.g., "Sean — navbar layout", "mp214gitty — pricing copy")
+- **🔨 In Progress:** what was being worked on when session ended — tag with contributor
+- **🚫 Blocked:** any blockers discovered this session
+- **👤 Contributors this session:** list each person + the section/area they worked on. Default to **Sean** if no other contributor is mentioned in the conversation; name others explicitly when the user references them (e.g., mp214gitty)
+- **Context for Next Agent:** 2-3 sentence handoff — what's done, what's next, any gotchas
+- **Active Design Decisions:** update if any decisions were made or changed
+- **Known Issues & Tooling:** update if any new issues found or fixed
+
+---
+
+## Step 3: Upload to NotebookLM
+
+Upload updated `MEMORY.md` to the website-builder Project Brain notebook.
+
+**Notebook:** website-builder-brain
+**ID:** `bd83690f-e997-46c5-b054-6ff3139e11d6`
+**URL:** https://notebooklm.google.com/notebook/bd83690f-e997-46c5-b054-6ff3139e11d6
+**Shared with:** mpitto214@gmail.com (mp214gitty) — manually invited by Sean, **pending acceptance**
+
+In session summary, note current acceptance status of the shared notebook invite (pending / accepted) so next agent knows whether the collaborator has full access yet.
+
+Run via CLI:
+```powershell
+py -m notebooklm source add ./MEMORY.md --notebook bd83690f-e997-46c5-b054-6ff3139e11d6
+```
+
+If CLI unavailable or fails, instruct user to manually re-upload `MEMORY.md` to the notebook and note it in session output.
+
+---
+
+## Step 3a: Obsidian vault note
+
+Sean created an **Obsidian vault** pointed directly at this project folder
+(`C:\Users\mysis\website-builder`). It serves as:
+- scaffolding/structure reference for future agents
+- shared layout/theme tracker for both contributors
+- visual map of the project that raw files / Antigravity can't provide
+
+**Matt** (mp214gitty / mpitto214@gmail.com) needs to **download Obsidian** and open this
+folder as a vault to use it. Note current status (vault exists, Matt onboarded or not yet)
+in the session summary.
+
+---
+
+## Step 3b: Reindex local semantic memory
+
+Re-embed the markdown memory so the `memory` MCP server (`search_memory`) can recall
+this session's notes next time. Runs locally via Ollama (`nomic-embed-text`) — free, offline.
+
+```powershell
+node C:/Users/mysis/.claude/memory-mcp/indexer.mjs
+```
+
+If Ollama isn't running, start it (`ollama serve`) or note that reindex was skipped.
+The index lives at `C:/Users/mysis/.claude/memory-mcp/index.json` (not committed).
+
+---
+
+## Step 4: Commit
+
+Stage and commit all changes with format:
+
+```
+[PHASE][AREA] Session wrapup — <1-line summary of what was accomplished>
+```
+
+Example:
+```
+[1][blueprint] Session wrapup — locked brand tokens, updated content-map placeholders
+```
+
+Only commit files that changed this session. Never commit `.env`, secrets, or `node_modules`.
+
+---
+
+## Step 5: Report
+
+Output a clean session summary:
+
+```
+SESSION COMPLETE
+───────────────
+✅ Build: passing (or: skipped — no build tooling)
+✅ MEMORY.md: updated
+✅ NotebookLM: synced (or: skipped — not configured)
+✅ Committed: [commit hash]
+
+NEXT SESSION SHOULD:
+- [top priority item]
+- [second priority]
+```

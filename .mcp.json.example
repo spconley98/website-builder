@@ -1,0 +1,12 @@
+{
+  "//": "TEMPLATE — copy this file to .mcp.json and paste your real Firecrawl key. .mcp.json is gitignored so your key never reaches the repo. Get a key at https://firecrawl.dev. After creating .mcp.json, RESTART Claude Code so the MCP tools (mcp__firecrawl__*) load — they do NOT activate mid-session.",
+  "mcpServers": {
+    "firecrawl-mcp": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-YOUR-KEY-HERE"
+      }
+    }
+  }
+}
