@@ -59,6 +59,38 @@ Run the **`context-transfer`** skill at the END of every session (say "wrap up" 
 It updates this file with a summary + **who did what + timestamp**, syncs the NotebookLM brain, and
 syncs Obsidian. **This applies to Matt too — first thing to know after his first `git pull`.**
 
+## 🛠️ How to pick this up cold (any agent — Claude, Codex, Gemini)
+
+Read order: `AGENTS.md` (constitution/rules) → this file (state) →
+`docs/project/ARCHITECTURE.md` (full design + the approved scaffold tree, §5).
+
+The scaffold is **DONE and working** — this is a real Python project now, not just docs:
+
+```powershell
+cd website-builder
+uv sync --group dev          # install deps (uv is the package manager — see pyproject.toml)
+uv run pytest tests/ -q      # health check — should show 11 passed
+uv run leadpipe --help       # see the CLI: find / prioritize / run / report
+uv run leadpipe find --area "Austin, TX" --industry restaurants   # try it on real data
+```
+
+Code lives in `src/leadpipe/`. Each module has a docstring explaining its role AND any
+hardening that came from the `three-brain`→Codex adversarial review (search for
+"post three-brain/Codex review" — those comments explain WHY the code looks the way it
+does; don't "simplify" them away without re-reading the reasoning).
+
+**Known gotchas already solved — don't rediscover these:**
+- `config.py::_force_ipv4_dns()` — broken IPv6 on Sean's network made every Google/Firecrawl
+  call hang ~85s; this patch fixes it to ~0.05s. If Matt or anyone hits mysterious slow API
+  calls, this is probably why — the patch should already cover it, but verify it's present.
+- Google Cloud requires **"Places API (New)"** specifically enabled (not the legacy "Places
+  API") — a 403 `SERVICE_DISABLED` error means that toggle is off. `PlacesError` messages
+  include the exact enable-URL.
+- Firecrawl account is out of credits — `lead_prioritizer` degrades gracefully (skips +
+  logs, never fakes a rating). This is expected, not a bug, until credits are topped up.
+
 ## Context for next agent
-Read `AGENTS.md` → this file → `docs/project/ARCHITECTURE.md`. Architecture is locked; scaffold is the
-next build step but **must wait for Sean's approval** to start. Matt onboarding: `docs/project/ONBOARDING_MATT.md`.
+Architecture is locked AND BUILT. The pipeline runs end-to-end on real data (see "What exists
+now" above for the live validation result). Remaining work is in §"Next": real hunts, Firecrawl
+credits, future agents. Matt onboarding: `docs/project/ONBOARDING_MATT.md`. No approval gate
+remains on the scaffold — that gate (AGENTS.md §0) was for the *initial* build, which is complete.
