@@ -4,13 +4,235 @@
 
 targets:
   - area: "Austin, TX"
-    radius: 5km
+    radius: 10mi
     industries:
       - restaurants
       - landscaping
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
 
   - area: "San Antonio, TX"
-    radius: 8km
+    radius: 10mi
     industries:
       - plumbers
       - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+
+  - area: "Houston, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+
+  - area: "Dallas, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+
+  - area: "Fort Worth, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+
+  - area: "Plano, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Arlington, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Frisco, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Irving, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Denton, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Garland, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Richardson, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Mesquite, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "McKinney, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Carrollton, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+  - area: "Wichita Falls, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+      - car washes
+      - dry cleaners
+      - hair salons
+      - nail salons
+      - spas
+      - tattoo parlors
+      - barbershops
+      - waxing salons
+      - massage therapists
+      - tanning salons
+  - area: "Abilene, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+      - car washes
+      - dry cleaners
+      - hair salons
+      - nail salons
+      - spas
+      - tattoo parlors
+      - barbershops
+      - waxing salons
+      - massage therapists
+      - tanning salons
+  - area: "El Paso, TX"
+    radius: 10mi
+    industries:
+      - plumbers
+      - roofing
+      - dentists
+      - gyms
+      - veterinarians
+      - mechanics
+      - plumbers
+      - roofing
+      - car washes
+      - dry cleaners
+      - hair salons
+      - nail salons
+      - spas
+      - tattoo parlors
+      - barbershops
+      - waxing salons
+      - massage therapists
+      - tanning salons

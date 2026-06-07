@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T16:05:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding complete, NotebookLM CLI resolved
+**Last updated:** 2026-06-07T16:42:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding complete, real lead hunts run, 166 leads generated
 **Phase:** scaffold BUILT and working — `leadpipe` CLI runs end-to-end on real data
 
 ---
@@ -36,6 +36,7 @@
 
 ## 🔨 In progress
 - Status/pipeline explainer video still rendering in NotebookLM (background).
+- Ready to top up Firecrawl credits to run Lead Prioritizer on the 166 newly found leads.
 
 ## 🚫 Blocked / waiting
 - Firecrawl scraping — account out of credits (code handles this gracefully — Prioritizer skips
@@ -91,5 +92,4 @@ does; don't "simplify" them away without re-reading the reasoning).
   logs, never fakes a rating). This is expected, not a bug, until credits are topped up.
 
 ## Context for next agent
-Architecture is locked AND BUILT. The pipeline runs end-to-end on real data (see "What exists
-now" above for the live validation result). Matt's onboarding is complete (git pull verified, Ollama model `qwen2.5:7b` pulled, Google key tested and verified working against Places API (New)). Remaining work is in §"Next": real hunts, Firecrawl credits, future agents. Matt onboarding: `docs/project/ONBOARDING_MATT.md`. No approval gate remains on the scaffold — that gate (AGENTS.md §0) was for the *initial* build, which is complete.
+Matt onboarding is complete and a substantial lead hunt has been executed. The pipeline was run across 16 Texas cities (Austin through Wichita Falls) and populated `data/leads.jsonl` with 166 leads without websites. Reports have been generated in `reports/`. Next steps are to top up Firecrawl credits so the Lead Prioritizer stage can process and rate these 166 leads.
