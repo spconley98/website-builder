@@ -69,6 +69,35 @@ WIP commit, then reconcile with `origin/main`. It should never reset, overwrite,
 work just to make a pull succeed. After any pull/rebase/merge, re-read `AGENTS.md` + `MEMORY.md`
 because Sean may have updated the project rules.
 
+### If Sean only wants your research/context
+Sometimes your local branch may be useful even if it was built on an older project structure. In that
+case, Sean's agent should fetch and inspect your branch, then import only Matt-owned context/research:
+
+```text
+docs/context-transfers/matt/
+docs/research/matt/
+data/matt/
+```
+
+Shared scaffold/code files require Sean review before import:
+
+```text
+AGENTS.md
+MEMORY.md
+src/
+tests/
+config/
+docs/project/
+.claude/skills/
+.gemini/
+```
+
+Why this matters: Sean is putting these failsafes in place to keep your work safe. Your research and
+session context should still flow back to Sean, but an older local framework should not accidentally
+overwrite the current working pipeline, agent rules, or shared memory. When in doubt, have your agent
+write a note under `docs/context-transfers/matt/` explaining what it thinks should change instead of
+rewriting shared files directly.
+
 ## Step 4 — Your API keys (you get your OWN — do not share/commit)
 We each use our **own** keys. They live in a local `.env` (gitignored — never committed).
 - [ ] **Google Places API key** — Google Cloud Console → enable Places API → create key. (Cheap /
@@ -109,10 +138,13 @@ provenance clear (same per-contributor rule the `context-transfer` skill uses fo
 
 This is **mandatory for both of us, every single session** — say "wrap up" or "/context-transfer"
 to your agent before you close out. It:
-1. Updates `MEMORY.md` with a session summary **tagged with your name + a timestamp**.
+1. Writes your session handoff under `docs/context-transfers/matt/` with your name + timestamp.
 2. Syncs the shared NotebookLM brain (with the `[Matt]` attribution from the rule above).
 3. Reflects in the Obsidian vault.
 4. Commits everything.
+
+Matt's agent should not rewrite shared `MEMORY.md` during wrap-up unless Sean explicitly approves it.
+If it thinks shared memory needs an update, put the proposed change in the Matt context-transfer note.
 
 **Why it matters:** with two of us and three different AI agents in play, this is the *only* thing
 keeping everyone — you, me, Claude, Codex, Gemini — on the same page about who did what and when.

@@ -2,9 +2,10 @@
 name: context-transfer
 description: >
   website-builder session wrapup skill. Verifies build health (if applicable), updates
-  MEMORY.md with session summary, optionally uploads to NotebookLM project brain, and
-  commits all changes. Trigger when user says "wrap up", "end session", "context transfer",
-  "close session", "/context-transfer", or "update memory".
+  contributor-owned context-transfer notes, optionally updates MEMORY.md when allowed by
+  AGENTS.md, optionally uploads to NotebookLM project brain, and commits all changes. Trigger
+  when user says "wrap up", "end session", "context transfer", "close session",
+  "/context-transfer", or "update memory".
 ---
 
 # Context Transfer — website-builder Session Wrapup
@@ -25,7 +26,35 @@ npx tsc --noEmit
 
 ---
 
-## Step 2: MEMORY.md Update
+## Step 2: Contributor Context Transfer
+
+Create or update a contributor-owned session handoff:
+
+```text
+docs/context-transfers/sean/YYYY-MM-DD-HHMM-<short-topic>.md
+docs/context-transfers/matt/YYYY-MM-DD-HHMM-<short-topic>.md
+```
+
+Default contributor is **Sean** unless the conversation explicitly names Matt or another contributor.
+
+Include:
+- contributor name
+- timestamp
+- agent/tool used
+- what changed
+- commands run and results
+- files changed
+- decisions made
+- next recommended steps
+- blockers or risks
+
+This file is the default place for Matt's context transfer. Matt's agent must not rewrite shared
+`MEMORY.md`, `AGENTS.md`, scaffold docs, or code as part of context transfer unless Sean explicitly
+asks for that exact change.
+
+---
+
+## Step 2b: MEMORY.md Update
 
 Update `MEMORY.md` (project root) with:
 
@@ -39,6 +68,13 @@ Update `MEMORY.md` (project root) with:
 - **Context for Next Agent:** 2-3 sentence handoff — what's done, what's next, any gotchas
 - **Active Design Decisions:** update if any decisions were made or changed
 - **Known Issues & Tooling:** update if any new issues found or fixed
+
+Rules:
+- Sean-owned sessions may update `MEMORY.md` directly when the session changes project state.
+- Matt-owned sessions should append detailed context to `docs/context-transfers/matt/` and leave
+  `MEMORY.md` untouched unless Sean explicitly approves a shared-memory update.
+- If Matt's agent believes `MEMORY.md` is stale, it should create a proposed memory update in the
+  Matt context-transfer note instead of rewriting the shared file.
 
 ---
 

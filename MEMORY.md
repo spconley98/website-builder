@@ -24,7 +24,7 @@
 - **`leadpipe` — the lead pipeline scaffold, BUILT AND VALIDATED LIVE** (`src/leadpipe/`):
   - `config`/`models`/`store`/`llm` core, `sources/` (google_places, firecrawl), `agents/`
     (lead_finder, lead_prioritizer), `pipeline`, `reports`, Typer `cli` (`find`/`prioritize`/`run`/`report`)
-  - 15 passing tests covering the riskiest contracts (dedup, fact/judgment separation, status monotonicity, atomic writes,
+  - 18 passing tests covering the riskiest contracts (dedup, fact/judgment separation, status monotonicity, atomic writes,
     local-model config fallback, Prioritizer target scoping, photo-count parse handling)
   - **Cross-challenged via `three-brain`→Codex** before agents were built on top — caught real
     foundational issues (status regression, enrichment-overwrites-facts) which were fixed pre-emptively
@@ -43,6 +43,8 @@
 - Sean — approved separate Sean/Matt agent profiles with shared generated Obsidian reports.
 - Sean — reference-library visualization for `Local_AI_Agents_for_Leadpipe` generated after
   NotebookLM auth was restored.
+- Sean — approved selective import rules for Matt work: automatically import only Matt-owned
+  context/research/data, while shared memory/protocol/code/scaffold changes require Sean review.
 
 ## 🚫 Blocked / waiting
 - None currently. NotebookLM CLI auth was restored after the previous failed sync attempt.
@@ -66,12 +68,16 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
 7. ~~Implement Sean/Matt profile protocol~~ ✅ **Done**:
    `data/sean/leads.jsonl`, `data/matt/leads.jsonl`, generated `(Sean)`/`(Matt)`/`(Shared)` reports,
    automatic shared sync/dedup by `place_id`, and soft-delete/archive rather than hard delete.
-8. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
+8. **Use contributor context-transfer folders going forward**:
+   Sean handoffs in `docs/context-transfers/sean/`; Matt handoffs in `docs/context-transfers/matt/`.
+   Matt's agent should propose shared-memory changes there instead of rewriting `MEMORY.md` directly.
+9. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
 
 ## 📋 REQUIRED — every session, every contributor
 Run the **`context-transfer`** skill at the END of every session (say "wrap up" / "/context-transfer").
-It updates this file with a summary + **who did what + timestamp**, syncs the NotebookLM brain, and
-syncs Obsidian. **This applies to Matt too — first thing to know after his first `git pull`.**
+It writes a contributor-owned handoff under `docs/context-transfers/<sean|matt>/`, updates this file
+only when protocol allows, syncs the NotebookLM brain, and syncs Obsidian. **This applies to Matt too
+— first thing to know after his first `git pull`.**
 
 ## 🛠️ How to pick this up cold (any agent — Claude, Codex, Gemini)
 
@@ -83,7 +89,7 @@ The scaffold is **DONE and working** — this is a real Python project now, not 
 ```powershell
 cd website-builder
 uv sync --group dev          # install deps (uv is the package manager — see pyproject.toml)
-uv run pytest tests/ -q      # health check — should show 15 passed
+uv run pytest tests/ -q      # health check — should show 18 passed
 uv run leadpipe --help       # see the CLI: check / find / prioritize / run / report
 uv run leadpipe check --google  # verify Google Places + local Ollama before hunts
 uv run leadpipe find --area "Austin, TX" --industry restaurants   # try it on real data
@@ -111,9 +117,10 @@ does; don't "simplify" them away without re-reading the reasoning).
 ## Context for next agent
 Architecture is locked AND BUILT. Lead Finder and Prioritizer now run end-to-end on real data with
 local `gemma4-fast`, Google Places, and Firecrawl. Sean chose the collaboration protocol: separate
-Sean/Matt stores, shared generated Obsidian reports, automatic update/dedup, and soft-delete/archive
-instead of hard delete. Next agent should plan/implement profile-aware stores/reports before "24/7"
-operation so Sean and Matt's agents do not overlap.
+Sean/Matt stores, shared generated Obsidian reports, automatic update/dedup, soft-delete/archive
+instead of hard delete, and selective import of Matt context/research only unless Sean approves
+shared scaffold/code changes. Next agent should use contributor context-transfer folders before
+any cross-contributor import.
 
 ## 👤 Contributors this session
 - **Sean** — directed lead-generator-first setup, approved reference research/visualization, validated
@@ -136,3 +143,7 @@ operation so Sean and Matt's agents do not overlap.
   pause feature work, inspect status/fetch/log divergence, pull fast-forward if clean, or preserve
   Matt's local edits on a Matt branch/WIP commit before reconciling. Never reset or overwrite Matt's
   local work just to pull.
+- Selective import protocol: if Sean wants only Matt's context transfer and agent research, fetch and
+  inspect Matt's branch but import only `docs/context-transfers/matt/`, `docs/research/matt/`,
+  `data/matt/`, and approved Matt report outputs. Shared memory, protocol, code, tests, config,
+  scaffold docs, and agent tooling require Sean review before import.

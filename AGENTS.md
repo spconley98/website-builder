@@ -77,8 +77,9 @@ is **not** a decision to use it. Each doc has three tiers:
   offers** (asks first, never auto-generates) to build the `(Mind Map)` + `(Visualization)` tiers.
   Response branches: **Yes** → generate · **No** → skip · **Unsure** (e.g. Matt) → log to
   `docs/_reference-library/_PENDING_APPROVALS.md` for **Sean's** approval. Only Sean processes the queue.
-- **`context-transfer`** — session wrap-up: health check, update `MEMORY.md` (with **per-contributor
-  attribution**), upload to the NotebookLM brain, commit. Run it at the end of a work session.
+- **`context-transfer`** — session wrap-up: health check, write a contributor-owned handoff under
+  `docs/context-transfers/<sean|matt>/`, update `MEMORY.md` only when protocol allows, upload to the
+  NotebookLM brain, commit. Run it at the end of a work session.
 - Full menu of available + recommended skills: `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md`.
 
 ---
@@ -152,6 +153,33 @@ newer project protocol (`AGENTS.md`/`MEMORY.md`) while preserving Matt's intende
 tests after reconciliation and regenerate reports only when the task actually touched lead data or
 report logic.
 
+### Selective import protocol for Matt work
+If Sean only wants Matt's context transfer and agent research, do **not** pull or merge Matt's whole
+branch into `main`. Fetch and inspect first:
+
+```powershell
+git fetch origin
+git status --short --branch
+git diff --name-only main..origin/<matt-branch>
+```
+
+Allowed to import from Matt automatically:
+- `docs/context-transfers/matt/`
+- `docs/research/matt/`
+- `data/matt/`
+- Matt-owned generated reports, when report generation is the stated task
+
+Requires Sean review before import/merge:
+- `AGENTS.md`, `MEMORY.md`, `CLAUDE.md`, `GEMINI.md`
+- `src/`, `tests/`, `config/`, `pyproject.toml`, `uv.lock`
+- `.github/`, `.claude/skills/`, `.gemini/`
+- `docs/project/` architecture/scaffold docs
+
+Matt's agent should write session context to `docs/context-transfers/matt/` and research to
+`docs/research/matt/` by default. Matt's agent must not rewrite shared `MEMORY.md` or project
+protocol files unless Sean explicitly asks for that exact change. This keeps Matt's work visible to
+Sean without letting an older local framework accidentally replace current scaffold or agent rules.
+
 ---
 
 ## 8. Session protocol
@@ -159,7 +187,8 @@ report logic.
 **Start:** read `AGENTS.md` (this file) → `MEMORY.md` → check for pending approvals/onboarding.
 
 **End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `context-transfer`
-skill ("wrap up" / "/context-transfer"). It updates `MEMORY.md` with a summary **tagged with
-contributor name + timestamp**, syncs the NotebookLM brain (remember the `[<Name>]` attribution rule
-in §5), reflects in Obsidian, and commits. Skipping it means the next session starts blind — do it
-every time, even short sessions.
+skill ("wrap up" / "/context-transfer"). It writes a contributor-owned handoff under
+`docs/context-transfers/<sean|matt>/`, updates shared `MEMORY.md` only when allowed by the protocol
+above, syncs the NotebookLM brain (remember the `[<Name>]` attribution rule in §5), reflects in
+Obsidian, and commits. Skipping it means the next session starts blind — do it every time, even short
+sessions.
