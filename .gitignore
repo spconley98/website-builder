@@ -47,6 +47,9 @@ lerna-debug.log*
 *.sln
 *.sw?
 
+# --- Gemini CLI (machine-local skill links + MCP config — absolute paths, not portable) ---
+.gemini/
+
 # --- Obsidian (keep config, ignore volatile UI state) ---
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json

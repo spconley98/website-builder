@@ -56,7 +56,16 @@ We each use our **own** keys. They live in a local `.env` (gitignored — never 
 
 ## Step 5 — Skills
 - [ ] Project skills travel in the repo (`.claude/skills/`) — `git pull` and you have
-      `context-transfer` + `reference-visualizer`. Nothing to install for those.
+      `context-transfer` + `reference-visualizer`. Nothing to install for those — **for Claude Code.**
+- [ ] **You use Gemini — it needs separate one-time setup** (Gemini doesn't read `.claude/skills/`
+      or `.mcp.json` natively). Run these once, pointing at YOUR clone path + YOUR OWN Firecrawl key:
+      ```powershell
+      gemini skills link "<your-clone-path>\.claude\skills\context-transfer" --scope workspace --consent
+      gemini skills link "<your-clone-path>\.claude\skills\reference-visualizer" --scope workspace --consent
+      gemini mcp add firecrawl npx -y firecrawl-mcp -e "FIRECRAWL_API_KEY=<your-own-key>" --scope user
+      ```
+      Verify: `gemini skills list` shows both; `gemini mcp list` shows `firecrawl ... Connected`.
+      Full detail: `GEMINI.md`.
 - [ ] For more skills, see `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md` — it lists
       what to pull from Anthropic / VoltAgent repos with copy-paste install commands. **Don't add
       project tooling/skills mid-build without Sean's ok.**
