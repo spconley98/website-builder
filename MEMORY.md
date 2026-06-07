@@ -23,6 +23,7 @@
 - NotebookLM brain `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`).
 - Firecrawl MCP wired in local `.mcp.json` (key valid, account out of credits; loads on restart).
 - Local Ollama model (`qwen2.5:7b`) pulled for Matt's GPU.
+- Programmatic NotebookLM CLI (`notebooklm-py`) and Playwright Chromium browser installed for Matt.
 
 ## 🔨 In progress
 - Nothing actively mid-edit.
