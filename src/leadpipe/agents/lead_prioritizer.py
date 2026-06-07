@@ -19,6 +19,7 @@ Degradation (important — Sean's Firecrawl account is out of credits today):
 from __future__ import annotations
 
 from datetime import date
+import re
 
 from .. import llm
 from ..config import Target
@@ -57,20 +58,70 @@ def rate_from_count(photo_count: int) -> int:
 def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
     """LLM reasoning step over scraped page content. Raises LLMError on failure
     or on an unparseable response — caller decides how to degrade."""
+    prompt = (
+        f"Analyze the following scraped page content:\n"
+        f"<scraped_content>\n{scraped_markdown[:6000]}\n</scraped_content>\n\n"
+        f"Based on the content above, estimate how many photos of the business are shown.\n"
+        f"You MUST respond in EXACTLY this format and nothing else (do not include markdown formatting or conversational text):\n"
+        f"COUNT: <number>\n"
+        f"REASON: <one short sentence justification>\n\n"
+        f"Response:"
+    )
     response = llm.generate(
-        f"Page content (truncated):\n{scraped_markdown[:6000]}\n\nEstimate:",
+        prompt,
         system=_COUNT_SYSTEM,
         temperature=0.0,
     )
     count = reason = None
     for line in response.splitlines():
+        line = line.strip()
         if line.upper().startswith("COUNT:"):
-            count = int("".join(ch for ch in line.split(":", 1)[1] if ch.isdigit()) or "0")
+            val = "".join(c for c in line.split(":", 1)[1] if c.isdigit())
+            if val:
+                count = int(val)
         elif line.upper().startswith("REASON:"):
             reason = line.split(":", 1)[1].strip()
+
+    # Fallback for count if not found in standard format
     if count is None:
-        raise llm.LLMError(f"could not parse photo-count estimate from response: {response!r}")
-    return count, (reason or "no reason given")
+        m = re.search(r'(?:COUNT|count|Count):\s*(\d+)', response)
+        if m:
+            count = int(m.group(1))
+        else:
+            word_to_num = {
+                "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, 
+                "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9,
+                "ten": 10
+            }
+            lower_resp = response.lower()
+            found_num = False
+            for word, num in word_to_num.items():
+                if f"{word} photo" in lower_resp or f"{word} image" in lower_resp:
+                    count = num
+                    found_num = True
+                    break
+            if not found_num:
+                m_phrase = re.search(r'(\d+)\s*(?:photo|image|picture)', lower_resp)
+                if m_phrase:
+                    count = int(m_phrase.group(1))
+                else:
+                    m_any = re.search(r'\d+', response)
+                    if m_any:
+                        count = int(m_any.group())
+                    else:
+                        count = 0  # Default to 0 if absolutely no number found
+
+    # Fallback for reason
+    if reason is None:
+        non_empty_lines = [l.strip() for l in response.splitlines() if l.strip()]
+        for line in non_empty_lines:
+            if not line.upper().startswith("COUNT:"):
+                reason = line
+                break
+        if not reason:
+            reason = "No reason given"
+
+    return count, reason
 
 
 def _gather_listing_urls(lead) -> list[tuple[str, str]]:
@@ -89,6 +140,15 @@ def _gather_listing_urls(lead) -> list[tuple[str, str]]:
     return urls
 
 
+_NEARBY_TOWNS = {
+    "austin": {"round rock"},
+    "san antonio": {"von ormy"},
+    "denton": {"cross roads"},
+    "wichita falls": {"iowa park", "sheppard afb"},
+    "arlington": {"pantego", "dalworthington gardens"},
+}
+
+
 def run(store: LeadStore, target: Target) -> AgentResult:
     processed = created_or_updated = skipped = 0
     errors: list[str] = []
@@ -96,11 +156,16 @@ def run(store: LeadStore, target: Target) -> AgentResult:
     # Prioritizer works the existing FOUND queue — it doesn't search Places
     # again. `target` scopes WHICH found leads to work (by area/industry),
     # consistent with how `find` is invoked.
+    area_city = target.area.split(",")[0].strip().lower()
+    allowed_cities = {area_city}
+    if area_city in _NEARBY_TOWNS:
+        allowed_cities.update(_NEARBY_TOWNS[area_city])
+
     candidates = [
         l
         for l in store.by_status("found")
-        if l.location.startswith(target.area.split(",")[0]) and l.industry in target.industries
-        or not target.industries  # empty industries list = "all in this area"
+        if any(city in l.location.lower() for city in allowed_cities)
+        and (not target.industries or l.industry in target.industries)
     ]
 
     for lead in candidates:

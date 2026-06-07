@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T16:44:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt Obsidian and NotebookLM synced, memory uploaded
+**Last updated:** 2026-06-07T17:06:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt bugfixes applied to lead_prioritizer.py, 68 leads prioritized
 **Phase:** scaffold BUILT and working — `leadpipe` CLI runs end-to-end on real data
 
 ---
@@ -36,7 +36,7 @@
 
 ## 🔨 In progress
 - Status/pipeline explainer video still rendering in NotebookLM (background).
-- Ready to top up Firecrawl credits to run Lead Prioritizer on the 166 newly found leads.
+- Ready to prioritize the remaining 98 leads (68 of 166 are complete).
 
 ## 🚫 Blocked / waiting
 - Firecrawl scraping — account out of credits (code handles this gracefully — Prioritizer skips
@@ -92,4 +92,4 @@ does; don't "simplify" them away without re-reading the reasoning).
   logs, never fakes a rating). This is expected, not a bug, until credits are topped up.
 
 ## Context for next agent
-Matt onboarding is complete and a substantial lead hunt has been executed. The pipeline was run across 16 Texas cities (Austin through Wichita Falls) and populated `data/leads.jsonl` with 166 leads without websites. Reports have been generated in `reports/`. Next steps are to top up Firecrawl credits so the Lead Prioritizer stage can process and rate these 166 leads.
+Matt onboarding is complete and 166 leads have been successfully gathered. We applied bugfixes to `lead_prioritizer.py` to enable robust city matching for surrounding towns (e.g. Iowa Park, Von Ormy) and added lenient fallback parsing for chatty local LLMs. Run `uv run leadpipe prioritize` to process the remaining 98 un-prioritized leads. Reports are generated in `reports/` and display correctly in Obsidian.
