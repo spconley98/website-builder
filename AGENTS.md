@@ -120,5 +120,9 @@ is **not** a decision to use it. Each doc has three tiers:
 ## 8. Session protocol
 
 **Start:** read `AGENTS.md` (this file) → `MEMORY.md` → check for pending approvals/onboarding.
-**End:** run the `context-transfer` skill (updates `MEMORY.md` with per-contributor attribution,
-syncs the NotebookLM brain, commits).
+
+**End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `context-transfer`
+skill ("wrap up" / "/context-transfer"). It updates `MEMORY.md` with a summary **tagged with
+contributor name + timestamp**, syncs the NotebookLM brain (remember the `[<Name>]` attribution rule
+in §5), reflects in Obsidian, and commits. Skipping it means the next session starts blind — do it
+every time, even short sessions.

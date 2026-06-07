@@ -71,6 +71,22 @@ provenance clear (same per-contributor rule the `context-transfer` skill uses fo
 
 ---
 
+## ⚠️ THE ONE HABIT TO LOCK IN — run `context-transfer` at the END of every session
+
+This is **mandatory for both of us, every single session** — say "wrap up" or "/context-transfer"
+to your agent before you close out. It:
+1. Updates `MEMORY.md` with a session summary **tagged with your name + a timestamp**.
+2. Syncs the shared NotebookLM brain (with the `[Matt]` attribution from the rule above).
+3. Reflects in the Obsidian vault.
+4. Commits everything.
+
+**Why it matters:** with two of us and three different AI agents in play, this is the *only* thing
+keeping everyone — you, me, Claude, Codex, Gemini — on the same page about who did what and when.
+Skip it and the next session (yours, mine, or an agent's) starts blind. Even a 10-minute session —
+run it. No exceptions.
+
+---
+
 ## Your "ready" checklist
 You're set up when: invites accepted ✓, apps installed ✓, repo cloned ✓, `.env` + `.mcp.json` created
 with your keys ✓, you've read `AGENTS.md` + `ARCHITECTURE.md` ✓. Then ping Sean — and **wait for his

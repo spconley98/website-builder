@@ -16,6 +16,11 @@ dist-ssr
 build/
 out/
 
+# --- Large generated audio (lives in NotebookLM brain instead — keeps repo lean) ---
+*.mp3
+*.wav
+*.m4a
+
 # --- OS / editor ---
 .DS_Store
 Thumbs.db

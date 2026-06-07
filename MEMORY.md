@@ -37,9 +37,17 @@ place_id) + generated clickable Markdown reports. Typer CLI. Full detail + appro
 
 ## ➡️ Next (do NOT pre-empt — needs Sean's go-ahead)
 1. **Build the approved scaffold** (tree in ARCHITECTURE §5) — files/stubs/CLI/schema/config.
-2. Sean picks the **Ollama model**.
-3. Sean + Matt get their **own** Google Places + Firecrawl keys. (Matt's keys are configured ✅)
+2. ~~Sean picks the Ollama model~~ ✅ **Done — `gemma4-fast`** (RTX 3090; secondary: `nomic-embed-text`
+   for embedding-based dedup later). **Matt picks his OWN model based on his own GPU** — don't assume
+   he mirrors Sean's. `LLM_MODEL` is config-driven (one-line `.env` change either way).
+3. ~~Sean + Matt get their own keys~~ ✅ **Both done** — Sean's Google Places key secured locally
+   (`.env`, gitignored); Matt's Google Places + Firecrawl keys configured on his end too.
 4. Implement Lead Finder, then Lead Prioritizer.
+
+## 📋 REQUIRED — every session, every contributor
+Run the **`context-transfer`** skill at the END of every session (say "wrap up" / "/context-transfer").
+It updates this file with a summary + **who did what + timestamp**, syncs the NotebookLM brain, and
+syncs Obsidian. **This applies to Matt too — first thing to know after his first `git pull`.**
 
 ## Context for next agent
 Read `AGENTS.md` → this file → `docs/project/ARCHITECTURE.md`. Architecture is locked; scaffold is the
