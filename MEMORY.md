@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T15:10:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding & Places API verified, scaffold merged
+**Last updated:** 2026-06-07T16:00:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding complete & validated
 **Phase:** scaffold BUILT and working — `leadpipe` CLI runs end-to-end on real data
 
 ---
