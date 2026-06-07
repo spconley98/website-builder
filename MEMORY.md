@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07 · **Last agent:** Gemini (Antigravity) — Matt onboarding complete
+**Last updated:** 2026-06-07T13:40:00-05:00 · **Last agent:** Gemini (Antigravity) — Matt onboarding verification and model pull
 **Phase:** pre-scaffold (architecture APPROVED, app not yet built)
 
 ---
@@ -22,12 +22,14 @@
   Visualization). Reference only, NOT the scaffold.
 - NotebookLM brain `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`).
 - Firecrawl MCP wired in local `.mcp.json` (key valid, account out of credits; loads on restart).
+- Local Ollama model (`qwen2.5:7b`) pulled for Matt's GPU.
 
 ## 🔨 In progress
 - Nothing actively mid-edit.
 
 ## 🚫 Blocked / waiting
 - Firecrawl scraping — account out of credits.
+- Google Places API (Matt) — key returns `LegacyApiNotActivatedMapError`. Matt needs to enable the legacy "Places API" in his Google Cloud Console.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me)
 Local-AI **lead pipeline** (Python). Lead Finder → Lead Prioritizer → future agents. Google Places API
@@ -41,7 +43,7 @@ place_id) + generated clickable Markdown reports. Typer CLI. Full detail + appro
    for embedding-based dedup later). **Matt picks his OWN model based on his own GPU** — don't assume
    he mirrors Sean's. `LLM_MODEL` is config-driven (one-line `.env` change either way).
 3. ~~Sean + Matt get their own keys~~ ✅ **Both done** — Sean's Google Places key secured locally
-   (`.env`, gitignored); Matt's Google Places + Firecrawl keys configured on his end too.
+   (`.env`, gitignored); Matt's Google Places + Firecrawl keys configured on his end too (Places key verified but blocked on legacy activation).
 4. Implement Lead Finder, then Lead Prioritizer.
 
 ## 📋 REQUIRED — every session, every contributor
@@ -50,5 +52,4 @@ It updates this file with a summary + **who did what + timestamp**, syncs the No
 syncs Obsidian. **This applies to Matt too — first thing to know after his first `git pull`.**
 
 ## Context for next agent
-Read `AGENTS.md` → this file → `docs/project/ARCHITECTURE.md`. Architecture is locked; scaffold is the
-next build step but **must wait for Sean's approval** to start. Matt onboarding: `docs/project/ONBOARDING_MATT.md`.
+Read `AGENTS.md` → this file → `docs/project/ARCHITECTURE.md`. Matt's onboarding is complete (git pull verified, Ollama model `qwen2.5:7b` pulled, Google key tested). The legacy Google Places API needs to be enabled for Matt's key to work. Scaffold is the next build step but **must wait for Sean's approval** to start. Matt onboarding: `docs/project/ONBOARDING_MATT.md`.
