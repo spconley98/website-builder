@@ -8,7 +8,7 @@ estimate a photo count and write a one-line justification. The numeric
 — NOT an LLM guess — so re-runs are stable and the thresholds are tunable
 in one place (Codex review: "thresholds, tune later").
 
-Degradation (important — Sean's Firecrawl account is out of credits today):
+Degradation:
   - FirecrawlError -> skip this lead, record the error. We do NOT write a
     photo_rating of 0 in this case: 0 means "reviewed, nothing usable found",
     which is a different fact than "couldn't review it". Skipping preserves
@@ -30,9 +30,12 @@ from .base import AgentResult
 NAME = "lead_prioritizer"
 
 _COUNT_SYSTEM = (
-    "You are reviewing scraped business-listing page content to estimate how "
-    "many distinct photos of the business's actual work/products are shown or "
-    "referenced. Respond in EXACTLY this format, nothing else:\n"
+    "You are a strict data-extraction function. You are NOT answering a user "
+    "question about directions, prices, travel, or the business. Review scraped "
+    "business-listing page content and estimate how many distinct photos of the "
+    "business's actual work/products are shown or referenced. If the page content "
+    "does not contain clear photo evidence, use COUNT: 0. Respond in EXACTLY this "
+    "format, nothing else:\n"
     "COUNT: <integer>\n"
     "REASON: <one short sentence>"
 )
@@ -57,11 +60,36 @@ def rate_from_count(photo_count: int) -> int:
 def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
     """LLM reasoning step over scraped page content. Raises LLMError on failure
     or on an unparseable response — caller decides how to degrade."""
+    prompt = (
+        "Return only the two-line photo estimate for this scraped listing content.\n\n"
+        f"SCRAPED_CONTENT:\n{scraped_markdown[:6000]}\n\n"
+        "Your response must be exactly:\n"
+        "COUNT: <integer>\n"
+        "REASON: <one short sentence>"
+    )
     response = llm.generate(
-        f"Page content (truncated):\n{scraped_markdown[:6000]}\n\nEstimate:",
+        prompt,
         system=_COUNT_SYSTEM,
         temperature=0.0,
     )
+    try:
+        return _parse_photo_count_response(response)
+    except llm.LLMError:
+        repair = llm.generate(
+            "Your previous response did not follow the required format.\n\n"
+            f"Previous response:\n{response}\n\n"
+            "Re-read the scraped listing content below and output ONLY:\n"
+            "COUNT: <integer>\n"
+            "REASON: <one short sentence>\n\n"
+            f"SCRAPED_CONTENT:\n{scraped_markdown[:6000]}",
+            system=_COUNT_SYSTEM,
+            temperature=0.0,
+        )
+        return _parse_photo_count_response(repair)
+
+
+def _parse_photo_count_response(response: str) -> tuple[int, str]:
+    """Parse the strict two-line LLM output for photo-count estimates."""
     count = reason = None
     for line in response.splitlines():
         if line.upper().startswith("COUNT:"):
@@ -89,6 +117,16 @@ def _gather_listing_urls(lead) -> list[tuple[str, str]]:
     return urls
 
 
+def _matches_target(lead, target: Target) -> bool:
+    """Scope found leads to the requested target. Google Places addresses start
+    with street numbers, so match the city/area anywhere in the formatted address."""
+    area_name = target.area.split(",", 1)[0].strip().lower()
+    location = lead.location.lower()
+    in_area = area_name in location if area_name else True
+    in_industry = not target.industries or lead.industry in target.industries
+    return in_area and in_industry
+
+
 def run(store: LeadStore, target: Target) -> AgentResult:
     processed = created_or_updated = skipped = 0
     errors: list[str] = []
@@ -96,12 +134,7 @@ def run(store: LeadStore, target: Target) -> AgentResult:
     # Prioritizer works the existing FOUND queue — it doesn't search Places
     # again. `target` scopes WHICH found leads to work (by area/industry),
     # consistent with how `find` is invoked.
-    candidates = [
-        l
-        for l in store.by_status("found")
-        if l.location.startswith(target.area.split(",")[0]) and l.industry in target.industries
-        or not target.industries  # empty industries list = "all in this area"
-    ]
+    candidates = [l for l in store.by_status("found") if _matches_target(l, target)]
 
     for lead in candidates:
         processed += 1
@@ -137,7 +170,7 @@ def run(store: LeadStore, target: Target) -> AgentResult:
             created_or_updated += 1
 
         except (firecrawl.FirecrawlError, llm.LLMError) as e:
-            # Expected degradation path (e.g. Firecrawl out of credits) — skip,
+            # Expected degradation path (e.g. Firecrawl/API issues) — skip,
             # don't fabricate a rating. Re-running later will retry these.
             skipped += 1
             errors.append(f"{lead.place_id} ({lead.name!r}): {e}")

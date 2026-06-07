@@ -2,7 +2,7 @@
 
 > **Project canon.** This is the real architecture and plan (distinct from `docs/_reference-library/`,
 > which is idea/reference material only). Status as of 2026-06-07: **architecture approved via
-> `/grill-me`, scaffold NOT yet built.**
+> `/grill-me`; scaffold built, tested, and validated live as the `leadpipe` Python CLI.**
 
 ---
 
@@ -96,7 +96,9 @@ assign the rating). The LLM is the cheap reasoning labor — never the search en
 
 ---
 
-## 5. Approved scaffold (to build NEXT session)
+## 5. Implemented scaffold
+
+The approved scaffold now exists in the repo and is the working baseline for ongoing work:
 
 ```
 website-builder/
@@ -136,22 +138,25 @@ website-builder/
 ---
 
 ## 7. Problems / constraints carried forward
-- **Firecrawl account out of credits** — REST + key valid, but scrapes fail until topped up. MCP tools
-  load only on session restart (REST is the mid-session fallback).
-- **Local model not chosen yet** — Sean will pick the Ollama model (3090 available). Scaffold stays
-  model-agnostic via config until then.
-- **Google Places API** — new paid dependency; needs a Google Cloud key + billing (cheap/free-tier).
-- **Matt onboarding pending** — GitHub invite + NotebookLM share acceptance; needs local setup
-  (see `ONBOARDING_MATT.md`).
+- **Firecrawl enrichment depends on active credits/subscription** — Prioritizer handles failures
+  gracefully by skipping enrichment and logging the issue rather than fabricating a rating. MCP tools
+  load only on session restart; REST remains the mid-session fallback.
+- **Local model routing is still a config decision** — the code uses the thin `llm` module and
+  Ollama's OpenAI-compatible endpoint, so task-specific model choices can be made without rewriting
+  agents.
+- **Google Places API requires "Places API (New)"** — a 403 `SERVICE_DISABLED` usually means the
+  legacy API was enabled instead of the new one.
+- **Docs/memory must stay synchronized** — `AGENTS.md` and `MEMORY.md` are canonical; run
+  `context-transfer` at session end.
 
 ---
 
 ## 8. Status & next steps
 - ✅ Architecture approved via `/grill-me`.
-- ⬜ **Next session:** build the scaffold (tree above) — files, stubs, CLI, schema, config. No agent
-  logic yet beyond wiring.
-- ⬜ Sean picks the Ollama model.
-- ⬜ Sean + Matt get Google Places + Firecrawl keys.
-- ⬜ Then implement Lead Finder, then Lead Prioritizer.
-
-> 🚫 **Hard rule:** do not build beyond project setup until **Sean approves** (per `AGENTS.md` §0).
+- ✅ Scaffold built in `src/leadpipe/` and validated live on real data.
+- ✅ Lead Finder and Lead Prioritizer exist behind the Typer CLI (`find`, `prioritize`, `run`,
+  `report`).
+- ⬜ Finalize local model choices/routing for the current machine setup.
+- ⬜ Run real hunts by editing `config/targets.yaml` and using `uv run leadpipe run`.
+- ⬜ Build agent #3+ by adding one module under `src/leadpipe/agents/` and registering it in
+  `pipeline.STAGES`.

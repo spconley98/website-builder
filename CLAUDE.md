@@ -18,5 +18,5 @@
   takes precedence for shared state.
 - **Caveman output mode** may be active (an installed plugin compresses Claude's prose). It does not
   change code/commits, only conversational output.
-- **Hard rule reminder:** do NOT build project scaffolding until the `/grill-me` scaffolding session
-  has produced an approved structure (see `AGENTS.md` §0).
+- **Current status reminder:** the scaffold is built and working. Follow `AGENTS.md` + `MEMORY.md`
+  for current state, and treat new work as normal ongoing development rather than a pre-scaffold gate.

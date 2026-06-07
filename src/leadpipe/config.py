@@ -69,6 +69,15 @@ class Settings(BaseModel):
     targets: list[Target]
 
 
+def _env_str(name: str, default: str | None = None) -> str | None:
+    """Read env vars human-edited in .env, treating blank values as unset."""
+    value = os.getenv(name)
+    if value is None:
+        return default
+    value = value.strip()
+    return value or default
+
+
 def _load_targets(path: Path) -> list[Target]:
     if not path.exists():
         return []
@@ -88,9 +97,9 @@ def load_settings(targets_path: Path | None = None) -> Settings:
     """Single entry point every module/agent uses to read config."""
     targets_path = targets_path or ROOT / "config" / "targets.yaml"
     return Settings(
-        google_places_api_key=os.getenv("GOOGLE_PLACES_API_KEY") or None,
-        firecrawl_api_key=os.getenv("FIRECRAWL_API_KEY") or None,
-        llm_model=os.getenv("LLM_MODEL", "gemma4-fast"),
-        llm_base_url=os.getenv("LLM_BASE_URL", "http://localhost:11434/v1"),
+        google_places_api_key=_env_str("GOOGLE_PLACES_API_KEY"),
+        firecrawl_api_key=_env_str("FIRECRAWL_API_KEY"),
+        llm_model=_env_str("LLM_MODEL", "gemma4-fast") or "gemma4-fast",
+        llm_base_url=_env_str("LLM_BASE_URL", "http://localhost:11434/v1") or "http://localhost:11434/v1",
         targets=_load_targets(targets_path),
     )

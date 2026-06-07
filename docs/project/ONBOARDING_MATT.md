@@ -1,10 +1,9 @@
 # Onboarding — Matt
 
-> ## 🚫 READ FIRST — do NOT build anything yet
-> This project is **pre-scaffold**. Your only job right now is **environment setup** (the checklist
-> below). **Do not write app code, create the project structure, or start agents** until **Sean
-> approves** the scaffold. The architecture is approved but Sean drives the build start. If unsure,
-> ask Sean — when in doubt, default to "not yet."
+> ## READ FIRST — current status
+> The initial scaffold is built and validated live. This repo now contains the working `leadpipe`
+> Python CLI in `src/leadpipe/`. Your setup goal is to get local tools, keys, and model config ready
+> so you can run the same pipeline and contribute future agents safely.
 
 Welcome. This gets your machine ready so you and Sean can build together. Assumes you've **linked up a
 few skills already**. Work top to bottom.
@@ -29,8 +28,8 @@ those businesses a website. Local AI (Ollama) does the research grunt-work. Full
 - [ ] **Git** + **GitHub CLI** (`gh`) — clone + auth (`gh auth login`).
 - [ ] **Python 3.12+** and **`uv`** (our package manager) — https://docs.astral.sh/uv/
 - [ ] **Ollama** — https://ollama.com — this runs the **local AI** on your machine. You need your own
-      GPU for real speed (Sean runs an RTX 3090). Don't pull a specific model yet — **Sean picks the
-      model**; you'll `ollama pull <that-model>` once decided.
+      GPU for real speed (Sean runs an RTX 3090). Model choice lives in your local `.env`, so you can
+      use a model that fits your hardware once Sean settles the current routing plan.
 - [ ] **Obsidian** — https://obsidian.md — then **Open folder as vault** → select your cloned
       `website-builder` folder. This is our shared visual brain. Start at **`_HOME.md`**.
 - [ ] **VS Code** (or your editor) with the Claude Code / Codex / Gemini extension you use.
@@ -43,6 +42,9 @@ cd website-builder
 - [ ] Read **`AGENTS.md`** (the constitution — every agent reads this first).
 - [ ] Read **`MEMORY.md`** (current state).
 - [ ] Skim **`docs/project/ARCHITECTURE.md`** (the plan) and the visuals in `docs/project/visuals/`.
+- [ ] Run `uv sync --group dev`.
+- [ ] Run `uv run pytest tests/ -q` and expect the core scaffold tests to pass.
+- [ ] Run `uv run leadpipe --help` to confirm the CLI is available.
 
 ## Step 4 — Your API keys (you get your OWN — do not share/commit)
 We each use our **own** keys. They live in a local `.env` (gitignored — never committed).
@@ -67,8 +69,8 @@ We each use our **own** keys. They live in a local `.env` (gitignored — never 
       Verify: `gemini skills list` shows both; `gemini mcp list` shows `firecrawl ... Connected`.
       Full detail: `GEMINI.md`.
 - [ ] For more skills, see `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md` — it lists
-      what to pull from Anthropic / VoltAgent repos with copy-paste install commands. **Don't add
-      project tooling/skills mid-build without Sean's ok.**
+      what to pull from Anthropic / VoltAgent repos with copy-paste install commands. Keep new
+      project tooling deliberate and aligned with `AGENTS.md`.
 
 ---
 
@@ -98,5 +100,5 @@ run it. No exceptions.
 
 ## Your "ready" checklist
 You're set up when: invites accepted ✓, apps installed ✓, repo cloned ✓, `.env` + `.mcp.json` created
-with your keys ✓, you've read `AGENTS.md` + `ARCHITECTURE.md` ✓. Then ping Sean — and **wait for his
-go-ahead** before building anything past this setup.
+with your keys ✓, you've read `AGENTS.md` + `MEMORY.md` + `ARCHITECTURE.md` ✓, tests pass ✓, and
+`uv run leadpipe --help` works ✓. Then coordinate with Sean on target hunts or the next agent.

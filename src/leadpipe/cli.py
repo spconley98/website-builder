@@ -15,6 +15,8 @@ from rich.console import Console
 
 from . import pipeline, reports
 from .config import load_settings
+from .llm import LLMError, generate
+from .sources import google_places
 from .store import LeadStore
 
 app = typer.Typer(help="Local-AI lead pipeline — find businesses with no website, rate by photo availability.")
@@ -43,6 +45,46 @@ def _print_report(report: pipeline.RunReport) -> None:
         for r in report.results:
             for e in r.errors:
                 console.print(f"    [dim]{r.agent}:[/dim] {e}")
+
+
+@app.command()
+def check(
+    google: bool = typer.Option(
+        False,
+        "--google",
+        help="Also make a tiny Google Places request to verify the key/API toggle.",
+    ),
+):
+    """Check local setup: keys, Ollama model, and optional Google Places access."""
+    settings = load_settings()
+    console.print("[bold]leadpipe setup check[/bold]")
+
+    console.print(f"  Google Places key: {'set' if settings.google_places_api_key else '[yellow]missing[/yellow]'}")
+    console.print(f"  Firecrawl key: {'set' if settings.firecrawl_api_key else '[yellow]missing[/yellow]'}")
+    console.print(f"  LLM model: {settings.llm_model}")
+    console.print(f"  LLM base URL: {settings.llm_base_url}")
+
+    try:
+        response = generate(
+            "Reply with exactly: OK",
+            system="You are a setup smoke test. Reply with exactly OK.",
+            temperature=0.0,
+            settings=settings,
+        )
+        console.print(f"  Ollama smoke test: [green]ok[/green] ({response})")
+    except LLMError as e:
+        console.print(f"  Ollama smoke test: [red]failed[/red] — {e}")
+        raise typer.Exit(code=1)
+
+    if google:
+        try:
+            hits = google_places.search_businesses("Round Rock, TX", "coffee shops")
+            console.print(f"  Google Places smoke test: [green]ok[/green] ({len(hits)} result(s))")
+        except google_places.PlacesError as e:
+            console.print(f"  Google Places smoke test: [red]failed[/red] — {e}")
+            raise typer.Exit(code=1)
+
+    console.print("[green]Setup check complete.[/green]")
 
 
 @app.command()

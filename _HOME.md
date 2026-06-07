@@ -6,7 +6,9 @@
 **Project in one line:** a local-AI pipeline that finds local businesses with no website, prioritizes
 them by available photos, so we can build + sell them websites.
 
-**Status:** pre-scaffold — architecture approved, app not yet built. 🚫 Don't build past setup until Sean approves.
+**Status:** scaffold built and validated live — `leadpipe` is the working Python CLI. The old
+"don't scaffold yet" gate is lifted; next work is real hunts, Firecrawl-backed prioritization, and
+future agents.
 
 ---
 
@@ -18,7 +20,7 @@ them by available photos, so we can build + sell them websites.
 
 ## 👥 People
 - **Sean** — owner, sole approver
-- **Matt** — collaborator (onboarding in progress)
+- **Matt** — collaborator (onboarding complete)
 
 ## 🗂️ Areas
 - **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, session logs, visuals)
@@ -32,7 +34,9 @@ them by available photos, so we can build + sell them websites.
 - **This Obsidian vault** — visual second brain (you're in it).
 
 ## ➡️ Next
-- Build the scaffold (see [[ARCHITECTURE]] §5) — **next session, with Sean's go-ahead.**
+- Run real hunts from `config/targets.yaml` with `uv run leadpipe run`.
+- Keep `MEMORY.md` current via `context-transfer` at the end of each session.
+- Add future agents by following the existing `src/leadpipe/agents/` + `pipeline.STAGES` pattern.
 
 ---
 *Plain `MEMORY.md`, `AGENTS.md` etc. live at the repo root; `[[wikilinks]]` above resolve to them in Obsidian.*
