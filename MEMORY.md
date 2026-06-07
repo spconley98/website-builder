@@ -4,15 +4,14 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07 · **Last agent:** Claude Sonnet 4.6 — architecture via /grill-me
+**Last updated:** 2026-06-07 · **Last agent:** Gemini (Antigravity) — Matt onboarding complete
 **Phase:** pre-scaffold (architecture APPROVED, app not yet built)
 
 ---
 
 ## 👤 Contributors
 - **Sean** — owner, sole approver. Set up the repo, skills, reference library, NotebookLM brain, MCP.
-- **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. **Pending:** accept GitHub invite,
-  accept NotebookLM share, install Obsidian.
+- **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
 - GitHub repo (public, shared) + `.gitignore` + `.mcp.json.example`.
@@ -29,7 +28,6 @@
 
 ## 🚫 Blocked / waiting
 - Firecrawl scraping — account out of credits.
-- Matt — onboarding acceptances pending.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me)
 Local-AI **lead pipeline** (Python). Lead Finder → Lead Prioritizer → future agents. Google Places API

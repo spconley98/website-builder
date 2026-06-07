@@ -12,6 +12,7 @@ storage_state.json
 node_modules/
 .next/
 dist/
+dist-ssr
 build/
 out/
 
@@ -19,6 +20,20 @@ out/
 .DS_Store
 Thumbs.db
 *.log
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # --- Obsidian (keep config, ignore volatile UI state) ---
 .obsidian/workspace.json
