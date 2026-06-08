@@ -4,8 +4,8 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T13:55:00-07:00 · **Last agent:** Codex — lead generator/local model setup + live prioritizer fix + collaboration protocol (Sean)
-**Phase:** lead generator operational — `leadpipe` find/check/prioritize validated live on real data
+**Last updated:** 2026-06-07T19:26:50-07:00 · **Last agent:** Codex — context transfer after Matt selective import + protocol hardening (Sean)
+**Phase:** lead generator operational — Sean/Matt collaboration protocol active; Matt imported leads awaiting review
 
 ---
 
@@ -35,19 +35,23 @@
     passed; `leadpipe find --area "Round Rock, TX" --industry "coffee shops"` wrote Fresh Brew Cafe;
     `leadpipe prioritize --area "Round Rock, TX" --industry "coffee shops"` processed 1/wrote 1 and
     marked it `prioritized` with a 1-star photo rating from the Google Maps listing.
+  - **Surgically imported Matt's work**: Extracted 166 leads from Matt's stale `onboarding-matt` branch
+    into `data/matt/leads.jsonl`. Verified his branch was out of sync (pre-scaffold docs) and 
+    preserved local `AGENTS.md` / `src/` to prevent regression.
   - **Found + fixed a real infra bug**: broken IPv6 routing on Sean's network made every Google/Firecrawl
     HTTPS call hang ~85s; patched IPv4-only DNS resolution in `config.py` → 0.05s. Documented inline.
 
 ## 🔨 In progress
 - Sean — deciding the broader 24/7/scheduled-agent strategy after validating the lead generator.
-- Sean — approved separate Sean/Matt agent profiles with shared generated Obsidian reports.
+- Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
 - Sean — reference-library visualization for `Local_AI_Agents_for_Leadpipe` generated after
   NotebookLM auth was restored.
 - Sean — approved selective import rules for Matt work: automatically import only Matt-owned
   context/research/data, while shared memory/protocol/code/scaffold changes require Sean review.
 
 ## 🚫 Blocked / waiting
-- None currently. NotebookLM CLI auth was restored after the previous failed sync attempt.
+- NotebookLM CLI auth expired during context-transfer upload. Run `py -m notebooklm login`, then
+  re-upload `MEMORY.md` to `website-builder-brain`.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places
@@ -119,14 +123,19 @@ Architecture is locked AND BUILT. Lead Finder and Prioritizer now run end-to-end
 local `gemma4-fast`, Google Places, and Firecrawl. Sean chose the collaboration protocol: separate
 Sean/Matt stores, shared generated Obsidian reports, automatic update/dedup, soft-delete/archive
 instead of hard delete, and selective import of Matt context/research only unless Sean approves
-shared scaffold/code changes. Next agent should use contributor context-transfer folders before
-any cross-contributor import.
+shared scaffold/code changes. Matt's stale-branch work has been selectively imported as Matt-owned
+context/research plus `data/matt/leads.jsonl`; next agent should review those leads before treating
+them as production-quality and should avoid importing Matt scaffold/code changes without Sean review.
 
 ## 👤 Contributors this session
 - **Sean** — directed lead-generator-first setup, approved reference research/visualization, validated
-  local Ollama commands and live `leadpipe` runs from PowerShell.
+  local Ollama commands and live `leadpipe` runs from PowerShell; approved Sean/Matt profile isolation,
+  stale-copy handling, selective Matt imports, and context-transfer folder rules.
 - **Codex** — implemented config fallback, `leadpipe check`, Prioritizer scoping/LLM-output repair,
-  docs/reference updates, `.env` local runtime values, tests, live validation, and this handoff.
+  docs/reference updates, `.env` local runtime values, tests, live validation, profile/report protocol,
+  Matt import protections, and this handoff.
+- **Matt / Matt's agent** — contributed imported lead/research context now isolated under Matt-owned
+  files for Sean review.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
@@ -147,3 +156,5 @@ any cross-contributor import.
   inspect Matt's branch but import only `docs/context-transfers/matt/`, `docs/research/matt/`,
   `data/matt/`, and approved Matt report outputs. Shared memory, protocol, code, tests, config,
   scaffold docs, and agent tooling require Sean review before import.
+- NotebookLM shared-brain sync is currently pending reauthentication; local semantic memory reindex
+  succeeded on 2026-06-07 with 317 chunks written.
