@@ -74,7 +74,7 @@ Sometimes your local branch may be useful even if it was built on an older proje
 case, Sean's agent should fetch and inspect your branch, then import only Matt-owned context/research:
 
 ```text
-docs/context-transfers/matt/
+docs/session-logs/matt/
 docs/research/matt/
 data/matt/
 ```
@@ -95,7 +95,7 @@ docs/project/
 Why this matters: Sean is putting these failsafes in place to keep your work safe. Your research and
 session context should still flow back to Sean, but an older local framework should not accidentally
 overwrite the current working pipeline, agent rules, or shared memory. When in doubt, have your agent
-write a note under `docs/context-transfers/matt/` explaining what it thinks should change instead of
+write a note under `docs/session-logs/matt/` explaining what it thinks should change instead of
 rewriting shared files directly.
 
 ## Step 4 — Your API keys (you get your OWN — do not share/commit)
@@ -138,7 +138,7 @@ provenance clear (same per-contributor rule the `context-transfer` skill uses fo
 
 This is **mandatory for both of us, every single session** — say "wrap up" or "/context-transfer"
 to your agent before you close out. It:
-1. Writes your session handoff under `docs/context-transfers/matt/` with your name + timestamp.
+1. Writes your session handoff under `docs/session-logs/matt/` with your name + timestamp.
 2. Syncs the shared NotebookLM brain (with the `[Matt]` attribution from the rule above).
 3. Reflects in the Obsidian vault.
 4. Commits everything.

@@ -74,7 +74,7 @@ class LeadPrioritization(BaseModel):
 
 
 class Lead(BaseModel):
-    """Canonical stored record — the only shape that lives in data/leads.jsonl."""
+    """Canonical stored record — the only shape that lives in data/<profile>/leads.jsonl."""
 
     # Identity + acquisition facts (Lead Finder territory; immutable after insert
     # except via an explicit refresh of the SAME facts)

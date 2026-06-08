@@ -2,7 +2,8 @@
 
 One JSON record per line, keyed by place_id. Single source of truth
 (ARCHITECTURE.md §9): Lead Finder CREATES, Lead Prioritizer ENRICHES the same
-record — reports.py renders human views FROM this file, never the reverse.
+profile-owned record — reports.py renders human views FROM these files, never
+the reverse.
 
 Concurrency note (post three-brain/Codex review): "plain processes" (§7) means
 no orchestrator guarantees single-writer execution, so this store IS the
@@ -21,10 +22,10 @@ from filelock import FileLock
 
 from .models import Lead, LeadCreate, LeadPrioritization, LeadStatus
 
-ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_STORE_PATH = ROOT / "data" / "leads.jsonl"
 DEFAULT_PROFILE = "sean"
+ROOT = Path(__file__).resolve().parents[2]
 PROFILE_STORE_DIR = ROOT / "data"
+DEFAULT_STORE_PATH = PROFILE_STORE_DIR / DEFAULT_PROFILE / "leads.jsonl"
 ALLOWED_PROFILES = {"sean", "matt"}
 
 

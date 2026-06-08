@@ -31,8 +31,8 @@ npx tsc --noEmit
 Create or update a contributor-owned session handoff:
 
 ```text
-docs/context-transfers/sean/YYYY-MM-DD-HHMM-<short-topic>.md
-docs/context-transfers/matt/YYYY-MM-DD-HHMM-<short-topic>.md
+docs/session-logs/sean/YYYY-MM-DD-HHMM-<short-topic>.md
+docs/session-logs/matt/YYYY-MM-DD-HHMM-<short-topic>.md
 ```
 
 Default contributor is **Sean** unless the conversation explicitly names Matt or another contributor.
@@ -48,7 +48,7 @@ Include:
 - next recommended steps
 - blockers or risks
 
-This file is the default place for Matt's context transfer. Matt's agent must not rewrite shared
+This file is the default place for every context transfer. Matt's agent must not rewrite shared
 `MEMORY.md`, `AGENTS.md`, scaffold docs, or code as part of context transfer unless Sean explicitly
 asks for that exact change.
 
@@ -71,7 +71,7 @@ Update `MEMORY.md` (project root) with:
 
 Rules:
 - Sean-owned sessions may update `MEMORY.md` directly when the session changes project state.
-- Matt-owned sessions should append detailed context to `docs/context-transfers/matt/` and leave
+- Matt-owned sessions should append detailed context to `docs/session-logs/matt/` and leave
   `MEMORY.md` untouched unless Sean explicitly approves a shared-memory update.
 - If Matt's agent believes `MEMORY.md` is stale, it should create a proposed memory update in the
   Matt context-transfer note instead of rewriting the shared file.

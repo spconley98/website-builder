@@ -23,18 +23,21 @@ future agents.
 - **Matt** — collaborator (onboarding complete)
 
 ## 🗂️ Areas
-- **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, session logs, visuals)
+- **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, visuals)
 - **Reference library** — `docs/_reference-library/` — *ideas/tools only, NOT the scaffold*
   - Master Skills Catalog, AI Build Bible, Comprehensive_* guides — each as Raw Text / Mind Map / Visualization
 - **Skills** — `.claude/skills/` — `context-transfer`, `reference-visualizer`
-- **Session logs** — `docs/project/sessions/`
+- **Session logs** — `docs/session-logs/sean/` and `docs/session-logs/matt/`
+- **Lead data** — `data/sean/` and `data/matt/` profile stores
+- **Reports** — `reports/` generated Sean/Matt/shared Obsidian views
 
 ## 🧠 Shared brain
 - **NotebookLM** — `website-builder-brain` (shared). When you add to it, **attach your name**.
 - **This Obsidian vault** — visual second brain (you're in it).
 
 ## ➡️ Next
-- Run real hunts from `config/targets.yaml` with `uv run leadpipe run`.
+- Run real hunts from `config/targets.sean.yaml` or `config/targets.matt.yaml` with
+  `uv run leadpipe run --profile sean` / `--profile matt`.
 - Keep `MEMORY.md` current via `context-transfer` at the end of each session.
 - Add future agents by following the existing `src/leadpipe/agents/` + `pipeline.STAGES` pattern.
 

@@ -1,11 +1,12 @@
-"""Loads .env (secrets) and config/targets.yaml (hunt list) into one place.
+"""Loads .env (secrets) and profile-owned hunt lists into one place.
 
 Each collaborator runs this against their own .env — see .env.example for the
 required keys. Nothing here should ever read a value that isn't local-only.
 
-Validation note (post three-brain/Codex review): targets.yaml is Matt-friendly
-config that humans hand-edit — bad YAML should fail with a clear, located
-message, not a raw constructor TypeError. Pydantic gives us that for free.
+Validation note (post three-brain/Codex review): config/targets.<profile>.yaml
+is Matt-friendly config that humans hand-edit — bad YAML should fail with a
+clear, located message, not a raw constructor TypeError. Pydantic gives us that
+for free.
 """
 from __future__ import annotations
 
@@ -47,7 +48,7 @@ _force_ipv4_dns()
 
 
 class TargetsConfigError(ValueError):
-    """Raised when config/targets.yaml is malformed — message is meant to be
+    """Raised when config/targets.<profile>.yaml is malformed — message is meant to be
     read directly by a human (Matt) editing the file."""
 
 
@@ -94,15 +95,15 @@ def _load_targets(path: Path) -> list[Target]:
 
 
 def targets_path_for_profile(profile: str | None) -> Path:
-    """Profile-specific batch target list; falls back to the shared starter file."""
+    """Profile-specific batch target list; examples live in targets.example.yaml."""
     suffix = (profile or "").strip().lower()
-    candidate = ROOT / "config" / f"targets.{suffix}.yaml" if suffix else ROOT / "config" / "targets.yaml"
-    return candidate if candidate.exists() else ROOT / "config" / "targets.yaml"
+    candidate = ROOT / "config" / f"targets.{suffix}.yaml" if suffix else ROOT / "config" / "targets.sean.yaml"
+    return candidate if candidate.exists() else ROOT / "config" / "targets.example.yaml"
 
 
 def load_settings(targets_path: Path | None = None) -> Settings:
     """Single entry point every module/agent uses to read config."""
-    targets_path = targets_path or ROOT / "config" / "targets.yaml"
+    targets_path = targets_path or ROOT / "config" / "targets.sean.yaml"
     return Settings(
         google_places_api_key=_env_str("GOOGLE_PLACES_API_KEY"),
         firecrawl_api_key=_env_str("FIRECRAWL_API_KEY"),

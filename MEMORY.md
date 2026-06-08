@@ -4,8 +4,8 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T19:26:50-07:00 · **Last agent:** Codex — context transfer after Matt selective import + protocol hardening (Sean)
-**Phase:** lead generator operational — Sean/Matt collaboration protocol active; Matt imported leads awaiting review
+**Last updated:** 2026-06-07T19:59:04-07:00 · **Last agent:** Codex — Obsidian/repo framework cleanup (Sean)
+**Phase:** lead generator operational — Sean/Matt profile stores, clean reports, and session-log rules active
 
 ---
 
@@ -20,7 +20,9 @@
 - Reference library `docs/_reference-library/` — 8 raw docs total; 7 have the full 3-tier treatment.
   New raw reference added this session: `(Raw Text) Local_AI_Agents_for_Leadpipe.md`.
 - NotebookLM brain `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`) + project visuals
-  + status explainer video (in progress) + Matt morning-briefing script.
+  + generated reference/research summaries.
+- Obsidian-facing folder indexes exist for `config/`, `data/`, `reports/`, `docs/research/`, and
+  `docs/session-logs/`.
 - **`leadpipe` — the lead pipeline scaffold, BUILT AND VALIDATED LIVE** (`src/leadpipe/`):
   - `config`/`models`/`store`/`llm` core, `sources/` (google_places, firecrawl), `agents/`
     (lead_finder, lead_prioritizer), `pipeline`, `reports`, Typer `cli` (`find`/`prioritize`/`run`/`report`)
@@ -38,6 +40,10 @@
   - **Surgically imported Matt's work**: Extracted 166 leads from Matt's stale `onboarding-matt` branch
     into `data/matt/leads.jsonl`. Verified his branch was out of sync (pre-scaffold docs) and 
     preserved local `AGENTS.md` / `src/` to prevent regression.
+  - **Obsidian framework cleanup**: Removed the legacy `data/leads.jsonl`, renamed reports to
+    `Sean - ...`, `Matt - ...`, and `Shared - ...`, moved all session logs to `docs/session-logs/`,
+    renamed duplicate README notes, removed redundant `.gitkeep` placeholders, and removed the Matt
+    morning briefing artifacts.
   - **Found + fixed a real infra bug**: broken IPv6 routing on Sean's network made every Google/Firecrawl
     HTTPS call hang ~85s; patched IPv4-only DNS resolution in `config.py` → 0.05s. Documented inline.
 
@@ -48,6 +54,8 @@
   NotebookLM auth was restored.
 - Sean — approved selective import rules for Matt work: automatically import only Matt-owned
   context/research/data, while shared memory/protocol/code/scaffold changes require Sean review.
+- Sean — approved Obsidian-facing cleanup: canonical session-log folder, profile-only data stores,
+  human-readable report names, README/index notes, and removal of Matt morning briefing clutter.
 
 ## 🚫 Blocked / waiting
 - NotebookLM CLI auth expired during context-transfer upload. Run `py -m notebooklm login`, then
@@ -64,22 +72,25 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
 2. ~~Sean picks the Ollama model~~ ✅ **`gemma4-fast`** as the default runtime model (Matt picks his own per his GPU).
 3. ~~Both get keys~~ ✅ **Done** — Sean's Places key live and validated; enable "Places API (New)"
    specifically if Matt hits a 403 (a real gotcha Sean hit — see `lead_finder` PlacesError messages).
-4. **Run real hunts** — fill out `config/targets.yaml` with real areas/industries, run `leadpipe run`.
+4. **Run real hunts** — fill out `config/targets.sean.yaml` or `config/targets.matt.yaml` with real
+   areas/industries, run `leadpipe run --profile sean` or `--profile matt`.
 5. ~~Top up Firecrawl credits~~ ✅ **Done** — Firecrawl key is active in `.mcp.json` and copied into local `.env`;
    Prioritizer now works on Fresh Brew Cafe.
 6. **Design budget-safe scheduled operation** before any 24/7 run: cap Firecrawl usage, prefer Finder-only
    frequent runs, run Prioritizer less often/on limited batches.
 7. ~~Implement Sean/Matt profile protocol~~ ✅ **Done**:
-   `data/sean/leads.jsonl`, `data/matt/leads.jsonl`, generated `(Sean)`/`(Matt)`/`(Shared)` reports,
-   automatic shared sync/dedup by `place_id`, and soft-delete/archive rather than hard delete.
+   `data/sean/leads.jsonl`, `data/matt/leads.jsonl`, generated `Sean - ...`, `Matt - ...`, and
+   `Shared - ...` reports, automatic shared sync/dedup by `place_id`, and soft-delete/archive rather
+   than hard delete.
 8. **Use contributor context-transfer folders going forward**:
-   Sean handoffs in `docs/context-transfers/sean/`; Matt handoffs in `docs/context-transfers/matt/`.
+   Sean handoffs in `docs/session-logs/sean/`; Matt handoffs in `docs/session-logs/matt/`.
    Matt's agent should propose shared-memory changes there instead of rewriting `MEMORY.md` directly.
-9. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
+9. **Review Matt imported leads** — especially before prioritizing or using them for outreach.
+10. Build agent #3+ (likely Website Intelligence or Lead Enrichment) only after scheduled/budget guardrails.
 
 ## 📋 REQUIRED — every session, every contributor
 Run the **`context-transfer`** skill at the END of every session (say "wrap up" / "/context-transfer").
-It writes a contributor-owned handoff under `docs/context-transfers/<sean|matt>/`, updates this file
+It writes a contributor-owned handoff under `docs/session-logs/<sean|matt>/`, updates this file
 only when protocol allows, syncs the NotebookLM brain, and syncs Obsidian. **This applies to Matt too
 — first thing to know after his first `git pull`.**
 
@@ -153,8 +164,11 @@ them as production-quality and should avoid importing Matt scaffold/code changes
   Matt's local edits on a Matt branch/WIP commit before reconciling. Never reset or overwrite Matt's
   local work just to pull.
 - Selective import protocol: if Sean wants only Matt's context transfer and agent research, fetch and
-  inspect Matt's branch but import only `docs/context-transfers/matt/`, `docs/research/matt/`,
+  inspect Matt's branch but import only `docs/session-logs/matt/`, `docs/research/matt/`,
   `data/matt/`, and approved Matt report outputs. Shared memory, protocol, code, tests, config,
   scaffold docs, and agent tooling require Sean review before import.
+- Framework cleanup rule: no new `data/leads.jsonl`, no `(report)` / `(Sean)` style report names, no
+  new `docs/context-transfers/` or `docs/project/sessions/` logs. Use profile stores, human-readable
+  report names, and `docs/session-logs/<contributor>/`.
 - NotebookLM shared-brain sync is currently pending reauthentication; local semantic memory reindex
   succeeded on 2026-06-07 with 317 chunks written.

@@ -2,11 +2,12 @@
 
     leadpipe find --area "Austin, TX" --industry restaurants   # one stage, one-off
     leadpipe prioritize                                         # next stage on existing leads
-    leadpipe run                                                 # full pipeline, batch from targets.yaml
+    leadpipe run --profile sean                                 # full pipeline, batch from targets.sean.yaml
     leadpipe report                                              # regenerate the clickable views
 
-CLI flags override targets.yaml for a quick experiment; omit them to run the
-whole repeatable batch list (ARCHITECTURE.md §8 — config file vs flags).
+CLI flags override config/targets.<profile>.yaml for a quick experiment; omit
+them to run the whole repeatable batch list (ARCHITECTURE.md §8 — config file
+vs flags).
 """
 from __future__ import annotations
 
@@ -29,9 +30,9 @@ def _targets_or_exit(area: str | None, industry: str | None, radius: str | None,
     targets = pipeline.resolve_targets(settings, area=area, industry=industry, radius=radius)
     if not targets:
         console.print(
-            "[yellow]No targets given and config/targets.yaml is empty.[/yellow]\n"
+            f"[yellow]No targets given and config/targets.{profile}.yaml is empty.[/yellow]\n"
             "Either pass --area (and optionally --industry/--radius), "
-            "or add entries to config/targets.yaml."
+            f"or add entries to config/targets.{profile}.yaml."
         )
         raise typer.Exit(code=1)
     return targets
@@ -112,7 +113,7 @@ def check(
 
 @app.command()
 def find(
-    area: str | None = typer.Option(None, help='e.g. "Austin, TX" — overrides targets.yaml for one run'),
+    area: str | None = typer.Option(None, help='e.g. "Austin, TX" — overrides targets.<profile>.yaml for one run'),
     industry: str | None = typer.Option(None, help='e.g. "restaurants" — used with --area'),
     radius: str | None = typer.Option(None, help='e.g. "5km" — used with --area'),
     profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose agents may write this run: sean or matt"),
@@ -150,7 +151,7 @@ def prioritize(
 
 @app.command()
 def run(
-    area: str | None = typer.Option(None, help="override targets.yaml for one run"),
+    area: str | None = typer.Option(None, help="override targets.<profile>.yaml for one run"),
     industry: str | None = typer.Option(None),
     radius: str | None = typer.Option(None),
     profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose agents may write this run: sean or matt"),

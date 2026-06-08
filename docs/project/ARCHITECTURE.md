@@ -40,11 +40,11 @@ side — so that's a solved problem handled elsewhere. **This repo is the new, h
 ## 3. The pipeline
 
 ```
-config/targets.yaml                (areas + industries to hunt)
+config/targets.<profile>.yaml      (Sean/Matt hunt lists)
         │
         ▼
 ┌──────────────────┐   Google Places API           ┌──────────────────────────┐
-│  Lead Finder     │── enumerate businesses ──────▶ │ data/leads.jsonl (master)│
+│  Lead Finder     │── enumerate businesses ──────▶ │ data/<profile>/leads.jsonl│
 │  (agent)         │   detect missing `website`     │  dedup by place_id        │
 └──────────────────┘   LLM: classify/summarize      │  status: found            │
         │                                           └──────────────────────────┘
@@ -56,8 +56,10 @@ config/targets.yaml                (areas + industries to hunt)
         │                                            status: prioritized
         ▼
    reports/ (generated, clickable Markdown views)
-   ├── (report) AI-Leads.md            ← all found
-   └── (report) Prioritized-Leads.md   ← ⭐-sorted, clickable photo links
+   ├── Sean - AI Leads.md              ← Sean profile leads
+   ├── Matt - AI Leads.md              ← Matt profile leads
+   ├── Shared - AI Leads.md            ← deduped shared view
+   └── Shared - Prioritized Leads.md   ← ⭐-sorted shared view
         │
         ▼
    [ future agents: outreach, website-draft, etc. — TBD ]
@@ -81,8 +83,8 @@ assign the rating). The LLM is the cheap reasoning labor — never the search en
 | 5 | Acquisition | **Google Places API** + LLM reasoning + Firecrawl enrichment | "Has website?" is a lookup, not an LLM guess |
 | 6 | Local AI | **Thin `llm` module**, Ollama OpenAI endpoint, model in config, optional cloud fallback | Model choice deferred = config toggle, not rewrite |
 | 7 | Isolation | **Plain processes** v1 | Sandbox earns its keep only for code-execution agents (deferred) |
-| 8 | Interface | **Typer CLI** (`find`/`prioritize`/`run`) + `config/targets.yaml` | Matt-friendly; repeatable batch hunts |
-| 9 | Storage | **Master `leads.jsonl` keyed by `place_id`**, dedup + status lifecycle | One place to dedup + track status; no file drift |
+| 8 | Interface | **Typer CLI** (`find`/`prioritize`/`run`) + `config/targets.<profile>.yaml` | Matt-friendly; repeatable batch hunts |
+| 9 | Storage | **Profile-owned `data/<profile>/leads.jsonl` keyed by `place_id`**, dedup + status lifecycle | Sean/Matt agents write separately; shared reports dedupe across profiles |
 | 10 | Tree + git | **Approved scaffold; lead data git-tracked** | Sharing leads between Sean+Matt is the point |
 
 **Minor defaults (changeable):**
@@ -104,11 +106,14 @@ The approved scaffold now exists in the repo and is the working baseline for ong
 website-builder/
 ├── pyproject.toml                  # Python project + deps (uv); defines `leadpipe` CLI
 ├── .env.example                    # GOOGLE_PLACES_API_KEY, FIRECRAWL_API_KEY, LLM_MODEL... (.env gitignored)
-├── config/targets.yaml             # areas + industries to hunt
+├── config/
+│   ├── targets.sean.yaml           # Sean's areas + industries to hunt
+│   ├── targets.matt.yaml           # Matt's areas + industries to hunt
+│   └── targets.example.yaml        # starter examples only
 ├── src/leadpipe/
 │   ├── cli.py                      # Typer CLI: find / prioritize / run
 │   ├── pipeline.py                 # thin runner — orders the agents
-│   ├── config.py                   # loads .env + targets.yaml
+│   ├── config.py                   # loads .env + profile target files
 │   ├── models.py                   # Lead schema (pydantic)
 │   ├── store.py                    # leads.jsonl read/write + dedup by place_id + status
 │   ├── llm.py                      # Ollama OpenAI-compatible client; model from config; cloud fallback
@@ -120,10 +125,25 @@ website-builder/
 │   │   ├── lead_finder.py
 │   │   └── lead_prioritizer.py
 │   └── reports.py                  # render the two markdown views
-├── data/leads.jsonl                # master store (git-tracked)
-├── reports/                        # generated clickable views (git-tracked)
+├── data/
+│   ├── sean/leads.jsonl            # Sean profile store (git-tracked)
+│   └── matt/leads.jsonl            # Matt profile store (git-tracked)
+├── reports/                        # generated profile/shared clickable views (git-tracked)
+│   ├── Sean - AI Leads.md
+│   ├── Sean - Prioritized Leads.md
+│   ├── Matt - AI Leads.md
+│   ├── Matt - Prioritized Leads.md
+│   ├── Shared - AI Leads.md
+│   └── Shared - Prioritized Leads.md
+├── docs/session-logs/              # all context-transfer/session handoffs
+│   ├── sean/
+│   └── matt/
 └── tests/                          # store dedup + agent contract
 ```
+
+Session logs are part of the framework, not loose notes. Every context transfer or session handoff
+must be written under `docs/session-logs/<sean|matt>/` using a timestamped filename. Do not create new
+session logs under `docs/project/`, `docs/research/`, or root daily notes.
 
 ---
 
@@ -157,6 +177,7 @@ website-builder/
 - ✅ Lead Finder and Lead Prioritizer exist behind the Typer CLI (`find`, `prioritize`, `run`,
   `report`).
 - ⬜ Finalize local model choices/routing for the current machine setup.
-- ⬜ Run real hunts by editing `config/targets.yaml` and using `uv run leadpipe run`.
+- ⬜ Run real hunts by editing `config/targets.sean.yaml` / `config/targets.matt.yaml` and using
+  `uv run leadpipe run --profile sean` or `--profile matt`.
 - ⬜ Build agent #3+ by adding one module under `src/leadpipe/agents/` and registering it in
   `pipeline.STAGES`.

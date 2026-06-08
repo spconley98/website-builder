@@ -1,0 +1,17 @@
+# Example areas + industries for a profile hunt list.
+# Copy examples into config/targets.sean.yaml or config/targets.matt.yaml.
+# One-off CLI flags override the profile file:
+#   uv run leadpipe find --profile sean --area "Austin, TX" --radius 5km --industry restaurants
+
+targets:
+  - area: "Austin, TX"
+    radius: 5km
+    industries:
+      - restaurants
+      - landscaping
+
+  - area: "San Antonio, TX"
+    radius: 8km
+    industries:
+      - plumbers
+      - roofing

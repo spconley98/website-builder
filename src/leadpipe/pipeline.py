@@ -55,7 +55,7 @@ def run_all(store: LeadStore, targets: list[Target], *, limit: int | None = None
 
 def resolve_targets(settings: Settings, *, area: str | None, industry: str | None, radius: str | None) -> list[Target]:
     """CLI-flag override vs config-file batch list (ARCHITECTURE.md §8):
-    explicit --area/--industry wins for a one-off; otherwise use targets.yaml."""
+    explicit --area/--industry wins for a one-off; otherwise use targets.<profile>.yaml."""
     if area:
         return [Target(area=area, radius=radius or "5km", industries=[industry] if industry else [])]
     return settings.targets

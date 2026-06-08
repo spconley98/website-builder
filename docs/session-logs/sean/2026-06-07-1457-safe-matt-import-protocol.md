@@ -9,7 +9,7 @@
 - Added a selective import protocol so Sean can fetch and inspect Matt's branch without merging an
   outdated local framework into `main`.
 - Defined the files/folders that can be imported from Matt automatically:
-  - `docs/context-transfers/matt/`
+  - `docs/session-logs/matt/`
   - `docs/research/matt/`
   - `data/matt/`
   - Matt-owned generated reports when report generation is the stated task
@@ -19,7 +19,7 @@
   - agent/tooling files (`.claude/skills/`, `.gemini/`, `.github/`)
   - architecture/scaffold docs (`docs/project/`)
 - Updated the context-transfer skill so Matt-owned sessions write detailed handoffs under
-  `docs/context-transfers/matt/` by default instead of rewriting shared `MEMORY.md`.
+  `docs/session-logs/matt/` by default instead of rewriting shared `MEMORY.md`.
 
 ## Why It Matters
 Sean and Matt can both contribute without accidentally overwriting each other's work. Matt's research
@@ -34,6 +34,6 @@ rules stay protected until Sean reviews them.
 
 ## Next Steps
 - Matt should pull the latest `main`, re-read `AGENTS.md` and `MEMORY.md`, then use
-  `docs/context-transfers/matt/` for session handoffs.
+  `docs/session-logs/matt/` for session handoffs.
 - If Matt's agent wants to change shared memory or scaffold files, it should write a proposal in its
   Matt context-transfer note and wait for Sean review.

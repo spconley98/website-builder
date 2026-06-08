@@ -9,15 +9,15 @@
 - Protected the Sean/Matt collaboration flow with rules for stale working copies and selective Matt
   imports.
 - Established contributor-owned context-transfer folders:
-  - `docs/context-transfers/sean/`
-  - `docs/context-transfers/matt/`
+  - `docs/session-logs/sean/`
+  - `docs/session-logs/matt/`
 - Updated the context-transfer skill so Matt's agent writes handoffs under
-  `docs/context-transfers/matt/` by default and proposes shared-memory edits there instead of
+  `docs/session-logs/matt/` by default and proposes shared-memory edits there instead of
   rewriting `MEMORY.md`.
 - Preserved/imported Matt-owned materials without taking shared scaffold/code from his stale branch:
   - `data/matt/leads.jsonl` with 166 imported leads
-  - `docs/context-transfers/matt/2026-06-07-session.md`
-  - `docs/research/matt/morning-briefing-script.md`
+  - `docs/session-logs/matt/`
+  - `docs/research/matt/`
   - `docs/research/notebooklm-insights/`
 - Regenerated profile/shared reports so Obsidian has Sean/Matt/shared lead views.
 

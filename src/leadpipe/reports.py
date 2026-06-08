@@ -7,15 +7,13 @@ from __future__ import annotations
 from pathlib import Path
 
 from .models import Lead, LeadStatus
-from .store import ALLOWED_PROFILES, LeadStore, normalize_profile
+from .store import ALLOWED_PROFILES, DEFAULT_PROFILE, LeadStore, normalize_profile
 
 ROOT = Path(__file__).resolve().parents[2]
 REPORTS_DIR = ROOT / "reports"
 
-ALL_LEADS_PATH = REPORTS_DIR / "(report) AI-Leads.md"
-PRIORITIZED_PATH = REPORTS_DIR / "(report) Prioritized-Leads.md"
-SHARED_ALL_PATH = REPORTS_DIR / "(Shared) AI-Leads.md"
-SHARED_PRIORITIZED_PATH = REPORTS_DIR / "(Shared) Prioritized-Leads.md"
+SHARED_ALL_PATH = REPORTS_DIR / "Shared - AI Leads.md"
+SHARED_PRIORITIZED_PATH = REPORTS_DIR / "Shared - Prioritized Leads.md"
 
 _STARS = {0: "—", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐", 5: "⭐⭐⭐⭐⭐"}
 
@@ -26,7 +24,7 @@ def _profile_label(profile: str) -> str:
 
 def profile_report_paths(profile: str) -> tuple[Path, Path]:
     label = _profile_label(profile)
-    return REPORTS_DIR / f"({label}) AI-Leads.md", REPORTS_DIR / f"({label}) Prioritized-Leads.md"
+    return REPORTS_DIR / f"{label} - AI Leads.md", REPORTS_DIR / f"{label} - Prioritized Leads.md"
 
 
 def _active(leads: list[Lead]) -> list[Lead]:
@@ -62,7 +60,7 @@ def _prioritized_table(leads: list[Lead]) -> str:
     return "\n".join(rows) + "\n"
 
 
-def render_all_leads(leads: list[Lead], *, source_label: str = "data/leads.jsonl") -> str:
+def render_all_leads(leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl") -> str:
     return (
         "# AI Leads\n\n"
         f"> Generated from `{source_label}` — do not hand-edit, regenerate with `leadpipe report`.\n"
@@ -71,7 +69,7 @@ def render_all_leads(leads: list[Lead], *, source_label: str = "data/leads.jsonl
     )
 
 
-def render_prioritized(leads: list[Lead], *, source_label: str = "data/leads.jsonl") -> str:
+def render_prioritized(leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl") -> str:
     return (
         "# Prioritized Leads\n\n"
         f"> Generated from `{source_label}` — do not hand-edit, regenerate with `leadpipe report`.\n"
@@ -153,12 +151,9 @@ def render_shared_prioritized(profile_leads: dict[str, list[Lead]]) -> str:
 def write_reports(store: LeadStore, *, profile: str | None = None) -> tuple[Path, Path]:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     leads = list(store.load().values())
-    if profile is None:
-        all_path, prioritized_path = ALL_LEADS_PATH, PRIORITIZED_PATH
-        source_label = "data/leads.jsonl"
-    else:
-        all_path, prioritized_path = profile_report_paths(profile)
-        source_label = f"data/{normalize_profile(profile)}/leads.jsonl"
+    profile = normalize_profile(profile or DEFAULT_PROFILE)
+    all_path, prioritized_path = profile_report_paths(profile)
+    source_label = f"data/{profile}/leads.jsonl"
     all_path.write_text(render_all_leads(leads, source_label=source_label), encoding="utf-8")
     prioritized_path.write_text(render_prioritized(leads, source_label=source_label), encoding="utf-8")
     return all_path, prioritized_path

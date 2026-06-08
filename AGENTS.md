@@ -17,8 +17,9 @@ it found a real business with no website and produced a clickable report).
 Pick this project up and run with it: `MEMORY.md` has a "How to pick this up cold" section with the
 exact commands (`uv sync`, `uv run pytest`, `uv run leadpipe ...`).
 
-What's still open is normal ongoing work, not a gate: real hunts (`config/targets.yaml`), topping up
-Firecrawl credits, building further agents. None of that requires a special approval session — just
+What's still open is normal ongoing work, not a gate: real hunts (`config/targets.sean.yaml` /
+`config/targets.matt.yaml`), topping up Firecrawl credits, building further agents. None of that
+requires a special approval session — just
 follow the established pattern (one module in `agents/`, one line in `pipeline.STAGES`, cross-challenge
 non-trivial logic via `three-brain` per §3/feedback memory before/while building).
 
@@ -78,7 +79,7 @@ is **not** a decision to use it. Each doc has three tiers:
   Response branches: **Yes** → generate · **No** → skip · **Unsure** (e.g. Matt) → log to
   `docs/_reference-library/_PENDING_APPROVALS.md` for **Sean's** approval. Only Sean processes the queue.
 - **`context-transfer`** — session wrap-up: health check, write a contributor-owned handoff under
-  `docs/context-transfers/<sean|matt>/`, update `MEMORY.md` only when protocol allows, upload to the
+  `docs/session-logs/<sean|matt>/`, update `MEMORY.md` only when protocol allows, upload to the
   NotebookLM brain, commit. Run it at the end of a work session.
 - Full menu of available + recommended skills: `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md`.
 
@@ -164,7 +165,7 @@ git diff --name-only main..origin/<matt-branch>
 ```
 
 Allowed to import from Matt automatically:
-- `docs/context-transfers/matt/`
+- `docs/session-logs/matt/`
 - `docs/research/matt/`
 - `data/matt/`
 - Matt-owned generated reports, when report generation is the stated task
@@ -175,10 +176,21 @@ Requires Sean review before import/merge:
 - `.github/`, `.claude/skills/`, `.gemini/`
 - `docs/project/` architecture/scaffold docs
 
-Matt's agent should write session context to `docs/context-transfers/matt/` and research to
+Matt's agent should write session context to `docs/session-logs/matt/` and research to
 `docs/research/matt/` by default. Matt's agent must not rewrite shared `MEMORY.md` or project
 protocol files unless Sean explicitly asks for that exact change. This keeps Matt's work visible to
 Sean without letting an older local framework accidentally replace current scaffold or agent rules.
+
+### Session-log location rule
+All session logs, wrap-ups, and context-transfer handoffs must live under:
+
+```text
+docs/session-logs/sean/YYYY-MM-DD-HHMM-short-topic.md
+docs/session-logs/matt/YYYY-MM-DD-HHMM-short-topic.md
+```
+
+Do not create new session logs under `docs/project/`, `docs/research/`, daily-note roots, or ad hoc
+folders. All new agent/human handoffs must use `docs/session-logs/<contributor>/`.
 
 ---
 
@@ -188,7 +200,7 @@ Sean without letting an older local framework accidentally replace current scaff
 
 **End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `context-transfer`
 skill ("wrap up" / "/context-transfer"). It writes a contributor-owned handoff under
-`docs/context-transfers/<sean|matt>/`, updates shared `MEMORY.md` only when allowed by the protocol
+`docs/session-logs/<sean|matt>/`, updates shared `MEMORY.md` only when allowed by the protocol
 above, syncs the NotebookLM brain (remember the `[<Name>]` attribution rule in §5), reflects in
 Obsidian, and commits. Skipping it means the next session starts blind — do it every time, even short
 sessions.

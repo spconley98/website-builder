@@ -1,6 +1,6 @@
-# Matt Context Transfers
+# Matt Session Logs
 
-Matt's agent writes end-of-session handoffs here.
+Matt's agent writes every end-of-session handoff here.
 
 Use one file per session:
 
