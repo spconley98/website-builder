@@ -4,8 +4,8 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T19:59:04-07:00 · **Last agent:** Codex — Obsidian/repo framework cleanup (Sean)
-**Phase:** lead generator operational — Sean/Matt profile stores, clean reports, and session-log rules active
+**Last updated:** 2026-06-07T20:24:51-07:00 · **Last agent:** Codex — context transfer after Obsidian framework cleanup (Sean)
+**Phase:** lead generator operational — Obsidian framework cleaned, profile stores active, NotebookLM synced
 
 ---
 
@@ -58,8 +58,7 @@
   human-readable report names, README/index notes, and removal of Matt morning briefing clutter.
 
 ## 🚫 Blocked / waiting
-- NotebookLM CLI auth expired during context-transfer upload. Run `py -m notebooklm login`, then
-  re-upload `MEMORY.md` to `website-builder-brain`.
+- None currently. NotebookLM sync succeeded during the latest context-transfer.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places
@@ -137,6 +136,8 @@ instead of hard delete, and selective import of Matt context/research only unles
 shared scaffold/code changes. Matt's stale-branch work has been selectively imported as Matt-owned
 context/research plus `data/matt/leads.jsonl`; next agent should review those leads before treating
 them as production-quality and should avoid importing Matt scaffold/code changes without Sean review.
+Current Obsidian framework convention is clean: session handoffs live in `docs/session-logs/`, report
+files use human-readable names, and lead data is profile-only under `data/sean/` and `data/matt/`.
 
 ## 👤 Contributors this session
 - **Sean** — directed lead-generator-first setup, approved reference research/visualization, validated
@@ -144,7 +145,7 @@ them as production-quality and should avoid importing Matt scaffold/code changes
   stale-copy handling, selective Matt imports, and context-transfer folder rules.
 - **Codex** — implemented config fallback, `leadpipe check`, Prioritizer scoping/LLM-output repair,
   docs/reference updates, `.env` local runtime values, tests, live validation, profile/report protocol,
-  Matt import protections, and this handoff.
+  Matt import protections, Obsidian framework cleanup, and this handoff.
 - **Matt / Matt's agent** — contributed imported lead/research context now isolated under Matt-owned
   files for Sean review.
 
@@ -170,5 +171,4 @@ them as production-quality and should avoid importing Matt scaffold/code changes
 - Framework cleanup rule: no new `data/leads.jsonl`, no `(report)` / `(Sean)` style report names, no
   new `docs/context-transfers/` or `docs/project/sessions/` logs. Use profile stores, human-readable
   report names, and `docs/session-logs/<contributor>/`.
-- NotebookLM shared-brain sync is currently pending reauthentication; local semantic memory reindex
-  succeeded on 2026-06-07 with 317 chunks written.
+- NotebookLM shared-brain sync succeeded on 2026-06-07 after the Obsidian framework cleanup.
