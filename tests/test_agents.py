@@ -9,10 +9,12 @@ from __future__ import annotations
 from datetime import date
 
 from leadpipe.agents.base import AgentResult
+from leadpipe.agents import website_intelligence
 from leadpipe.agents.lead_prioritizer import _matches_target, _parse_photo_count_response, rate_from_count
 from leadpipe.config import load_settings
 from leadpipe.config import Target
-from leadpipe.models import Lead
+from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus
+from leadpipe.store import LeadStore
 
 
 def test_rate_from_count_thresholds():
@@ -90,3 +92,69 @@ def test_parse_photo_count_response():
 
     assert count == 12
     assert reason == "visible menu and cafe photos"
+
+
+def test_website_intelligence_only_processes_prioritized_active_leads(tmp_path, monkeypatch):
+    store = LeadStore(tmp_path / "leads.jsonl")
+    for place_id, name in [("p1", "Ready Cafe"), ("p2", "Found Cafe"), ("p3", "Archived Cafe")]:
+        store.create(
+            LeadCreate(
+                place_id=place_id,
+                name=name,
+                industry="coffee shops",
+                location="Round Rock, TX",
+                has_website=False,
+                found_date=date(2026, 6, 7),
+                google_maps_url=f"https://maps.example/{place_id}",
+            )
+        )
+    store.apply_prioritization(
+        LeadPrioritization(
+            place_id="p1",
+            photo_rating=3,
+            photo_count=15,
+            photo_links=["https://listing.example/ready"],
+            photo_sources=["google_maps"],
+            rating_reason="visible listing photos",
+            prioritized_date=date(2026, 6, 8),
+        )
+    )
+    store.apply_prioritization(
+        LeadPrioritization(
+            place_id="p3",
+            photo_rating=4,
+            photo_count=30,
+            photo_links=["https://listing.example/archived"],
+            photo_sources=["google_maps"],
+            rating_reason="many listing photos",
+            prioritized_date=date(2026, 6, 8),
+        )
+    )
+    store.set_status("p3", LeadStatus.ARCHIVED)
+
+    scraped_urls = []
+    monkeypatch.setattr(website_intelligence.firecrawl, "scrape", lambda url: scraped_urls.append(url) or "photos")
+    monkeypatch.setattr(
+        website_intelligence.llm,
+        "generate",
+        lambda *args, **kwargs: (
+            "BRIEF: Build a simple cafe site.\n"
+            "ANGLE: Turn map viewers into visitors.\n"
+            "PAGES: Home, Menu, Gallery, Contact\n"
+            "CONTENT: Gather menu and hours.\n"
+            "VISUAL: Use warm drink photos."
+        ),
+    )
+
+    result = website_intelligence.run(
+        store,
+        Target(area="Round Rock, TX", radius="5km", industries=["coffee shops"]),
+    )
+
+    leads = store.load()
+    assert result.processed == 1
+    assert result.created_or_updated == 1
+    assert scraped_urls == ["https://listing.example/ready", "https://maps.example/p1"]
+    assert leads["p1"].site_brief == "Build a simple cafe site."
+    assert leads["p2"].site_brief is None
+    assert leads["p3"].site_brief is None

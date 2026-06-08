@@ -20,7 +20,7 @@ from pathlib import Path
 
 from filelock import FileLock
 
-from .models import Lead, LeadCreate, LeadPrioritization, LeadStatus
+from .models import Lead, LeadCreate, LeadPrioritization, LeadStatus, LeadWebsiteIntelligence
 
 DEFAULT_PROFILE = "sean"
 ROOT = Path(__file__).resolve().parents[2]
@@ -142,6 +142,21 @@ class LeadStore:
                     "that Lead Finder already created"
                 )
             leads[update.place_id] = existing.with_prioritization(update)
+            self._write_all(leads)
+            return leads[update.place_id]
+
+    def apply_website_intelligence(self, update: LeadWebsiteIntelligence) -> Lead:
+        """Website Intelligence entry point. Build/sales judgment only — cannot
+        touch identity, acquisition facts, prioritization, or lifecycle status."""
+        with self._locked():
+            leads = self._read_all()
+            existing = leads.get(update.place_id)
+            if existing is None:
+                raise KeyError(
+                    f"no lead {update.place_id} — Website Intelligence can only enrich leads "
+                    "that Lead Finder already created"
+                )
+            leads[update.place_id] = existing.with_website_intelligence(update)
             self._write_all(leads)
             return leads[update.place_id]
 

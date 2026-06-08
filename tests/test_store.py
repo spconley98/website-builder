@@ -8,7 +8,7 @@ from datetime import date
 
 import pytest
 
-from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus
+from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus, LeadWebsiteIntelligence
 from leadpipe.store import LeadStore, normalize_profile
 
 
@@ -32,6 +32,19 @@ def _prioritization(place_id="p1", rating=3, count=12) -> LeadPrioritization:
         photo_sources=["yelp"],
         rating_reason="found a dozen food photos",
         prioritized_date=date(2026, 1, 2),
+    )
+
+
+def _website_intelligence(place_id="p1") -> LeadWebsiteIntelligence:
+    return LeadWebsiteIntelligence(
+        place_id=place_id,
+        site_brief="A compact restaurant site with menu, photos, and contact info.",
+        selling_angle="Make it easier for hungry nearby customers to choose them.",
+        suggested_pages=["Home", "Menu", "Gallery", "Contact"],
+        content_notes="Gather current menu, hours, and best dishes.",
+        visual_notes="Use warm food photos from the listing.",
+        intelligence_sources=["https://yelp.com/biz/joes-pizza"],
+        intelligence_date=date(2026, 1, 3),
     )
 
 
@@ -98,6 +111,30 @@ def test_apply_prioritization_requires_existing_lead(tmp_path):
     store = LeadStore(tmp_path / "leads.jsonl")
     with pytest.raises(KeyError):
         store.apply_prioritization(_prioritization(place_id="ghost"))
+
+
+def test_website_intelligence_cannot_overwrite_facts_or_status(tmp_path):
+    store = LeadStore(tmp_path / "leads.jsonl")
+    store.create(_create(name="Joe's Pizza", place_id="p1"))
+    store.apply_prioritization(_prioritization(place_id="p1"))
+
+    before = store.load()["p1"]
+    store.apply_website_intelligence(_website_intelligence(place_id="p1"))
+
+    lead = store.load()["p1"]
+    assert lead.name == before.name
+    assert lead.industry == before.industry
+    assert lead.location == before.location
+    assert lead.has_website is False
+    assert lead.status == LeadStatus.PRIORITIZED
+    assert lead.photo_rating == 3
+    assert lead.site_brief.startswith("A compact restaurant site")
+
+
+def test_apply_website_intelligence_requires_existing_lead(tmp_path):
+    store = LeadStore(tmp_path / "leads.jsonl")
+    with pytest.raises(KeyError):
+        store.apply_website_intelligence(_website_intelligence(place_id="ghost"))
 
 
 def test_corrupt_line_raises_with_location(tmp_path):

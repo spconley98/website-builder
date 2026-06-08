@@ -73,6 +73,21 @@ class LeadPrioritization(BaseModel):
     prioritized_date: date
 
 
+class LeadWebsiteIntelligence(BaseModel):
+    """What Website Intelligence produces. BUILD/SALES JUDGMENT only — it
+    turns already-prioritized evidence into a concise brief without changing
+    acquisition facts or lifecycle status."""
+
+    place_id: str
+    site_brief: str
+    selling_angle: str
+    suggested_pages: list[str] = Field(default_factory=list)
+    content_notes: str | None = None
+    visual_notes: str | None = None
+    intelligence_sources: list[str] = Field(default_factory=list)
+    intelligence_date: date
+
+
 class Lead(BaseModel):
     """Canonical stored record — the only shape that lives in data/<profile>/leads.jsonl."""
 
@@ -99,6 +114,15 @@ class Lead(BaseModel):
     rating_reason: str | None = None
     prioritized_date: date | None = None
 
+    # Website Intelligence judgment (None/empty = not yet reviewed)
+    site_brief: str | None = None
+    selling_angle: str | None = None
+    suggested_pages: list[str] = Field(default_factory=list)
+    content_notes: str | None = None
+    visual_notes: str | None = None
+    intelligence_sources: list[str] = Field(default_factory=list)
+    intelligence_date: date | None = None
+
     @classmethod
     def from_create(cls, data: LeadCreate) -> "Lead":
         return cls(**data.model_dump(), status=LeadStatus.FOUND)
@@ -116,6 +140,22 @@ class Lead(BaseModel):
                 "rating_reason": p.rating_reason,
                 "prioritized_date": p.prioritized_date,
                 "status": self._advance_status(LeadStatus.PRIORITIZED),
+            }
+        )
+
+    def with_website_intelligence(self, i: LeadWebsiteIntelligence) -> "Lead":
+        """Apply Website Intelligence judgment via an explicit allowlist."""
+        if i.place_id != self.place_id:
+            raise ValueError(f"place_id mismatch: lead={self.place_id} update={i.place_id}")
+        return self.model_copy(
+            update={
+                "site_brief": i.site_brief,
+                "selling_angle": i.selling_angle,
+                "suggested_pages": i.suggested_pages,
+                "content_notes": i.content_notes,
+                "visual_notes": i.visual_notes,
+                "intelligence_sources": i.intelligence_sources,
+                "intelligence_date": i.intelligence_date,
             }
         )
 

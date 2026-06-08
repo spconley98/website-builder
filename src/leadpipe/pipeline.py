@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .agents import lead_finder, lead_prioritizer
+from .agents import lead_finder, lead_prioritizer, website_intelligence
 from .agents.base import AgentResult
 from .config import Settings, Target
 from .store import LeadStore
@@ -19,6 +19,7 @@ from .store import LeadStore
 STAGES = {
     "find": lead_finder,
     "prioritize": lead_prioritizer,
+    "intelligence": website_intelligence,
 }
 
 
@@ -42,10 +43,18 @@ def run_stage(stage: str, store: LeadStore, targets: list[Target], *, limit: int
     return RunReport(results)
 
 
-def run_all(store: LeadStore, targets: list[Target], *, limit: int | None = None) -> RunReport:
+def run_all(
+    store: LeadStore,
+    targets: list[Target],
+    *,
+    limit: int | None = None,
+    include_intelligence: bool = False,
+) -> RunReport:
     """Run every stage, in pipeline order, across every target."""
     results: list[AgentResult] = []
     for name, module in STAGES.items():
+        if name == "intelligence" and not include_intelligence:
+            continue
         if name == "find" and limit is not None:
             results.extend(module.run(store, target, limit=limit) for target in targets)
         else:

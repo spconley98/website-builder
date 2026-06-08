@@ -67,8 +67,20 @@ def _profile_or_exit(profile: str) -> str:
 
 def _refresh_reports(store: LeadStore, profile: str) -> None:
     reports.write_reports(store, profile=profile)
+    reports.write_website_briefs(store, profile=profile)
     reports.write_shared_reports()
+    reports.write_shared_website_briefs()
     console.print("[dim]Profile + shared reports refreshed in reports/[/dim]")
+
+
+def _require_firecrawl(use_firecrawl: bool, command: str) -> None:
+    if use_firecrawl:
+        return
+    console.print(
+        "[yellow]This command uses Firecrawl credits and only runs at explicit user request.[/yellow]\n"
+        f"Re-run with [bold]--use-firecrawl[/bold] to execute: leadpipe {command} --use-firecrawl"
+    )
+    raise typer.Exit(code=1)
 
 
 @app.command()
@@ -139,8 +151,14 @@ def prioritize(
     industry: str | None = typer.Option(None, help="restrict to this industry"),
     radius: str | None = typer.Option(None),
     profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose leads may be prioritized: sean or matt"),
+    use_firecrawl: bool = typer.Option(
+        False,
+        "--use-firecrawl",
+        help="Required guard: this stage spends Firecrawl credits.",
+    ),
 ):
     """Run Lead Prioritizer on prompt only — this stage uses Firecrawl credits."""
+    _require_firecrawl(use_firecrawl, "prioritize")
     profile = _profile_or_exit(profile)
     targets = _targets_or_exit(area, industry, radius, profile)
     store = _store_for_profile(profile)
@@ -161,13 +179,46 @@ def run(
         max=20,
         help="Maximum Google Places candidates per industry. Default safety cap is 20.",
     ),
+    use_firecrawl: bool = typer.Option(
+        False,
+        "--use-firecrawl",
+        help="Required guard: full runs include Firecrawl-backed prioritization.",
+    ),
+    include_intelligence: bool = typer.Option(
+        False,
+        "--include-intelligence",
+        help="Also run Agent 3 Website Intelligence after prioritization.",
+    ),
 ):
     """Run the full pipeline on prompt only (find -> prioritize) across every target."""
+    _require_firecrawl(use_firecrawl, "run")
     profile = _profile_or_exit(profile)
     targets = _targets_or_exit(area, industry, radius, profile)
     store = _store_for_profile(profile)
     console.print(f"[bold]Full pipeline[/bold] — {len(targets)} target(s), profile={profile}, limit={limit}")
-    _print_report(pipeline.run_all(store, targets, limit=limit))
+    _print_report(pipeline.run_all(store, targets, limit=limit, include_intelligence=include_intelligence))
+    _refresh_reports(store, profile)
+
+
+@app.command()
+def intelligence(
+    area: str | None = typer.Option(None, help="restrict to leads found in this area"),
+    industry: str | None = typer.Option(None, help="restrict to this industry"),
+    radius: str | None = typer.Option(None),
+    profile: str = typer.Option(DEFAULT_PROFILE, help="Owner profile whose leads may be researched: sean or matt"),
+    use_firecrawl: bool = typer.Option(
+        False,
+        "--use-firecrawl",
+        help="Required guard: this stage spends Firecrawl credits.",
+    ),
+):
+    """Run Agent 3 Website Intelligence on prioritized leads only."""
+    _require_firecrawl(use_firecrawl, "intelligence")
+    profile = _profile_or_exit(profile)
+    targets = _targets_or_exit(area, industry, radius, profile)
+    store = _store_for_profile(profile)
+    console.print(f"[bold]Website Intelligence[/bold] — {len(targets)} target(s), profile={profile}")
+    _print_report(pipeline.run_stage("intelligence", store, targets))
     _refresh_reports(store, profile)
 
 
@@ -180,12 +231,16 @@ def report(
     profile = _profile_or_exit(profile)
     store = _store_for_profile(profile)
     all_path, prioritized_path = reports.write_reports(store, profile=profile)
+    website_briefs_path = reports.write_website_briefs(store, profile=profile)
     console.print(f"Wrote {all_path.relative_to(reports.ROOT)}")
     console.print(f"Wrote {prioritized_path.relative_to(reports.ROOT)}")
+    console.print(f"Wrote {website_briefs_path.relative_to(reports.ROOT)}")
     if shared:
         shared_all_path, shared_prioritized_path = reports.write_shared_reports()
+        shared_website_briefs_path = reports.write_shared_website_briefs()
         console.print(f"Wrote {shared_all_path.relative_to(reports.ROOT)}")
         console.print(f"Wrote {shared_prioritized_path.relative_to(reports.ROOT)}")
+        console.print(f"Wrote {shared_website_briefs_path.relative_to(reports.ROOT)}")
 
 
 if __name__ == "__main__":
