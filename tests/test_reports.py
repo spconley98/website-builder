@@ -70,6 +70,20 @@ def test_shared_prioritized_hides_archived_leads():
     assert "Old Cafe" not in rendered
 
 
+def test_shared_prioritized_escapes_pipe_characters_in_table_cells():
+    lead = _lead(
+        "p1",
+        name="Mecanico a Domicilio | Mobile Mechanic",
+        status=LeadStatus.PRIORITIZED,
+        rating=1,
+    )
+
+    rendered = render_shared_prioritized({"matt": [lead]})
+
+    assert "Mecanico a Domicilio \\| Mobile Mechanic" in rendered
+    assert "Mecanico a Domicilio | Mobile Mechanic" not in rendered
+
+
 def test_profile_website_briefs_render_empty_and_briefed_states():
     empty = render_website_briefs([])
     rendered = render_website_briefs([_briefed_lead("p1")])

@@ -19,6 +19,11 @@ SHARED_WEBSITE_BRIEFS_PATH = REPORTS_DIR / "Shared - Website Briefs.md"
 _STARS = {0: "—", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐", 5: "⭐⭐⭐⭐⭐"}
 
 
+def _cell(value: object) -> str:
+    text = "—" if value is None else str(value)
+    return text.replace("\r", " ").replace("\n", " ").replace("|", "\\|")
+
+
 def _profile_label(profile: str) -> str:
     return normalize_profile(profile).title()
 
@@ -43,7 +48,9 @@ def _all_leads_table(leads: list[Lead]) -> str:
     rows = ["| Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|"]
     for l in sorted(leads, key=lambda x: (x.industry, x.name)):
         maps = f"[map]({l.google_maps_url})" if l.google_maps_url else "—"
-        rows.append(f"| {l.name} | {l.industry} | {l.location} | {l.status.value} | {maps} |")
+        rows.append(
+            f"| {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | {_cell(l.status.value)} | {maps} |"
+        )
     return "\n".join(rows) + "\n"
 
 
@@ -60,7 +67,8 @@ def _prioritized_table(leads: list[Lead]) -> str:
         links = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(l.photo_links)) or "—"
         why = l.rating_reason or "—"
         rows.append(
-            f"| {stars} | {l.name} | {l.industry} | {l.location} | {l.photo_count or 0} | {links} | {why} |"
+            f"| {_cell(stars)} | {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | "
+            f"{_cell(l.photo_count or 0)} | {links} | {_cell(why)} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -77,8 +85,9 @@ def _website_briefs_table(leads: list[Lead]) -> str:
         pages = ", ".join(l.suggested_pages) or "—"
         sources = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(l.intelligence_sources)) or "—"
         rows.append(
-            f"| {l.name} | {l.industry} | {l.site_brief or '—'} | {l.selling_angle or '—'} | "
-            f"{pages} | {l.visual_notes or '—'} | {sources} |"
+            f"| {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.site_brief or '—')} | "
+            f"{_cell(l.selling_angle or '—')} | {_cell(pages)} | {_cell(l.visual_notes or '—')} | "
+            f"{sources} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -138,7 +147,8 @@ def _shared_all_table(rows_with_owners: list[tuple[Lead, list[str]]]) -> str:
     for lead, owners in sorted(rows_with_owners, key=lambda x: (x[0].industry, x[0].name)):
         maps = f"[map]({lead.google_maps_url})" if lead.google_maps_url else "—"
         rows.append(
-            f"| {', '.join(owners)} | {lead.name} | {lead.industry} | {lead.location} | {lead.status.value} | {maps} |"
+            f"| {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
+            f"{_cell(lead.location)} | {_cell(lead.status.value)} | {maps} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -156,8 +166,8 @@ def _shared_prioritized_table(rows_with_owners: list[tuple[Lead, list[str]]]) ->
         links = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(lead.photo_links)) or "—"
         why = lead.rating_reason or "—"
         rows.append(
-            f"| {stars} | {', '.join(owners)} | {lead.name} | {lead.industry} | {lead.location} | "
-            f"{lead.photo_count or 0} | {links} | {why} |"
+            f"| {_cell(stars)} | {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
+            f"{_cell(lead.location)} | {_cell(lead.photo_count or 0)} | {links} | {_cell(why)} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -174,8 +184,9 @@ def _shared_website_briefs_table(rows_with_owners: list[tuple[Lead, list[str]]])
         pages = ", ".join(lead.suggested_pages) or "—"
         sources = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(lead.intelligence_sources)) or "—"
         rows.append(
-            f"| {', '.join(owners)} | {lead.name} | {lead.industry} | {lead.site_brief or '—'} | "
-            f"{lead.selling_angle or '—'} | {pages} | {lead.visual_notes or '—'} | {sources} |"
+            f"| {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
+            f"{_cell(lead.site_brief or '—')} | {_cell(lead.selling_angle or '—')} | {_cell(pages)} | "
+            f"{_cell(lead.visual_notes or '—')} | {sources} |"
         )
     return "\n".join(rows) + "\n"
 

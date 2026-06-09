@@ -4,8 +4,8 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T15:17:18-07:00 · **Last agent:** Codex — NotebookLM provenance repair + context-transfer protocol update (Sean)
-**Phase:** lead generator operational — request-only Firecrawl guardrails active, Agent 3 built, profile/shared reports active
+**Last updated:** 2026-06-09T15:47:51-07:00 · **Last agent:** Codex — canonical foundation sync for Sean + Matt (Sean)
+**Phase:** lead generator operational — canonical `main` foundation, request-only Firecrawl guardrails active, Agent 3 built, profile/shared reports active
 
 ---
 
@@ -28,9 +28,9 @@
   - `config`/`models`/`store`/`llm` core, `sources/` (google_places, firecrawl), `agents/`
     (lead_finder, lead_prioritizer, website_intelligence), `pipeline`, `reports`, Typer `cli`
     (`check`/`find`/`prioritize`/`run`/`intelligence`/`report`)
-  - 25 passing tests covering the riskiest contracts (dedup, fact/judgment separation, status monotonicity, atomic writes,
+  - 26 passing tests covering the riskiest contracts (dedup, fact/judgment separation, status monotonicity, atomic writes,
     local-model config fallback, Prioritizer target scoping, photo-count parse handling, Firecrawl guardrails,
-    Website Intelligence queue discipline, and Website Brief report rendering)
+    Website Intelligence queue discipline, Website Brief report rendering, and Markdown report escaping)
   - **Cross-challenged via `three-brain`→Codex** before agents were built on top — caught real
     foundational issues (status regression, enrichment-overwrites-facts) which were fixed pre-emptively
   - **Validated on REAL data**: `leadpipe find --area "Round Rock, TX" --industry "coffee shops"` found
@@ -54,9 +54,16 @@
   - **Agent 3 built**: Website Intelligence enriches prioritized active leads with build/sales briefs while
     preserving facts, photo judgment, and lifecycle status. Reports now include `Sean - Website Briefs.md`,
     `Matt - Website Briefs.md`, and `Shared - Website Briefs.md`.
+  - **Canonical foundation sync prepared**: Current `main` remains the foundation for Sean + Matt; Matt's
+    stale `origin/onboarding-matt` branch is preserved as historical evidence only. Verified Matt's branch
+    lead file already matches `data/matt/leads.jsonl` exactly (166 records: 98 `found`, 68 `prioritized`),
+    added Matt branch audit/proposed-target research notes, fixed Markdown table escaping for lead names/text
+    containing `|`, regenerated reports, and kept `config/targets.matt.yaml` empty pending a small chosen run.
 
 ## 🔨 In progress
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
+- Sean — pushing canonical `main` so Matt can fast-forward to the current scaffold instead of continuing on
+  `origin/onboarding-matt`.
 - Sean — tuning real hunt targets. The first guarded Sean-config run completed but found 0 new no-website
   candidates for the current Austin/San Antonio target list.
 - Sean — running Website Intelligence on prioritized leads once the desired target scope has prioritized
@@ -93,6 +100,9 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
 9. **Review Matt imported leads** — especially before prioritizing or using them for outreach.
 10. ~~Build agent #3~~ ✅ **Done — Website Intelligence**. Next: run it on prioritized leads with
     `leadpipe intelligence --profile sean --use-firecrawl`.
+11. **Sync Matt onto canonical `main`** — after Sean pushes, Matt/Matt's agent should run
+    `git status --short --branch`, `git fetch origin`, preserve any dirty work on a Matt WIP branch if
+    needed, then fast-forward `main`, run `uv sync --group dev`, and run `uv run pytest tests/ -q`.
 
 ## 📋 REQUIRED — every session, every contributor
 Run the **`context-transfer`** skill at the END of every session (say "wrap up" / "/context-transfer").
@@ -137,17 +147,17 @@ does; don't "simplify" them away without re-reading the reasoning).
 ## Context for next agent
 Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are
 implemented with stage-scoped writes; Firecrawl-backed commands are request-only behind `--use-firecrawl`.
-The first guarded Sean-config run completed but found 0 new no-website candidates, so the next agent
-should tune target areas/industries or run focused one-offs before expecting new Website Briefs.
-Continue using profile stores, generated human-readable reports, and session handoffs under
-`docs/session-logs/<contributor>/`.
+Current `main` is the canonical foundation; do not merge `origin/onboarding-matt` wholesale. Matt's lead
+data is already imported exactly, and his branch targets are captured as research notes until Sean/Matt
+choose a smaller active run list. Continue using profile stores, generated human-readable reports, and
+session handoffs under `docs/session-logs/<contributor>/`.
 
 ## 👤 Contributors this session
-- **Sean** — chose request-only operation instead of 24/7 scheduling; approved Agent 3 as Website
-  Intelligence; requested context transfer and scaffold-following wrapup.
-- **Codex** — implemented Firecrawl guardrails, Agent 3 Website Intelligence, Website Brief reports,
-  tests, first guarded Sean-config manual run, NotebookLM sync, NotebookLM provenance repair, and this
-  handoff.
+- **Sean** — chose current `main` as the canonical foundation and approved preserving Matt's branch as an
+  artifact source instead of a merge target.
+- **Codex** — fixed Markdown report table escaping, added the regression test, regenerated reports, verified
+  Matt/Sean data counts, wrote Matt branch audit/proposed-target notes, updated NotebookLM provenance state,
+  and prepared this handoff.
 - **Matt / Matt's agent** — contributed imported lead/research context now isolated under Matt-owned
   files for Sean review.
 
@@ -179,3 +189,7 @@ Continue using profile stores, generated human-readable reports, and session han
 - NotebookLM source-title rule: all future shared-brain uploads must include contributor, timestamp,
   and topic. Context-transfer `MEMORY.md` uploads must use `[<Name>] MEMORY.md - YYYY-MM-DD HHMM -
   <topic>`; use `[Unknown] ... needs-review` only when provenance cannot be proven.
+- Canonical sync decision: `origin/onboarding-matt` is not a merge target. Useful Matt ideas should be
+  rebuilt later on current `main`; optional hardening candidates include robust LLM parser fallback and
+  configurable `nearby_areas`. Do not add interactive Firecrawl prompts, and keep Firecrawl-backed stages
+  behind explicit `--use-firecrawl`.
