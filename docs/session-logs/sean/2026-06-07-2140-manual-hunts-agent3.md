@@ -81,12 +81,13 @@ It found no new no-website candidates for those targets. Existing Sean report da
 - Review Matt's imported leads in `data/matt/leads.jsonl` before treating them as production-quality.
 
 ## Blockers / Risks
-- NotebookLM CLI auth is expired. `py -m notebooklm source add .\MEMORY.md --notebook bd83690f-e997-46c5-b054-6ff3139e11d6` failed and requested `notebooklm login`.
+- NotebookLM CLI auth initially expired during wrapup, but was refreshed after interactive login.
+- `MEMORY.md` upload succeeded after re-authentication. NotebookLM source ID: `5881645e-4009-4413-816f-4c15d562b57f`.
 - Firecrawl remains credit-backed; the guardrails prevent accidental spend, but intentional runs still consume credits.
 - Website Intelligence has not yet produced a real brief in this session because the guarded Sean-config run had no matching prioritized candidates.
 
 ## Obsidian / NotebookLM
 - Obsidian vault remains the project folder: `C:\Users\mysis\website-builder`.
 - Matt onboarding is recorded as complete in `MEMORY.md`; Matt should continue using Obsidian on this folder.
-- NotebookLM sync is pending re-authentication with `py -m notebooklm login`.
+- NotebookLM sync succeeded after re-authentication.
 - Local semantic memory reindex succeeded: 317 chunks written to `C:\Users\mysis\.claude\memory-mcp\index.json`.

@@ -94,8 +94,11 @@ is **not** a decision to use it. Each doc has three tiers:
 - **NotebookLM brain** — `website-builder-brain`, ID `bd83690f-e997-46c5-b054-6ff3139e11d6`. Holds
   reference sources + generated mind-maps/infographics. Shared with Matt. **It is the one shared
   resource** (all API keys are per-person). 🏷️ **When any agent adds to the brain** (source, note,
-  artifact), **attach the contributor's name** — title sources `[<Name>] <doc>` and attribute the
-  contribution. Keeps shared-brain provenance clear (same per-contributor rule as `context-transfer`).
+  artifact), **attach the contributor's name, timestamp, and topic** — title `MEMORY.md` context
+  uploads as `[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>` and title other sources/notes/artifacts
+  with `[<Name>] <doc/topic>`. Keeps shared-brain provenance clear (same per-contributor rule as
+  `context-transfer`). If authorship is genuinely unclear, use `[Unknown] ... - needs-review` rather
+  than guessing.
 - **Obsidian vault** — opens on the project folder; visual map of structure/themes. Matt must install
   Obsidian to use it.
 
@@ -201,6 +204,6 @@ folders. All new agent/human handoffs must use `docs/session-logs/<contributor>/
 **End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `context-transfer`
 skill ("wrap up" / "/context-transfer"). It writes a contributor-owned handoff under
 `docs/session-logs/<sean|matt>/`, updates shared `MEMORY.md` only when allowed by the protocol
-above, syncs the NotebookLM brain (remember the `[<Name>]` attribution rule in §5), reflects in
-Obsidian, and commits. Skipping it means the next session starts blind — do it every time, even short
-sessions.
+above, syncs the NotebookLM brain (remember the `[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>`
+attribution rule in §5), reflects in Obsidian, and commits. Skipping it means the next session starts
+blind — do it every time, even short sessions.

@@ -4,7 +4,7 @@
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-07T21:40:14-07:00 · **Last agent:** Codex — context transfer after manual-run guardrails + Agent 3 Website Intelligence (Sean)
+**Last updated:** 2026-06-09T15:17:18-07:00 · **Last agent:** Codex — NotebookLM provenance repair + context-transfer protocol update (Sean)
 **Phase:** lead generator operational — request-only Firecrawl guardrails active, Agent 3 built, profile/shared reports active
 
 ---
@@ -20,7 +20,8 @@
 - Reference library `docs/_reference-library/` — 8 raw docs total; 7 have the full 3-tier treatment.
   New raw reference added this session: `(Raw Text) Local_AI_Agents_for_Leadpipe.md`.
 - NotebookLM brain `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`) + project visuals
-  + generated reference/research summaries.
+  + generated reference/research summaries. Existing duplicate `MEMORY.md` uploads have been renamed
+  with contributor/timestamp/topic provenance.
 - Obsidian-facing folder indexes exist for `config/`, `data/`, `reports/`, `docs/research/`, and
   `docs/session-logs/`.
 - **`leadpipe` — the lead pipeline scaffold, BUILT AND VALIDATED LIVE** (`src/leadpipe/`):
@@ -62,8 +63,8 @@
   candidates; one-off Round Rock/Fresh Brew remains available as a known validation lead.
 
 ## 🚫 Blocked / waiting
-- NotebookLM CLI auth expired during the 2026-06-07 Agent 3 context transfer. Run
-  `py -m notebooklm login`, then re-upload `MEMORY.md` to `website-builder-brain`.
+- None currently. NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and
+  `MEMORY.md` was uploaded successfully.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places
@@ -145,7 +146,8 @@ Continue using profile stores, generated human-readable reports, and session han
 - **Sean** — chose request-only operation instead of 24/7 scheduling; approved Agent 3 as Website
   Intelligence; requested context transfer and scaffold-following wrapup.
 - **Codex** — implemented Firecrawl guardrails, Agent 3 Website Intelligence, Website Brief reports,
-  tests, first guarded Sean-config manual run, NotebookLM sync, and this handoff.
+  tests, first guarded Sean-config manual run, NotebookLM sync, NotebookLM provenance repair, and this
+  handoff.
 - **Matt / Matt's agent** — contributed imported lead/research context now isolated under Matt-owned
   files for Sean review.
 
@@ -171,5 +173,9 @@ Continue using profile stores, generated human-readable reports, and session han
 - Framework cleanup rule: no new `data/leads.jsonl`, no `(report)` / `(Sean)` style report names, no
   new `docs/context-transfers/` or `docs/project/sessions/` logs. Use profile stores, human-readable
   report names, and `docs/session-logs/<contributor>/`.
-- NotebookLM shared-brain sync failed on 2026-06-07 after the Agent 3 Website Intelligence wrapup due
-  expired local NotebookLM auth. Local semantic memory reindex succeeded.
+- NotebookLM shared-brain sync initially failed on 2026-06-07 due expired local auth, then succeeded
+  after re-authentication. Uploaded `MEMORY.md` source ID: `5881645e-4009-4413-816f-4c15d562b57f`.
+  Local semantic memory reindex also succeeded.
+- NotebookLM source-title rule: all future shared-brain uploads must include contributor, timestamp,
+  and topic. Context-transfer `MEMORY.md` uploads must use `[<Name>] MEMORY.md - YYYY-MM-DD HHMM -
+  <topic>`; use `[Unknown] ... needs-review` only when provenance cannot be proven.

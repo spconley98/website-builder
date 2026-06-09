@@ -80,7 +80,8 @@ Rules:
 
 ## Step 3: Upload to NotebookLM
 
-Upload updated `MEMORY.md` to the website-builder Project Brain notebook.
+Upload updated `MEMORY.md` to the website-builder Project Brain notebook. Source titles must include
+the contributor, timestamp, and topic so repeated uploads remain auditable.
 
 **Notebook:** website-builder-brain
 **ID:** `bd83690f-e997-46c5-b054-6ff3139e11d6`
@@ -89,10 +90,14 @@ Upload updated `MEMORY.md` to the website-builder Project Brain notebook.
 
 In session summary, note current acceptance status of the shared notebook invite (pending / accepted) so next agent knows whether the collaborator has full access yet.
 
-Run via CLI:
+Run via CLI, replacing the contributor/topic values for the session:
 ```powershell
-py -m notebooklm source add ./MEMORY.md --notebook bd83690f-e997-46c5-b054-6ff3139e11d6
+py -m notebooklm source add ./MEMORY.md --notebook bd83690f-e997-46c5-b054-6ff3139e11d6 --title "[Sean] MEMORY.md - YYYY-MM-DD HHMM - short-topic"
 ```
+
+For Matt-owned context transfers, use `[Matt] MEMORY.md - YYYY-MM-DD HHMM - short-topic`. If
+authorship is unclear during a repair/audit, use `[Unknown] MEMORY.md - YYYY-MM-DD HHMM -
+needs-review` instead of guessing. Never upload a plain `MEMORY.md` title.
 
 If CLI unavailable or fails, instruct user to manually re-upload `MEMORY.md` to the notebook and note it in session output.
 
