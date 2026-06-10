@@ -1,10 +1,13 @@
 ---
 type: session-log
-contributor: matt
-agent: Claude Sonnet 4.6
-date: 2026-06-09T23:31:00
+contributors: [matt]
+agent: claude
+status: active
+created: 2026-06-09
+updated: 2026-06-09
 topic: wip-push-context-transfer
-branch: main
+tags: [sessions]
+related: ["[[MEMORY]]", "[[AGENTS]]"]
 ---
 
 # Matt Session Log — 2026-06-09 23:31 — WIP Push + Context Transfer
