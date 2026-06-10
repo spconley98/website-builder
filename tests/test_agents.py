@@ -10,7 +10,12 @@ from datetime import date
 
 from leadpipe.agents.base import AgentResult
 from leadpipe.agents import website_intelligence
-from leadpipe.agents.lead_prioritizer import _matches_target, _parse_photo_count_response, rate_from_count
+from leadpipe.agents.lead_prioritizer import (
+    _matches_target,
+    _parse_photo_count_response,
+    rate_from_count,
+    score_from_signals,
+)
 from leadpipe.config import load_settings
 from leadpipe.config import Target
 from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus
@@ -99,6 +104,34 @@ def test_rate_from_count_thresholds():
     assert rate_from_count(1000) == 5
 
 
+def test_score_from_signals_uses_soft_penalties():
+    strong = score_from_signals(
+        photo_count=30,
+        phone_present=True,
+        recent_review_count=3,
+        hours_present=True,
+        staleness_flags=[],
+    )
+    stale = score_from_signals(
+        photo_count=30,
+        phone_present=False,
+        recent_review_count=0,
+        hours_present=False,
+        staleness_flags=["missing_phone", "missing_hours", "no_recent_reviews"],
+    )
+    legacy_unknown = score_from_signals(
+        photo_count=30,
+        phone_present=None,
+        recent_review_count=None,
+        hours_present=None,
+        staleness_flags=[],
+    )
+
+    assert strong == 81
+    assert stale == 45
+    assert legacy_unknown == 60
+
+
 def test_agent_result_summary_reports_errors():
     result = AgentResult("lead_finder", processed=10, created_or_updated=8, skipped=2, errors=["a", "b"])
     summary = result.summary()
@@ -180,6 +213,7 @@ def test_website_intelligence_only_processes_prioritized_active_leads(tmp_path, 
         LeadPrioritization(
             place_id="p1",
             photo_rating=3,
+            lead_score=50,
             photo_count=15,
             photo_links=["https://listing.example/ready"],
             photo_sources=["google_maps"],
@@ -191,6 +225,7 @@ def test_website_intelligence_only_processes_prioritized_active_leads(tmp_path, 
         LeadPrioritization(
             place_id="p3",
             photo_rating=4,
+            lead_score=65,
             photo_count=30,
             photo_links=["https://listing.example/archived"],
             photo_sources=["google_maps"],

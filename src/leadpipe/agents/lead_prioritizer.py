@@ -57,6 +57,28 @@ def rate_from_count(photo_count: int) -> int:
     return 5
 
 
+def score_from_signals(
+    *,
+    photo_count: int,
+    phone_present: bool | None,
+    recent_review_count: int | None,
+    hours_present: bool | None,
+    staleness_flags: list[str] | None,
+) -> int:
+    """Deterministic lead score from buildability + reachability signals.
+    Unknown legacy facts are neutral; known stale signals are soft penalties."""
+    score = rate_from_count(photo_count) * 15
+    if phone_present is True:
+        score += 10
+    if hours_present is True:
+        score += 5
+    if recent_review_count is not None:
+        score += min(recent_review_count, 5) * 2
+    if staleness_flags:
+        score -= min(len(staleness_flags) * 5, 20)
+    return max(0, min(100, score))
+
+
 def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
     """LLM reasoning step over scraped page content. Raises LLMError on failure
     or on an unparseable response — caller decides how to degrade."""
@@ -186,6 +208,13 @@ def run(store: LeadStore, target: Target) -> AgentResult:
             update = LeadPrioritization(
                 place_id=lead.place_id,
                 photo_rating=rate_from_count(total_count),
+                lead_score=score_from_signals(
+                    photo_count=total_count,
+                    phone_present=lead.phone_present,
+                    recent_review_count=lead.recent_review_count,
+                    hours_present=lead.hours_present,
+                    staleness_flags=lead.staleness_flags,
+                ),
                 photo_count=total_count,
                 photo_links=links,
                 photo_sources=sources,

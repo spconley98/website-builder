@@ -70,6 +70,10 @@ def run(store: LeadStore, target: Target, *, limit: int = google_places.DEFAULT_
                     has_website=c["has_website"],
                     found_date=date.today(),
                     google_maps_url=c.get("google_maps_url"),
+                    phone_present=c.get("phone_present"),
+                    recent_review_count=c.get("recent_review_count"),
+                    hours_present=c.get("hours_present"),
+                    staleness_flags=c.get("staleness_flags", []),
                 )
                 store.create(lead)
                 created_or_updated += 1

@@ -30,6 +30,7 @@ def _lead(
         found_date=date(2026, 6, 7),
         status=status,
         photo_rating=rating,
+        lead_score=rating * 15 if rating is not None else None,
         photo_count=1 if rating is not None else None,
         photo_links=["https://maps.google.com/fresh"] if rating is not None else [],
         photo_sources=["google_maps"] if rating is not None else [],

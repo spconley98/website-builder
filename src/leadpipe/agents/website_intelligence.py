@@ -47,6 +47,7 @@ def _build_prompt(lead, scraped_content: str) -> str:
         f"Business: {lead.name}\n"
         f"Industry: {lead.industry}\n"
         f"Location: {lead.location}\n"
+        f"Lead score: {lead.lead_score if lead.lead_score is not None else 'unknown'}\n"
         f"Photo rating: {lead.photo_rating}\n"
         f"Photo count: {lead.photo_count}\n"
         f"Prioritizer reason: {lead.rating_reason or 'unknown'}\n\n"

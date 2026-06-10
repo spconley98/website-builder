@@ -56,6 +56,19 @@ def _active(leads: list[Lead]) -> list[Lead]:
     return [l for l in leads if l.status not in {LeadStatus.INVALID, LeadStatus.ARCHIVED}]
 
 
+def _score_value(lead: Lead) -> int | None:
+    if lead.lead_score is not None:
+        return lead.lead_score
+    if lead.photo_rating is not None:
+        return lead.photo_rating * 15
+    return None
+
+
+def _score_sort_key(lead: Lead) -> tuple[int, int, str]:
+    score = _score_value(lead)
+    return (-(score if score is not None else -1), -(lead.photo_rating or 0), lead.name)
+
+
 _ALL_LEADS_HEADER = ["| Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|"]
 
 
@@ -101,15 +114,15 @@ def _prioritized_table(leads: list[Lead]) -> str:
     if not rated:
         return "_No prioritized leads yet — run `leadpipe prioritize` after finding leads._\n"
     rows = [
-        "| ⭐ | Business | Industry | Location | Photos | Links | Why |",
-        "|---|---|---|---|---|---|---|",
+        "| Score | ⭐ | Business | Industry | Location | Photos | Links | Why |",
+        "|---|---|---|---|---|---|---|---|",
     ]
-    for l in sorted(rated, key=lambda x: (-(x.photo_rating or 0), x.name)):
+    for l in sorted(rated, key=_score_sort_key):
         stars = _STARS.get(l.photo_rating or 0, "—")
         links = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(l.photo_links)) or "—"
         why = l.rating_reason or "—"
         rows.append(
-            f"| {_cell(stars)} | {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | "
+            f"| {_cell(_score_value(l))} | {_cell(stars)} | {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | "
             f"{_cell(l.photo_count or 0)} | {links} | {_cell(why)} |"
         )
     return "\n".join(rows) + "\n"
@@ -123,7 +136,10 @@ def _website_briefs_table(leads: list[Lead]) -> str:
         "| Business | Industry | Brief | Selling angle | Pages | Visual notes | Sources |",
         "|---|---|---|---|---|---|---|",
     ]
-    for l in sorted(briefed, key=lambda x: (-(x.photo_rating or 0), x.name)):
+    for l in sorted(
+        briefed,
+        key=_score_sort_key,
+    ):
         pages = ", ".join(l.suggested_pages) or "—"
         sources = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(l.intelligence_sources)) or "—"
         rows.append(
@@ -190,8 +206,8 @@ def _merge_shared(profile_leads: dict[str, list[Lead]]) -> list[tuple[Lead, list
     return list(merged.values())
 
 
-def _lead_sort_rank(lead: Lead) -> tuple[int, int]:
-    return (lead.status.rank, lead.photo_rating or -1)
+def _lead_sort_rank(lead: Lead) -> tuple[int, int, int]:
+    return (lead.status.rank, _score_value(lead) or -1, lead.photo_rating or -1)
 
 
 _SHARED_ALL_HEADER = ["| Owners | Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|---|"]
@@ -240,15 +256,19 @@ def _shared_prioritized_table(rows_with_owners: list[tuple[Lead, list[str]]]) ->
     if not rated:
         return "_No shared prioritized leads yet — run `leadpipe prioritize` for a profile first._\n"
     rows = [
-        "| ⭐ | Owners | Business | Industry | Location | Photos | Links | Why |",
-        "|---|---|---|---|---|---|---|---|",
+        "| Score | ⭐ | Owners | Business | Industry | Location | Photos | Links | Why |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
-    for lead, owners in sorted(rated, key=lambda x: (-(x[0].photo_rating or 0), x[0].name)):
+    for lead, owners in sorted(
+        rated,
+        key=lambda x: _score_sort_key(x[0]),
+    ):
         stars = _STARS.get(lead.photo_rating or 0, "—")
         links = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(lead.photo_links)) or "—"
         why = lead.rating_reason or "—"
         rows.append(
-            f"| {_cell(stars)} | {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
+            f"| {_cell(_score_value(lead))} | {_cell(stars)} | {_cell(', '.join(owners))} | "
+            f"{_cell(lead.name)} | {_cell(lead.industry)} | "
             f"{_cell(lead.location)} | {_cell(lead.photo_count or 0)} | {links} | {_cell(why)} |"
         )
     return "\n".join(rows) + "\n"
@@ -262,7 +282,10 @@ def _shared_website_briefs_table(rows_with_owners: list[tuple[Lead, list[str]]])
         "| Owners | Business | Industry | Brief | Selling angle | Pages | Visual notes | Sources |",
         "|---|---|---|---|---|---|---|---|",
     ]
-    for lead, owners in sorted(briefed, key=lambda x: (-(x[0].photo_rating or 0), x[0].name)):
+    for lead, owners in sorted(
+        briefed,
+        key=lambda x: _score_sort_key(x[0]),
+    ):
         pages = ", ".join(lead.suggested_pages) or "—"
         sources = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(lead.intelligence_sources)) or "—"
         rows.append(

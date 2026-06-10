@@ -10,7 +10,7 @@ Docs: https://developers.google.com/maps/documentation/places/web-service/op-ove
 """
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 
 import httpx
 
@@ -18,7 +18,10 @@ from ..config import load_settings
 
 _BASE = "https://places.googleapis.com/v1"
 _SEARCH_FIELDS = "places.id,places.displayName,places.formattedAddress,places.googleMapsUri"
-_DETAILS_FIELDS = "id,websiteUri,googleMapsUri"
+_DETAILS_FIELDS = (
+    "id,websiteUri,googleMapsUri,nationalPhoneNumber,internationalPhoneNumber,"
+    "regularOpeningHours,userRatingCount,reviews"
+)
 
 DEFAULT_TIMEOUT = 30.0
 DEFAULT_RESULT_LIMIT = 20
@@ -83,9 +86,10 @@ def search_businesses(
     ]
 
 
-def fetch_website(place_id: str, *, api_key: str | None = None) -> str | None:
-    """Place Details lookup — returns the `websiteUri` if Google has one on file,
-    else None. THIS is the deterministic "has website" signal (no LLM involved)."""
+def fetch_place_details(place_id: str, *, api_key: str | None = None) -> dict:
+    """Place Details lookup — returns deterministic acquisition facts from
+    Google. `websiteUri` remains the hard no-website filter; the other signals
+    are soft ranking inputs for the Prioritizer."""
     settings = load_settings()
     key = api_key or settings.google_places_api_key
     if not key:
@@ -105,7 +109,48 @@ def fetch_website(place_id: str, *, api_key: str | None = None) -> str | None:
             f"Places details failed for {place_id}: HTTP {e.response.status_code} — {e.response.text}"
         ) from e
 
-    return resp.json().get("websiteUri")
+    return resp.json()
+
+
+def fetch_website(place_id: str, *, api_key: str | None = None) -> str | None:
+    """Place Details lookup — returns the `websiteUri` if Google has one on file,
+    else None. THIS is the deterministic "has website" signal (no LLM involved)."""
+    return fetch_place_details(place_id, api_key=api_key).get("websiteUri")
+
+
+def _recent_review_count(details: dict, *, today: date | None = None, days: int = 180) -> int:
+    """Count recent Google review timestamps from the limited review sample
+    returned by Places Details. Missing/unparseable review dates count as 0."""
+    today = today or date.today()
+    cutoff = today - timedelta(days=days)
+    count = 0
+    for review in details.get("reviews") or []:
+        raw = review.get("publishTime")
+        if not raw:
+            continue
+        try:
+            published = datetime.fromisoformat(raw.replace("Z", "+00:00")).astimezone(timezone.utc).date()
+        except ValueError:
+            continue
+        if published >= cutoff:
+            count += 1
+    return count
+
+
+def _hours_present(details: dict) -> bool:
+    hours = details.get("regularOpeningHours") or {}
+    return bool(hours.get("periods") or hours.get("weekdayDescriptions"))
+
+
+def _staleness_flags(*, phone_present: bool, hours_present: bool, recent_review_count: int) -> list[str]:
+    flags: list[str] = []
+    if not phone_present:
+        flags.append("missing_phone")
+    if not hours_present:
+        flags.append("missing_hours")
+    if recent_review_count <= 0:
+        flags.append("no_recent_reviews")
+    return flags
 
 
 def find_leads_without_website(
@@ -124,7 +169,25 @@ def find_leads_without_website(
     candidates = search_businesses(area, industry, limit=limit)
     leads_without_site = []
     for c in candidates:
-        website = fetch_website(c["place_id"])
-        if website is None:
-            leads_without_site.append({**c, "has_website": False, "found_date": date.today()})
+        details = fetch_place_details(c["place_id"])
+        if details.get("websiteUri") is None:
+            phone_present = bool(details.get("nationalPhoneNumber") or details.get("internationalPhoneNumber"))
+            hours_present = _hours_present(details)
+            recent_review_count = _recent_review_count(details)
+            leads_without_site.append(
+                {
+                    **c,
+                    "google_maps_url": details.get("googleMapsUri") or c.get("google_maps_url"),
+                    "has_website": False,
+                    "found_date": date.today(),
+                    "phone_present": phone_present,
+                    "recent_review_count": recent_review_count,
+                    "hours_present": hours_present,
+                    "staleness_flags": _staleness_flags(
+                        phone_present=phone_present,
+                        hours_present=hours_present,
+                        recent_review_count=recent_review_count,
+                    ),
+                }
+            )
     return leads_without_site

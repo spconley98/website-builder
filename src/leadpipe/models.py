@@ -57,6 +57,10 @@ class LeadCreate(BaseModel):
     source: str = "google_places"
     google_maps_url: str | None = None
     yelp_url: str | None = None
+    phone_present: bool | None = None
+    recent_review_count: int | None = Field(default=None, ge=0)
+    hours_present: bool | None = None
+    staleness_flags: list[str] = Field(default_factory=list)
 
 
 class LeadPrioritization(BaseModel):
@@ -66,6 +70,7 @@ class LeadPrioritization(BaseModel):
 
     place_id: str
     photo_rating: int = Field(..., ge=0, le=5)
+    lead_score: int = Field(..., ge=0, le=100)
     photo_count: int = Field(..., ge=0)
     photo_links: list[str] = Field(default_factory=list)
     photo_sources: list[str] = Field(default_factory=list)
@@ -102,12 +107,17 @@ class Lead(BaseModel):
     source: str = "google_places"
     google_maps_url: str | None = None
     yelp_url: str | None = None
+    phone_present: bool | None = None
+    recent_review_count: int | None = Field(default=None, ge=0)
+    hours_present: bool | None = None
+    staleness_flags: list[str] = Field(default_factory=list)
 
     # Lifecycle — monotonic, never regresses (see LeadStatus.rank + store.set_status)
     status: LeadStatus = LeadStatus.FOUND
 
     # Prioritizer judgment (None = not yet reviewed; 0 = reviewed, nothing usable)
     photo_rating: int | None = Field(default=None, ge=0, le=5)
+    lead_score: int | None = Field(default=None, ge=0, le=100)
     photo_count: int | None = Field(default=None, ge=0)
     photo_links: list[str] = Field(default_factory=list)
     photo_sources: list[str] = Field(default_factory=list)
@@ -134,6 +144,7 @@ class Lead(BaseModel):
         return self.model_copy(
             update={
                 "photo_rating": p.photo_rating,
+                "lead_score": p.lead_score,
                 "photo_count": p.photo_count,
                 "photo_links": p.photo_links,
                 "photo_sources": p.photo_sources,

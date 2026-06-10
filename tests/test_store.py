@@ -27,6 +27,7 @@ def _prioritization(place_id="p1", rating=3, count=12) -> LeadPrioritization:
     return LeadPrioritization(
         place_id=place_id,
         photo_rating=rating,
+        lead_score=rating * 15,
         photo_count=count,
         photo_links=["https://yelp.com/biz/joes-pizza"],
         photo_sources=["yelp"],
@@ -76,6 +77,7 @@ def test_prioritization_cannot_overwrite_acquisition_facts(tmp_path):
     assert lead.location == "Austin, TX"
     assert lead.has_website is False
     assert lead.photo_rating == 3
+    assert lead.lead_score == 45
     assert lead.photo_count == 12
 
 
