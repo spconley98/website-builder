@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-07
+topic: context-transfer
+tags: [sessions]
+---
+
 # Sean Context Transfer - Session Wrap-Up
 
 **Contributor:** Sean  

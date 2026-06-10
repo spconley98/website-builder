@@ -1,3 +1,13 @@
+---
+type: research
+contributors: [matt]
+status: active
+created: 2026-06-09
+updated: 2026-06-09
+topic: matt-research
+tags: [research]
+---
+
 # Matt Research
 
 Matt-owned research lives here so Sean can fetch, inspect, and import it without merging unrelated

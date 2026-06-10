@@ -1,3 +1,13 @@
+---
+type: project
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-09
+topic: onboarding
+tags: [onboarding]
+---
+
 # Onboarding — Matt
 
 > ## READ FIRST — current status
@@ -123,6 +133,33 @@ We each use our **own** keys. They live in a local `.env` (gitignored — never 
 - [ ] For more skills, see `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md` — it lists
       what to pull from Anthropic / VoltAgent repos with copy-paste install commands. Keep new
       project tooling deliberate and aligned with `AGENTS.md`.
+
+## Step 6 — Obsidian as the agent brain (read this) + optional enhancers
+
+The vault is the **primary** agent brain. Cold-start read order (also in `AGENTS.md` §5):
+`AGENTS.md` → `_HOT.md` → `_HOME.md` → `docs/_working-context/<proj>.md` → `past_mistakes.md` → `MEMORY.md`.
+It's all plain Markdown + YAML frontmatter, so it reads the same under Gemini.
+
+**Security — non-negotiable (`AGENTS.md` §6):**
+- [ ] Keep Obsidian **Restricted Mode ON**; leave **community-plugin sync OFF**.
+- The `.obsidian/` folder is an executable trust boundary — `plugins/` and `community-plugins.json` are
+      gitignored on purpose (a real campaign hid a RAT in a plugin's `data.json`). Never commit/sync them.
+
+**Vault maintenance is repo-native — no plugins, works under Gemini:**
+```powershell
+uv run leadpipe vault validate    # frontmatter schema on the allowlisted notes
+uv run leadpipe vault heartbeat   # broken [[links]] / stale / missing frontmatter
+uv run leadpipe vault hot         # regenerate _HOT.md from MEMORY.md
+```
+`context-transfer` runs these for you at wrap-up — you don't have to remember them.
+
+**Optional per-person enhancers (NONE are required for repo health):**
+- **Bases** (core plugin, already enabled) renders `docs/_bases/` dashboards (Sessions, Research,
+  Reference Library, Pending) — just open a `.base` file in Obsidian.
+- **kepano `obsidian-skills`** (Claude Code only, not Gemini): `/plugin marketplace add kepano/obsidian-skills`
+  for obsidian-markdown / obsidian-bases / obsidian-cli helpers.
+- **Linter** (community) for auto-formatting frontmatter — run it **manually**, exclude `reports/` + `data/`.
+  Vetted OSS only; **no shell/JS-executing plugins** (Shell Commands is banned).
 
 ---
 

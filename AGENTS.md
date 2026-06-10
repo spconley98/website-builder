@@ -1,3 +1,13 @@
+---
+type: project
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-09
+topic: constitution
+tags: [canon]
+---
+
 # AGENTS.md — website-builder Constitution
 
 > **This is the canonical front door for every agent (Claude Code, OpenAI Codex, Gemini) and every
@@ -47,8 +57,8 @@ Treat the reference library as inspiration, not the spec.
 
 - **Only Sean approves** pending items (see reference-visualizer queue, §4).
 - Default work attribution is **Sean** unless the conversation names Matt.
-- **Pending onboarding for Matt** (track until confirmed): GitHub collaborator invite (write access),
-  NotebookLM `website-builder-brain` share, and installing **Obsidian** to use the project vault.
+- **Matt onboarding/sync status is mutable state — it lives in `MEMORY.md` (per the Authority model in
+  §5), not here.** Don't hardcode a status in this file; read `MEMORY.md` for the current state.
 
 ---
 
@@ -85,22 +95,65 @@ is **not** a decision to use it. Each doc has three tiers:
 
 ---
 
-## 5. Memory & knowledge
+## 5. Memory & knowledge — the Obsidian agent brain
 
-- **`MEMORY.md` (repo root)** — the **portable, multi-agent state file**. Every agent reads it on start
-  and updates it on end. This is the shared source of truth for project state (Codex/Gemini included).
-- **Claude private memory** — Claude Code also keeps notes under
-  `.claude/projects/.../memory/`. That is Claude-specific and **not** a substitute for root `MEMORY.md`.
-- **NotebookLM brain** — `website-builder-brain`, ID `bd83690f-e997-46c5-b054-6ff3139e11d6`. Holds
-  reference sources + generated mind-maps/infographics. Shared with Matt. **It is the one shared
-  resource** (all API keys are per-person). 🏷️ **When any agent adds to the brain** (source, note,
-  artifact), **attach the contributor's name, timestamp, and topic** — title `MEMORY.md` context
-  uploads as `[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>` and title other sources/notes/artifacts
-  with `[<Name>] <doc/topic>`. Keeps shared-brain provenance clear (same per-contributor rule as
-  `context-transfer`). If authorship is genuinely unclear, use `[Unknown] ... - needs-review` rather
-  than guessing.
-- **Obsidian vault** — opens on the project folder; visual map of structure/themes. Matt must install
-  Obsidian to use it.
+The repo **is** an Obsidian vault, and that vault is the **primary** brain (source of truth + agent
+working memory); NotebookLM is a downstream **mirror**. To keep a cold agent's onboarding cheap AND safe,
+every "current truth" has exactly ONE owner plus a degradation rule — never create competing authorities.
+
+### Authority model
+| Concern | Source of truth | Derived / non-authoritative | Degradation rule |
+|---|---|---|---|
+| Rules / protocol | **`AGENTS.md`** (this file) | `CLAUDE.md` / `GEMINI.md` pointers | read first, always |
+| Current state | **`MEMORY.md`** | `_HOT.md` (generated digest) | `_HOT.md` is stamped `generated` + `stale_after`; if expired, fall back to `MEMORY.md` |
+| Per-project focus | latest session log | `docs/_working-context/<proj>.md` (generated) | regenerated at wrap-up |
+| History | dated `docs/session-logs/**` | — | append-only |
+| Cloud mirror | **`MEMORY.md` only** (NotebookLM) | — | one canonical current-state source; retire/rename stale |
+
+Mutable state (Matt onboarding/sync status, what's in progress, blockers) lives in **`MEMORY.md`** — never
+hardcode it into this file or any other "current-truth" surface.
+
+### Cold-start read-path (AGENTS first; each file is small → seconds, few tokens)
+1. `AGENTS.md` — rules / safety (authority on protocol)
+2. `_HOT.md` — generated ~500-word digest: current state + active tasks + blockers `[stale_after]`
+3. `_HOME.md` — navigation index → MOCs, Bases, spine docs
+4. `docs/_working-context/<proj>.md` — current domain focus (generated)
+5. `past_mistakes.md` — known bugs/hallucinations to not repeat
+6. `MEMORY.md` — canonical deep state (authority on state)
+
+`_HOT.md`, `docs/_working-context/*`, and `_HOME.md` are **generated/maintained by `leadpipe vault` (§6)**
+— do not hand-edit `_HOT.md`. They are conveniences; if any disagrees with `MEMORY.md`, `MEMORY.md` wins.
+
+### Note metadata — frontmatter schema (enforced by `leadpipe vault validate`)
+Every hand-written note carries YAML frontmatter (2-space indent; **omit** optional fields rather than
+leave them blank — an empty date breaks Bases filters; single-token keys; no nested properties; no
+Markdown in values, because Obsidian assigns one global type per property name):
+```yaml
+---
+type: session-log        # session-log|research|reference|moc|project|report|context
+contributors: [sean]     # LIST always (even for one)
+agent: codex             # claude|codex|gemini
+status: active           # active|draft|archived|superseded
+created: 2026-06-09
+updated: 2026-06-09
+topic: short-kebab-topic
+tags: [sessions]
+related: ["[[MEMORY]]"]
+---
+```
+RAG-friendly authoring (front-loaded summary, atomic 200–400 words, strict heading hierarchy) applies
+**only to new research / working-context notes**. Canon (this file, `MEMORY.md`, `ARCHITECTURE.md`,
+session logs, generated reports) stays as long as it needs to be.
+
+### Other brains
+- **Claude private memory** — `.claude/projects/.../memory/`. Claude-only; **not** a substitute for root `MEMORY.md`.
+- **NotebookLM brain** — `website-builder-brain`, ID `bd83690f-e997-46c5-b054-6ff3139e11d6`. Mirrors
+  **`MEMORY.md` only** as the single current-state source, plus reference mind-maps/infographics. Shared
+  with Matt (**the one shared resource**; all API keys are per-person). 🏷️ Every upload carries
+  contributor + timestamp + topic — `MEMORY.md` as `[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>`,
+  other items as `[<Name>] <doc/topic>`; use `[Unknown] ... - needs-review` only when authorship can't be
+  proven. **Do not mirror `_HOT.md`** (it's a local generated digest — mirroring it would create a second
+  conflicting "current state" in the brain).
 
 ---
 
@@ -115,6 +168,23 @@ is **not** a decision to use it. Each doc has three tiers:
     header `Authorization: Bearer <key>`.
   - ⚠️ Account is currently **out of credits** — scrapes return "Insufficient credits" until topped up.
 - **NotebookLM CLI** — `py -m notebooklm ...` (auth at `C:\Users\mysis\.notebooklm\storage_state.json`).
+- **Obsidian vault maintenance — `leadpipe vault`** (repo-native, pure Python/uv; **no** Obsidian or
+  Claude-skill dependency, so Sean AND Matt/Gemini can run the mandatory loop identically):
+  - `uv run leadpipe vault validate` — assert allowlisted notes match the §5 frontmatter schema (non-zero exit on violations)
+  - `uv run leadpipe vault heartbeat` — sweep for broken `[[wikilinks]]`, orphans, stale `updated`, malformed YAML (report-only, no silent edits)
+  - `uv run leadpipe vault hot` — regenerate `_HOT.md` from `MEMORY.md` + latest session log (deterministic; stamps `generated`/`stale_after`)
+
+### Obsidian plugin & vault security (non-negotiable)
+- A vault's `.obsidian/` is an **executable trust boundary** — a real campaign (REF6598) hid a
+  PHANTOMPULSE RAT in `.obsidian/plugins/<x>/data.json`. So **never git-track or sync `.obsidian/plugins/`,
+  `.obsidian/community-plugins.json`, or workspace state** (see `.gitignore`). A reviewed `core-plugins.json`
+  may stay tracked so Bases/Properties are enabled on a fresh clone.
+- **Restricted Mode ON; community-plugin sync OFF.** Install only vetted, popular OSS plugins — locally,
+  per person. **No shell / network / JS-executing plugins** (Shell Commands is banned). Templater is
+  allowed only with "no user scripts / no system-command functions / no unreviewed templates", and is
+  **never required** for repo correctness — repo health depends on `leadpipe vault`, not on any plugin.
+- kepano `obsidian-skills` and all Obsidian plugins are **optional per-person UX helpers**, never a
+  dependency of the mandatory session protocol (Matt runs Gemini and won't have the Claude-Code skills).
 
 ### Agent run safety
 - **No autonomous scraping by default.** Local agents must not run Firecrawl-backed enrichment or
@@ -199,11 +269,14 @@ folders. All new agent/human handoffs must use `docs/session-logs/<contributor>/
 
 ## 8. Session protocol
 
-**Start:** read `AGENTS.md` (this file) → `MEMORY.md` → check for pending approvals/onboarding.
+**Start:** follow the cold-start read-path in §5 — `AGENTS.md` → `_HOT.md` → `_HOME.md` →
+`docs/_working-context/<proj>.md` → `past_mistakes.md` → `MEMORY.md` — then check for pending
+approvals/onboarding.
 
 **End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `context-transfer`
-skill ("wrap up" / "/context-transfer"). It writes a contributor-owned handoff under
-`docs/session-logs/<sean|matt>/`, updates shared `MEMORY.md` only when allowed by the protocol
-above, syncs the NotebookLM brain (remember the `[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>`
-attribution rule in §5), reflects in Obsidian, and commits. Skipping it means the next session starts
-blind — do it every time, even short sessions.
+skill ("wrap up" / "/context-transfer"). It runs the health check (`uv run pytest tests/ -q` — this is a
+Python/uv project, not npm), writes a contributor-owned handoff under `docs/session-logs/<sean|matt>/`,
+regenerates the brain spine (`uv run leadpipe vault hot` + `uv run leadpipe vault heartbeat`), updates
+shared `MEMORY.md` only when allowed by the protocol above, mirrors **`MEMORY.md` only** to the NotebookLM
+brain (`[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>` per §5), and commits. Skipping it means the next
+session starts blind — do it every time, even short sessions.

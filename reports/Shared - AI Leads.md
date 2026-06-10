@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [sean, matt]
+status: active
+topic: shared-ai-leads
+tags: [report, leads, shared]
+---
+
 # Shared AI Leads
 
 > Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.

@@ -1,3 +1,13 @@
+---
+type: research
+contributors: [sean]
+status: active
+created: 2026-06-09
+updated: 2026-06-09
+topic: branch-sync-audit
+tags: [research, audit]
+---
+
 # Matt Branch Sync Audit - 2026-06-09
 
 ## Decision

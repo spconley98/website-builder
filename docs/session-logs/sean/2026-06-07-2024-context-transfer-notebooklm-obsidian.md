@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-07
+topic: context-transfer-notebooklm-obsidian
+tags: [sessions]
+---
+
 # Sean Session Log - Context Transfer, NotebookLM, Obsidian
 
 **Contributor:** Sean  

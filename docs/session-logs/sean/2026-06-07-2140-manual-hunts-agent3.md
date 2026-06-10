@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-07
+topic: manual-hunts-agent3
+tags: [sessions]
+---
+
 # Session Handoff — Manual Hunts + Agent 3 Website Intelligence
 
 - **Contributor:** Sean

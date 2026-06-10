@@ -1,0 +1,10 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - file.inFolder("docs/_reference-library")
+views:
+  - type: table
+    name: Reference Library
+    order:
+      - file.name
+      - file.folder

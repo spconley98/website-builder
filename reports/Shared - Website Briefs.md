@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [sean, matt]
+status: active
+topic: shared-website-briefs
+tags: [report, briefs, shared]
+---
+
 # Shared Website Briefs
 
 > Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.

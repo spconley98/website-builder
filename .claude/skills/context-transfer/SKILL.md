@@ -16,12 +16,13 @@ Closes out a work session cleanly so the next agent (or future you) has full con
 
 ## Step 1: Health Check
 
-If build/lint/typecheck scripts exist (check `package.json`), run them and report results
-before continuing. Fix failures before proceeding. Skip silently if no such tooling exists yet.
+This is a **Python/uv** project (`pyproject.toml`) — **not** npm. Run the test suite and the vault
+checks; report results before continuing and fix failures before proceeding.
 
 ```powershell
-npm run lint
-npx tsc --noEmit
+uv run pytest tests/ -q          # riskiest-contract tests — should be all green
+uv run leadpipe vault validate   # frontmatter schema on the allowlisted notes
+uv run leadpipe vault heartbeat  # broken [[wikilinks]] / orphans / stale notes (report-only)
 ```
 
 ---
@@ -78,15 +79,35 @@ Rules:
 
 ---
 
+## Step 2c: Regenerate the brain spine (repo-native — works for Sean AND Matt)
+
+After `MEMORY.md` is updated, regenerate the generated onboarding layer and check vault health. These are
+pure Python (`leadpipe vault`, AGENTS.md §6) — **no Obsidian plugins or Claude skills required**, so Matt's
+Gemini runs them identically:
+
+```powershell
+uv run leadpipe vault hot         # regenerate _HOT.md from the just-updated MEMORY.md
+uv run leadpipe vault heartbeat   # broken [[wikilinks]] / stale / missing-frontmatter (fix broken links)
+uv run leadpipe vault validate    # frontmatter schema on the allowlisted notes
+```
+
+Never hand-edit `_HOT.md` — it is regenerated here. Commit the refreshed `_HOT.md` in Step 4.
+
+---
+
 ## Step 3: Upload to NotebookLM
 
 Upload updated `MEMORY.md` to the website-builder Project Brain notebook. Source titles must include
 the contributor, timestamp, and topic so repeated uploads remain auditable.
 
+**Mirror `MEMORY.md` only** — do NOT upload `_HOT.md` or any other generated digest. A second
+"current state" source in the brain is exactly the duplicate/stale problem already repaired once
+(AGENTS.md §5: NotebookLM mirrors `MEMORY.md` only).
+
 **Notebook:** website-builder-brain
 **ID:** `bd83690f-e997-46c5-b054-6ff3139e11d6`
 **URL:** https://notebooklm.google.com/notebook/bd83690f-e997-46c5-b054-6ff3139e11d6
-**Shared with:** mpitto214@gmail.com (mp214gitty) — manually invited by Sean, **pending acceptance**
+**Shared with:** mpitto214@gmail.com (mp214gitty) — see `MEMORY.md` for current share/acceptance status (don't hardcode it here)
 
 In session summary, note current acceptance status of the shared notebook invite (pending / accepted) so next agent knows whether the collaborator has full access yet.
 

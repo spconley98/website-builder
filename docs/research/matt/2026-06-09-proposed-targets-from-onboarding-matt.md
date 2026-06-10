@@ -1,3 +1,13 @@
+---
+type: research
+contributors: [sean]
+status: active
+created: 2026-06-09
+updated: 2026-06-09
+topic: proposed-targets
+tags: [research, targets]
+---
+
 # Proposed Targets From Matt Onboarding Branch - 2026-06-09
 
 ## Source

@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [matt]
+status: active
+created: 2026-06-09
+updated: 2026-06-09
+topic: matt-session-logs
+tags: [sessions]
+---
+
 # Matt Session Logs
 
 Matt's agent writes every end-of-session handoff here.

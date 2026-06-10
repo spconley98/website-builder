@@ -1,3 +1,13 @@
+---
+type: project
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-09
+topic: session-log-convention
+tags: [sessions, convention]
+---
+
 # Session Logs
 
 All session logs and context-transfer handoffs live here.

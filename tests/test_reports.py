@@ -5,11 +5,13 @@ from datetime import date
 
 from leadpipe.models import Lead, LeadStatus
 from leadpipe.reports import (
+    render_all_leads,
     render_shared_all,
     render_shared_prioritized,
     render_shared_website_briefs,
     render_website_briefs,
 )
+from leadpipe.vault import parse_frontmatter, validate_frontmatter
 
 
 def _lead(
@@ -102,3 +104,17 @@ def test_shared_website_briefs_dedupes_and_shows_owners():
     assert rendered.count("Fresh Brew Cafe") == 1
     assert "Matt, Sean" in rendered
     assert "Convert map traffic" in rendered
+
+
+def test_reports_carry_valid_report_frontmatter():
+    profile = render_all_leads([], contributors=("matt",))
+    shared = render_shared_all({"sean": [_lead("p1")]})
+
+    for out in (profile, shared):
+        data, err = parse_frontmatter(out)
+        assert err is None
+        assert data["type"] == "report"
+        assert validate_frontmatter(data) == []  # generated reports must pass the same schema
+
+    assert "contributors: [matt]" in profile
+    assert "contributors: [sean, matt]" in shared

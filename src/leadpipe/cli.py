@@ -14,13 +14,14 @@ from __future__ import annotations
 import typer
 from rich.console import Console
 
-from . import pipeline, reports
+from . import pipeline, reports, vault
 from .config import load_settings, targets_path_for_profile
 from .llm import LLMError, generate
 from .sources import google_places
 from .store import DEFAULT_PROFILE, LeadStore, normalize_profile
 
 app = typer.Typer(help="Local-AI lead pipeline — find businesses with no website, rate by photo availability.")
+app.add_typer(vault.app, name="vault", help="Obsidian vault maintenance: validate / heartbeat / hot.")
 console = Console()
 DEFAULT_LEAD_LIMIT = 20
 

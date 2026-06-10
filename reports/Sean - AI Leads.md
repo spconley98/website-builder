@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [sean]
+status: active
+topic: ai-leads
+tags: [report, leads]
+---
+
 # AI Leads
 
 > Generated from `data/sean/leads.jsonl` — do not hand-edit, regenerate with `leadpipe report`.

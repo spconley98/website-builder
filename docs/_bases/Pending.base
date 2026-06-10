@@ -1,0 +1,12 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - 'status == "draft"'
+views:
+  - type: table
+    name: Pending review
+    order:
+      - file.name
+      - note.contributors
+      - note.type
+      - note.updated
