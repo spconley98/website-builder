@@ -61,6 +61,8 @@ _IGNORE_PARTS = {".git", ".obsidian", "node_modules", ".venv", "__pycache__", ".
 _ASSET_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".pdf", ".canvas", ".mp3", ".wav", ".m4a"}
 
 WIKILINK_RE = re.compile(r"!?\[\[([^\]]+)\]\]")
+_FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
+_INLINE_CODE_RE = re.compile(r"`[^`]*`")
 _PHASE_RE = re.compile(r"^\*\*Phase:\*\*\s*(.+)$", re.MULTILINE)
 
 
@@ -169,9 +171,15 @@ def allowlisted_notes() -> list[Path]:
 
 # --- Wikilink resolution ----------------------------------------------------
 def extract_wikilinks(text: str) -> list[str]:
-    """Bare link targets from [[Target]], [[Target|alias]], [[Target#heading]] (and ![[...]] embeds)."""
+    """Bare link targets from [[Target]], [[Target|alias]], [[Target#heading]] (and ![[...]] embeds).
+
+    Code spans and fenced code blocks are stripped first: a `[[wikilinks]]` inside backticks is a
+    syntax example, not a real link (Obsidian doesn't resolve those either)."""
+    norm = _normalize(text)
+    norm = _FENCED_CODE_RE.sub(" ", norm)
+    norm = _INLINE_CODE_RE.sub(" ", norm)
     out: list[str] = []
-    for raw in WIKILINK_RE.findall(_normalize(text)):
+    for raw in WIKILINK_RE.findall(norm):
         target = raw.split("|", 1)[0].split("#", 1)[0].split("^", 1)[0].strip()
         if target:
             out.append(target)

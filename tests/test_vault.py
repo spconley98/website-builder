@@ -85,6 +85,11 @@ def test_extract_wikilinks_strips_alias_and_heading():
     assert links == ["MEMORY", "AGENTS", "Note", "img.png"]
 
 
+def test_extract_wikilinks_ignores_code_spans_and_blocks():
+    text = "real [[MEMORY]] but inline `[[wikilinks]]` and\n```\n[[AGENTS]] in a fence\n```\ndone"
+    assert extract_wikilinks(text) == ["MEMORY"]
+
+
 def test_is_resolvable_matches_basename_path_and_skips_assets():
     basenames = {"memory", "agents"}
     relpaths = {"memory", "agents", "docs/_moc/sessions-moc"}

@@ -79,15 +79,35 @@ Rules:
 
 ---
 
+## Step 2c: Regenerate the brain spine (repo-native — works for Sean AND Matt)
+
+After `MEMORY.md` is updated, regenerate the generated onboarding layer and check vault health. These are
+pure Python (`leadpipe vault`, AGENTS.md §6) — **no Obsidian plugins or Claude skills required**, so Matt's
+Gemini runs them identically:
+
+```powershell
+uv run leadpipe vault hot         # regenerate _HOT.md from the just-updated MEMORY.md
+uv run leadpipe vault heartbeat   # broken [[wikilinks]] / stale / missing-frontmatter (fix broken links)
+uv run leadpipe vault validate    # frontmatter schema on the allowlisted notes
+```
+
+Never hand-edit `_HOT.md` — it is regenerated here. Commit the refreshed `_HOT.md` in Step 4.
+
+---
+
 ## Step 3: Upload to NotebookLM
 
 Upload updated `MEMORY.md` to the website-builder Project Brain notebook. Source titles must include
 the contributor, timestamp, and topic so repeated uploads remain auditable.
 
+**Mirror `MEMORY.md` only** — do NOT upload `_HOT.md` or any other generated digest. A second
+"current state" source in the brain is exactly the duplicate/stale problem already repaired once
+(AGENTS.md §5: NotebookLM mirrors `MEMORY.md` only).
+
 **Notebook:** website-builder-brain
 **ID:** `bd83690f-e997-46c5-b054-6ff3139e11d6`
 **URL:** https://notebooklm.google.com/notebook/bd83690f-e997-46c5-b054-6ff3139e11d6
-**Shared with:** mpitto214@gmail.com (mp214gitty) — manually invited by Sean, **pending acceptance**
+**Shared with:** mpitto214@gmail.com (mp214gitty) — see `MEMORY.md` for current share/acceptance status (don't hardcode it here)
 
 In session summary, note current acceptance status of the shared notebook invite (pending / accepted) so next agent knows whether the collaborator has full access yet.
 
