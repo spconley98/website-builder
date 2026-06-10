@@ -5,7 +5,7 @@ status: active
 created: 2026-06-09
 updated: 2026-06-09
 topic: hot-cache
-generated: 2026-06-09T21:25:32
+generated: 2026-06-09T21:30:50
 stale_after: 2026-06-14
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean (39/39); Codex/Gemini now have reciprocal three-brain routing in `AGENTS.md` §5; Matt's WIP preserved on `matt-wip-2026-06-09` pending review; `AGENTS.md` §1 North Star refined (scoring signals + feeder-repo framing, not yet implemented in code)
+**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean on `28f144e` (39/39), confirmed §5 reciprocal routing; new `docs/project/SYNC_GUIDE.md` for Sean/Matt session hygiene; Matt's WIP preserved on `matt-wip-2026-06-09` pending review; `AGENTS.md` §1 North Star refined (scoring signals + feeder-repo framing, not yet implemented in code)
 
 ## Active tasks
 - Sean — implement new §1 scoring signals (`phone_present`, `recent_review_count`, `hours_present`,
