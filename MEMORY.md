@@ -14,8 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T21:00:00-07:00 · **Last agent:** Claude Sonnet 4.6 — PR #2 merge, Matt sync, reciprocal three-brain for Codex/Gemini (Sean)
-**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean (39/39); Codex/Gemini now have reciprocal three-brain routing in `AGENTS.md` §5; Matt's WIP preserved on `matt-wip-2026-06-09` pending review
+**Last updated:** 2026-06-09T22:30:00-07:00 · **Last agent:** Claude Sonnet 4.6 — North Star refinement + Matt sync confirmation + SYNC_GUIDE (Sean)
+**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean on `28f144e` (39/39), confirmed §5 reciprocal routing; new `docs/project/SYNC_GUIDE.md` for Sean/Matt session hygiene; Matt's WIP preserved on `matt-wip-2026-06-09` pending review; `AGENTS.md` §1 North Star refined (scoring signals + feeder-repo framing, not yet implemented in code)
 
 ---
 
@@ -41,6 +41,11 @@ tags: [canon, state]
   a stray React/Vite scaffold (unknown origin, stays on that branch only), and his own
   `.claude/skills/three-brain/` (independently installed, separate from the AGENTS.md routing rules
   above). See `docs/research/matt/2026-06-09-wip-branch-diff-summary.md`.
+- **Matt confirmed on `28f144e`** — pulled clean (39/39), read AGENTS.md §5 reciprocal routing,
+  internalized it as his operating rules. He compared his `.claude/skills/three-brain/` against §5:
+  consistent, not stale — skill = full Claude-side detail (parallel consensus, media pipelines,
+  startup self-check), §5 = lightweight repo-level mirror for Matt/Gemini/Codex pointing back to it.
+  Nothing to change.
 - GitHub repo (public, shared) + `.gitignore` + `.mcp.json.example` + `.env.example`.
 - Multi-agent constitution: `AGENTS.md` (canonical), `CLAUDE.md` + `GEMINI.md` (pointers), this file.
 - Skills: `context-transfer`, `reference-visualizer`.
@@ -88,6 +93,9 @@ tags: [canon, state]
     containing `|`, regenerated reports, and kept `config/targets.matt.yaml` empty pending a small chosen run.
 
 ## 🔨 In progress
+- Sean — implement new §1 scoring signals (`phone_present`, `recent_review_count`, `hours_present`,
+  `staleness_flags` as soft penalties) in `lead_prioritizer` — spec'd this session via
+  three-brain/Codex, not yet coded.
 - Sean — reviewing Matt's `matt-wip-2026-06-09` diff: decide on `firecrawl.py` `get_credit_usage()` +
   2 credit-guard tests (cherry-pick candidate); decide fate of stray React/Vite scaffold (delete vs
   separate repo).

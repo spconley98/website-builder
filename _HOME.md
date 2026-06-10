@@ -37,6 +37,7 @@ by available photos, so we can build + sell them websites.
 ## 👥 People
 - **Sean** — owner, sole approver
 - **Matt** — collaborator (onboarding/sync status lives in [[MEMORY]])
+- **[[SYNC_GUIDE]]** — copy-paste before/after-session checklist for Sean & Matt (plain English)
 
 ## 🗂️ Areas
 - **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, visuals)
