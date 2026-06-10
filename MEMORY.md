@@ -14,8 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T22:30:00-07:00 · **Last agent:** Claude Sonnet 4.6 — North Star refinement + Matt sync confirmation + SYNC_GUIDE (Sean)
-**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean on `28f144e` (39/39), confirmed §5 reciprocal routing; new `docs/project/SYNC_GUIDE.md` for Sean/Matt session hygiene; Matt's WIP preserved on `matt-wip-2026-06-09` pending review; `AGENTS.md` §1 North Star refined (scoring signals + feeder-repo framing, not yet implemented in code)
+**Last updated:** 2026-06-09T23:30:00-07:00 · **Last agent:** Claude Sonnet 4.6 — Firecrawl credit-pause guard cherry-pick (Sean)
+**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean on `28f144e` (39/39), confirmed §5 reciprocal routing; new `docs/project/SYNC_GUIDE.md` for Sean/Matt session hygiene; `AGENTS.md` §1 North Star refined (scoring signals + feeder-repo framing, not yet implemented in code); Firecrawl account-wide credit-pause guard added to `lead_prioritizer` (41/41 tests); `matt-wip-2026-06-09` mostly resolved — only stray React/Vite scaffold fate still open
 
 ---
 
@@ -94,11 +94,10 @@ tags: [canon, state]
 
 ## 🔨 In progress
 - Sean — implement new §1 scoring signals (`phone_present`, `recent_review_count`, `hours_present`,
-  `staleness_flags` as soft penalties) in `lead_prioritizer` — spec'd this session via
-  three-brain/Codex, not yet coded.
-- Sean — reviewing Matt's `matt-wip-2026-06-09` diff: decide on `firecrawl.py` `get_credit_usage()` +
-  2 credit-guard tests (cherry-pick candidate); decide fate of stray React/Vite scaffold (delete vs
-  separate repo).
+  `staleness_flags` as soft penalties) in `lead_prioritizer` — spec'd via three-brain/Codex, not yet
+  coded.
+- Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
+  last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
 - Sean — tuning real hunt targets. The first guarded Sean-config run completed but found 0 new no-website
   candidates for the current Austin/San Antonio target list.
