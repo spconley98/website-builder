@@ -14,8 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T15:47:51-07:00 · **Last agent:** Codex — canonical foundation sync for Sean + Matt (Sean)
-**Phase:** lead generator operational — canonical `main` foundation, request-only Firecrawl guardrails active, Agent 3 built, profile/shared reports active
+**Last updated:** 2026-06-09T18:07:35-07:00 · **Last agent:** Claude Opus 4.8 — Obsidian agent-brain build, Codex-reviewed, on branch `obsidian-agent-brain` (Sean)
+**Phase:** lead generator operational; **Obsidian agent-brain shipped** (authority model + `leadpipe vault` + frontmatter/MOCs/Bases) on branch `obsidian-agent-brain`, pending push/PR/merge
 
 ---
 
@@ -24,6 +24,12 @@ tags: [canon, state]
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Obsidian agent-brain (branch `obsidian-agent-brain`, pending merge)** — the vault is now the primary
+  brain with an Authority model (`AGENTS.md` §5), a cold-start read-path (`_HOT.md` → `_HOME.md` MOCs →
+  `docs/_working-context/` → `past_mistakes.md` → `MEMORY.md`), schema frontmatter on every note, four
+  `docs/_bases/` dashboards, and a repo-native `uv run leadpipe vault validate|heartbeat|hot` maintenance
+  engine (no plugins — Matt/Gemini run the mandatory loop too). Built from `/grill-me` + the NotebookLM
+  "Obsidian best practices" notebook (49 sources) + a three-brain/Codex adversarial review. 39 tests green.
 - GitHub repo (public, shared) + `.gitignore` + `.mcp.json.example` + `.env.example`.
 - Multi-agent constitution: `AGENTS.md` (canonical), `CLAUDE.md` + `GEMINI.md` (pointers), this file.
 - Skills: `context-transfer`, `reference-visualizer`.
@@ -71,6 +77,7 @@ tags: [canon, state]
     containing `|`, regenerated reports, and kept `config/targets.matt.yaml` empty pending a small chosen run.
 
 ## 🔨 In progress
+- Sean/Claude — **Obsidian agent-brain on branch `obsidian-agent-brain`** (5 phases, 39 tests green); pending push/PR + merge to `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
 - Sean — pushing canonical `main` so Matt can fast-forward to the current scaffold instead of continuing on
   `origin/onboarding-matt`.

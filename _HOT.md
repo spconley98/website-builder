@@ -5,7 +5,7 @@ status: active
 created: 2026-06-09
 updated: 2026-06-09
 topic: hot-cache
-generated: 2026-06-09T17:34:23
+generated: 2026-06-09T18:09:20
 stale_after: 2026-06-14
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,9 +15,10 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** lead generator operational — canonical `main` foundation, request-only Firecrawl guardrails active, Agent 3 built, profile/shared reports active
+**Phase:** lead generator operational; **Obsidian agent-brain shipped** (authority model + `leadpipe vault` + frontmatter/MOCs/Bases) on branch `obsidian-agent-brain`, pending push/PR/merge
 
 ## Active tasks
+- Sean/Claude — **Obsidian agent-brain on branch `obsidian-agent-brain`** (5 phases, 39 tests green); pending push/PR + merge to `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
 - Sean — pushing canonical `main` so Matt can fast-forward to the current scaffold instead of continuing on
   `origin/onboarding-matt`.
@@ -47,4 +48,4 @@ choose a smaller active run list. Continue using profile stores, generated human
 session handoffs under `docs/session-logs/<contributor>/`.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-09-1547-canonical-foundation-sync.md` — Canonical Foundation Sync - 2026-06-09 1547
+`docs/session-logs/sean/2026-06-09-1807-obsidian-agent-brain.md` — Session Handoff — Obsidian Agent-Brain Build
