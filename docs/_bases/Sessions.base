@@ -1,0 +1,13 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - 'type == "session-log"'
+views:
+  - type: table
+    name: Sessions
+    order:
+      - file.name
+      - note.contributors
+      - note.status
+      - note.updated
+      - note.topic

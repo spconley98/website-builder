@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [matt]
+status: active
+topic: prioritized-leads
+tags: [report, leads, prioritized]
+---
+
 # Prioritized Leads
 
 > Generated from `data/matt/leads.jsonl` — do not hand-edit, regenerate with `leadpipe report`.

@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [matt]
+status: active
+topic: ai-leads
+tags: [report, leads]
+---
+
 # AI Leads
 
 > Generated from `data/matt/leads.jsonl` — do not hand-edit, regenerate with `leadpipe report`.

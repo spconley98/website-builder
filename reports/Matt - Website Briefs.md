@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [matt]
+status: active
+topic: website-briefs
+tags: [report, briefs]
+---
+
 # Website Briefs
 
 > Generated from `data/matt/leads.jsonl` — do not hand-edit, regenerate with `leadpipe report`.

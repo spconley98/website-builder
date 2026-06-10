@@ -1,3 +1,11 @@
+---
+type: report
+contributors: [sean, matt]
+status: active
+topic: shared-prioritized-leads
+tags: [report, leads, prioritized, shared]
+---
+
 # Shared Prioritized Leads
 
 > Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.

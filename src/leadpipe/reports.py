@@ -19,6 +19,20 @@ SHARED_WEBSITE_BRIEFS_PATH = REPORTS_DIR / "Shared - Website Briefs.md"
 _STARS = {0: "—", 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐", 4: "⭐⭐⭐⭐", 5: "⭐⭐⭐⭐⭐"}
 
 
+def _report_frontmatter(topic: str, contributors: tuple[str, ...], tags: list[str]) -> str:
+    """Schema-valid frontmatter (AGENTS.md §5) so generated reports show up in Obsidian Bases.
+    No dates on purpose — reports are regenerated from data, so a date would churn every run."""
+    return (
+        "---\n"
+        "type: report\n"
+        f"contributors: [{', '.join(contributors)}]\n"
+        "status: active\n"
+        f"topic: {topic}\n"
+        f"tags: [{', '.join(tags)}]\n"
+        "---\n\n"
+    )
+
+
 def _cell(value: object) -> str:
     text = "—" if value is None else str(value)
     return text.replace("\r", " ").replace("\n", " ").replace("|", "\\|")
@@ -92,18 +106,24 @@ def _website_briefs_table(leads: list[Lead]) -> str:
     return "\n".join(rows) + "\n"
 
 
-def render_all_leads(leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl") -> str:
+def render_all_leads(
+    leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl", contributors: tuple[str, ...] = ("sean",)
+) -> str:
     return (
-        "# AI Leads\n\n"
+        _report_frontmatter("ai-leads", contributors, ["report", "leads"])
+        + "# AI Leads\n\n"
         f"> Generated from `{source_label}` — do not hand-edit, regenerate with `leadpipe report`.\n"
         "> Every business Lead Finder found with **no website**.\n\n"
         f"{_all_leads_table(leads)}"
     )
 
 
-def render_prioritized(leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl") -> str:
+def render_prioritized(
+    leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl", contributors: tuple[str, ...] = ("sean",)
+) -> str:
     return (
-        "# Prioritized Leads\n\n"
+        _report_frontmatter("prioritized-leads", contributors, ["report", "leads", "prioritized"])
+        + "# Prioritized Leads\n\n"
         f"> Generated from `{source_label}` — do not hand-edit, regenerate with `leadpipe report`.\n"
         "> Sorted by photo availability — higher ⭐ means more existing material to build a site from.\n"
         "> Click the link numbers to open the Yelp/Google listing and save photos.\n\n"
@@ -111,9 +131,12 @@ def render_prioritized(leads: list[Lead], *, source_label: str = "data/<profile>
     )
 
 
-def render_website_briefs(leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl") -> str:
+def render_website_briefs(
+    leads: list[Lead], *, source_label: str = "data/<profile>/leads.jsonl", contributors: tuple[str, ...] = ("sean",)
+) -> str:
     return (
-        "# Website Briefs\n\n"
+        _report_frontmatter("website-briefs", contributors, ["report", "briefs"])
+        + "# Website Briefs\n\n"
         f"> Generated from `{source_label}` — do not hand-edit, regenerate with `leadpipe report`.\n"
         "> Build/sales intelligence for prioritized leads. This is judgment, not lifecycle status.\n\n"
         f"{_website_briefs_table(leads)}"
@@ -193,7 +216,8 @@ def _shared_website_briefs_table(rows_with_owners: list[tuple[Lead, list[str]]])
 
 def render_shared_all(profile_leads: dict[str, list[Lead]]) -> str:
     return (
-        "# Shared AI Leads\n\n"
+        _report_frontmatter("shared-ai-leads", ("sean", "matt"), ["report", "leads", "shared"])
+        + "# Shared AI Leads\n\n"
         "> Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.\n"
         "> Archived/invalid leads are hidden by default; owners show who found the same place.\n\n"
         f"{_shared_all_table(_merge_shared(profile_leads))}"
@@ -202,7 +226,8 @@ def render_shared_all(profile_leads: dict[str, list[Lead]]) -> str:
 
 def render_shared_prioritized(profile_leads: dict[str, list[Lead]]) -> str:
     return (
-        "# Shared Prioritized Leads\n\n"
+        _report_frontmatter("shared-prioritized-leads", ("sean", "matt"), ["report", "leads", "prioritized", "shared"])
+        + "# Shared Prioritized Leads\n\n"
         "> Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.\n"
         "> Deduped by `place_id`; higher ⭐ means more existing material to build a site from.\n\n"
         f"{_shared_prioritized_table(_merge_shared(profile_leads))}"
@@ -211,7 +236,8 @@ def render_shared_prioritized(profile_leads: dict[str, list[Lead]]) -> str:
 
 def render_shared_website_briefs(profile_leads: dict[str, list[Lead]]) -> str:
     return (
-        "# Shared Website Briefs\n\n"
+        _report_frontmatter("shared-website-briefs", ("sean", "matt"), ["report", "briefs", "shared"])
+        + "# Shared Website Briefs\n\n"
         "> Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.\n"
         "> Deduped by `place_id`; each row is build/sales intelligence from the best available profile record.\n\n"
         f"{_shared_website_briefs_table(_merge_shared(profile_leads))}"
@@ -224,8 +250,10 @@ def write_reports(store: LeadStore, *, profile: str | None = None) -> tuple[Path
     profile = normalize_profile(profile or DEFAULT_PROFILE)
     all_path, prioritized_path = profile_report_paths(profile)
     source_label = f"data/{profile}/leads.jsonl"
-    all_path.write_text(render_all_leads(leads, source_label=source_label), encoding="utf-8")
-    prioritized_path.write_text(render_prioritized(leads, source_label=source_label), encoding="utf-8")
+    all_path.write_text(render_all_leads(leads, source_label=source_label, contributors=(profile,)), encoding="utf-8")
+    prioritized_path.write_text(
+        render_prioritized(leads, source_label=source_label, contributors=(profile,)), encoding="utf-8"
+    )
     return all_path, prioritized_path
 
 
@@ -235,7 +263,7 @@ def write_website_briefs(store: LeadStore, *, profile: str | None = None) -> Pat
     profile = normalize_profile(profile or DEFAULT_PROFILE)
     path = profile_website_briefs_path(profile)
     source_label = f"data/{profile}/leads.jsonl"
-    path.write_text(render_website_briefs(leads, source_label=source_label), encoding="utf-8")
+    path.write_text(render_website_briefs(leads, source_label=source_label, contributors=(profile,)), encoding="utf-8")
     return path
 
 

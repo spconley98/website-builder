@@ -1,0 +1,12 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - 'type == "research"'
+views:
+  - type: table
+    name: Research
+    order:
+      - file.name
+      - note.contributors
+      - note.updated
+      - note.topic
