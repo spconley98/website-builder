@@ -14,15 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T22:38:42-07:00 · **Last agent:** Codex — deterministic scoring signals + report refresh (Sean)
-**Phase:** lead generator operational; first real Northern CA trade hunt run — 49 new no-website
-leads found across Sacramento/San Jose/Oakland/Fresno/Santa Rosa (HVAC, plumbing, electrical,
-handyman, landscaping), 25/26 prioritized via Firecrawl; `AGENTS.md` §1 North Star scoring signals
-are now implemented in code (`phone_present`, `recent_review_count`, `hours_present`,
-`staleness_flags`, plus deterministic `lead_score`); `matt-wip-2026-06-09` mostly resolved — only
-stray React/Vite scaffold fate still open. "AI Leads" reports group leads by broad industry category
-(collapsible `<details>`, `config/industry_categories.yaml`) above the unchanged full master list;
-Prioritized reports now include a score column.
+**Last updated:** 2026-06-09T23:59:00-07:00 · **Last Agent:** Gemini — Project Analysis & Context Transfer (Sean)
+**Phase:** operational with active efficiency improvements; completed a full pressure test, constitution review, and market analysis. `AGENTS.md` updates and a migration from JSONL to SQLite + `asyncio` are queued up next to resolve critical I/O bottlenecks.
 
 ---
 
@@ -31,6 +24,7 @@ Prioritized reports now include a score column.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Project Analysis & Pressure Test completed** — Spawned multiple sub-agents to analyze the project's efficiency, review the constitution, and conduct competitive market research. Findings are saved in `docs/session-logs/sean/2026-06-09-2359-efficiency-market-analysis.md`. Identified O(N²) JSONL read/write bottleneck, synchronous I/O blocks, and recommended SQLite, `asyncio`, and `tenacity`.
 - **AI Leads reports grouped by industry category** — `config/industry_categories.yaml`
   (broad category → keyword match, e.g. "Trades" ← plumb/electric/hvac/roof/handyman/landscap;
   "Food & Beverage" ← coffee/cafe/restaurant/bakery/bar/brewery; falls back to "Other") +
@@ -217,17 +211,13 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are
-implemented with stage-scoped writes; Firecrawl-backed commands are request-only behind `--use-firecrawl`.
-The §1 scoring signals are now coded for future finds/prioritization; existing prioritized records display
-report fallback scores until re-prioritized with the richer Places facts. Current `main` is the canonical
-foundation; do not merge `origin/onboarding-matt` wholesale. Continue using profile stores, generated
-human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
+Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are implemented.
+**URGENT PRIORITY:** Address the critical bottlenecks identified in `docs/session-logs/sean/2026-06-09-2359-efficiency-market-analysis.md`. The most critical technical fixes are replacing JSONL with SQLite and adding `asyncio` for network calls. The critical procedural fixes are updating `AGENTS.md` with Hunt Rhythms, Territory Coordination, and Post-Hunt Syncs. 
+Current `main` is the canonical foundation. Continue using profile stores, generated human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
 
 ## 👤 Contributors this session
-- **Sean** — directed the pending lead/report cleanup and requested implementation of the §1 scoring signals.
-- **Codex** — implemented Places-backed scoring facts, deterministic `lead_score`, report score columns,
-  focused regression tests, regenerated profile/shared reports, and prepared this context transfer.
+- **Sean** — directed a comprehensive codebase pressure test and market analysis.
+- **Gemini** — spawned sub-agents for analysis, synthesized the findings into a session log, and prepared this context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.

@@ -5,7 +5,7 @@ status: active
 created: 2026-06-09
 updated: 2026-06-09
 topic: hot-cache
-generated: 2026-06-09T22:42:28
+generated: 2026-06-09T23:57:59
 stale_after: 2026-06-14
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** lead generator operational; first real Northern CA trade hunt run — 49 new no-website
+**Phase:** operational with active efficiency improvements; completed a full pressure test, constitution review, and market analysis. `AGENTS.md` updates and a migration from JSONL to SQLite + `asyncio` are queued up next to resolve critical I/O bottlenecks.
 
 ## Active tasks
 - Sean — push latest `main` commits once ready (Northern CA hunt/category grouping + scoring/wrap-up).
@@ -39,12 +39,9 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   `MEMORY.md` was uploaded successfully.
 
 ## Handoff
-Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are
-implemented with stage-scoped writes; Firecrawl-backed commands are request-only behind `--use-firecrawl`.
-The §1 scoring signals are now coded for future finds/prioritization; existing prioritized records display
-report fallback scores until re-prioritized with the richer Places facts. Current `main` is the canonical
-foundation; do not merge `origin/onboarding-matt` wholesale. Continue using profile stores, generated
-human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
+Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are implemented.
+**URGENT PRIORITY:** Address the critical bottlenecks identified in `docs/session-logs/sean/2026-06-09-2359-efficiency-market-analysis.md`. The most critical technical fixes are replacing JSONL with SQLite and adding `asyncio` for network calls. The critical procedural fixes are updating `AGENTS.md` with Hunt Rhythms, Territory Coordination, and Post-Hunt Syncs. 
+Current `main` is the canonical foundation. Continue using profile stores, generated human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
 
 ## Latest session
 `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md` — Sean Session Log — 2026-06-09 — Northern CA Trade Lead Hunt
