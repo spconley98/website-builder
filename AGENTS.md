@@ -40,10 +40,14 @@ time. Keep it current.
 
 ## 1. What this project is
 
-`website-builder` — a **local-AI lead pipeline**: finds local businesses with **no website**,
-prioritizes them by available online photos (Yelp/Google), outputs clickable lead lists so Sean + Matt
-can build + sell them websites. Local AI (Ollama/RTX 3090) does the research grunt-work. Website
-*building* itself is a separate future repo. **Full architecture: [`docs/project/ARCHITECTURE.md`](./docs/project/ARCHITECTURE.md).**
+`website-builder` — a **local-AI lead pipeline**: finds local businesses with **no website** via Google
+Places API, scores each on buildability + reachability (`photo_count`, `phone_present`,
+`recent_review_count`, `hours_present`, `staleness_flags` as soft penalties — never hard excludes), and
+outputs clickable lead lists ranked by score. Output is a **qualified-leads feeder for a future separate
+website-build/sell repo** — leadpipe itself does not do site building, templates, pricing, CRM, or
+outreach automation. Local AI (Ollama) does the research grunt-work. Scope locked: no-website-only (no
+outdated-site/SEO tiers), Google Places only (no Yelp/directories/social scraping). **Full architecture:
+[`docs/project/ARCHITECTURE.md`](./docs/project/ARCHITECTURE.md).**
 Treat the reference library as inspiration, not the spec.
 
 ---
