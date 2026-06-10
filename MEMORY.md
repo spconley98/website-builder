@@ -14,8 +14,14 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T23:30:00-07:00 · **Last agent:** Claude Sonnet 4.6 — Firecrawl credit-pause guard cherry-pick (Sean)
-**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean on `28f144e` (39/39), confirmed §5 reciprocal routing; new `docs/project/SYNC_GUIDE.md` for Sean/Matt session hygiene; `AGENTS.md` §1 North Star refined (scoring signals + feeder-repo framing, not yet implemented in code); Firecrawl account-wide credit-pause guard added to `lead_prioritizer` (41/41 tests); `matt-wip-2026-06-09` mostly resolved — only stray React/Vite scaffold fate still open
+**Last updated:** 2026-06-10T00:00:00-07:00 · **Last agent:** Claude Sonnet 4.6 — Northern CA trade lead hunt + Matt onboarding guides + AI Leads category grouping (Sean)
+**Phase:** lead generator operational; first real Northern CA trade hunt run — 49 new no-website
+leads found across Sacramento/San Jose/Oakland/Fresno/Santa Rosa (HVAC, plumbing, electrical,
+handyman, landscaping), 25/26 prioritized via Firecrawl; `AGENTS.md` §1 North Star scoring signals
+still not yet implemented in code; `matt-wip-2026-06-09` mostly resolved — only stray React/Vite
+scaffold fate still open. NEW: "AI Leads" reports now group leads by broad industry category
+(collapsible `<details>`, `config/industry_categories.yaml`) above the unchanged full master
+list; 3 new ELI5 onboarding guides for Matt added to `docs/project/`.
 
 ---
 
@@ -24,6 +30,19 @@ tags: [canon, state]
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **AI Leads reports grouped by industry category** — `config/industry_categories.yaml`
+  (broad category → keyword match, e.g. "Trades" ← plumb/electric/hvac/roof/handyman/landscap;
+  "Food & Beverage" ← coffee/cafe/restaurant/bakery/bar/brewery; falls back to "Other") +
+  `src/leadpipe/industries.py` (`load_industry_categories`, `industry_group`).
+  `render_all_leads`/`render_shared_all` now render a "## By Category" section of collapsible
+  `<details>` blocks per category above the unchanged "## Full List" master table. Pure
+  reporting change, no new agent. 47/47 tests pass (4 new in `tests/test_industries.py`, 2 new
+  in `tests/test_reports.py`). Grow the YAML as new industries appear from hunts.
+- **ELI5 onboarding guides for Matt** (`docs/project/`, linked from `_HOME.md`):
+  `AGENT_PROMPT_GUIDE (Matt - Getting Up To Date).md` (git sync + copy-paste prompt),
+  `AGENT_PROMPT_GUIDE (Start Session).md` (cold-start prompt + what AGENTS.md/_HOT/MEMORY are),
+  `AGENT_PROMPT_GUIDE (End Session).md` (wrap-up prompt + what context-transfer does). Pushed
+  (`53e1916`).
 - **Obsidian agent-brain — MERGED to `main`** (`e289f49`, was branch `obsidian-agent-brain`, PR #2) —
   the vault is now the primary brain with an Authority model (`AGENTS.md` §5), a cold-start read-path
   (`_HOT.md` → `_HOME.md` MOCs → `docs/_working-context/` → `past_mistakes.md` → `MEMORY.md`), schema
@@ -92,17 +111,32 @@ tags: [canon, state]
     added Matt branch audit/proposed-target research notes, fixed Markdown table escaping for lead names/text
     containing `|`, regenerated reports, and kept `config/targets.matt.yaml` empty pending a small chosen run.
 
+## ✅ What exists now (cont.)
+- **First Northern CA trade hunt — Sean, 2026-06-09/10**: `config/targets.sean.yaml` repointed
+  from TX placeholders to 5 Northern CA areas (Sacramento, San Jose, Oakland, Fresno, Santa Rosa,
+  8km radius), 5 industries each (HVAC contractors, plumbers, electricians, handyman,
+  landscaping). `leadpipe find` (no Firecrawl needed) found 49 new no-website leads (Sacramento 9,
+  San Jose 10, Oakland 15, Fresno 8, Santa Rosa 7). `leadpipe prioritize --use-firecrawl` rated
+  25/26 candidates; one persistent failure ("Spark Electricians",
+  `ChIJiePmHvA1joARvbNVvZcwFJY`) — Ollama `gemma4-fast` times out after 60s on its scraped content,
+  even on retry, lead stays `found`. Reports regenerated. Session log:
+  `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md`.
+
 ## 🔨 In progress
+- Sean — re-run `leadpipe report` and commit refreshed reports once pending
+  `config/targets.sean.yaml` / `data/sean/leads.jsonl` changes are resolved (these were modified
+  before this session and left uncommitted; current `reports/*` working tree mixes those data
+  changes with the new "By Category" sections — needs a clean regenerate+commit pass).
+- Sean — push commit `94ccef9` (industry-category grouping) once ready.
 - Sean — implement new §1 scoring signals (`phone_present`, `recent_review_count`, `hours_present`,
   `staleness_flags` as soft penalties) in `lead_prioritizer` — spec'd via three-brain/Codex, not yet
   coded.
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
-- Sean — tuning real hunt targets. The first guarded Sean-config run completed but found 0 new no-website
-  candidates for the current Austin/San Antonio target list.
-- Sean — running Website Intelligence on prioritized leads once the desired target scope has prioritized
-  candidates; one-off Round Rock/Fresh Brew remains available as a known validation lead.
+- Sean — review the 49 new Northern CA trade leads in `reports/Sean - Prioritized Leads.md`; run
+  `leadpipe intelligence --use-firecrawl` on prioritized leads for Website Briefs; retry/investigate
+  "Spark Electricians" Ollama timeout (possible content-truncation guard needed in `lead_prioritizer`).
 
 ## 🚫 Blocked / waiting
 - None currently. NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and
@@ -188,6 +222,8 @@ choose a smaller active run list. Continue using profile stores, generated human
 session handoffs under `docs/session-logs/<contributor>/`.
 
 ## 👤 Contributors this session
+- **Sean** — ran first real Northern CA trade lead hunt (Sacramento, San Jose, Oakland, Fresno,
+  Santa Rosa; HVAC/plumbing/electrical/handyman/landscaping), 49 leads found, 25/26 prioritized.
 - **Sean** — chose current `main` as the canonical foundation and approved preserving Matt's branch as an
   artifact source instead of a merge target.
 - **Codex** — fixed Markdown report table escaping, added the regression test, regenerated reports, verified
