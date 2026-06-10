@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from .industries import industry_group, load_industry_categories
 from .models import Lead, LeadStatus
 from .store import ALLOWED_PROFILES, DEFAULT_PROFILE, LeadStore, normalize_profile
 
@@ -55,17 +56,44 @@ def _active(leads: list[Lead]) -> list[Lead]:
     return [l for l in leads if l.status not in {LeadStatus.INVALID, LeadStatus.ARCHIVED}]
 
 
+_ALL_LEADS_HEADER = ["| Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|"]
+
+
+def _all_leads_row(l: Lead) -> str:
+    maps = f"[map]({l.google_maps_url})" if l.google_maps_url else "—"
+    return f"| {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | {_cell(l.status.value)} | {maps} |"
+
+
 def _all_leads_table(leads: list[Lead]) -> str:
     leads = _active(leads)
     if not leads:
         return "_No leads yet — run `leadpipe find` to populate this list._\n"
-    rows = ["| Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|"]
+    rows = list(_ALL_LEADS_HEADER)
     for l in sorted(leads, key=lambda x: (x.industry, x.name)):
-        maps = f"[map]({l.google_maps_url})" if l.google_maps_url else "—"
-        rows.append(
-            f"| {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | {_cell(l.status.value)} | {maps} |"
-        )
+        rows.append(_all_leads_row(l))
     return "\n".join(rows) + "\n"
+
+
+def _grouped_leads_sections(leads: list[Lead]) -> str:
+    leads = _active(leads)
+    if not leads:
+        return "_No leads yet — run `leadpipe find` to populate this list._\n"
+    categories, other_label = load_industry_categories()
+    groups: dict[str, list[Lead]] = {}
+    for l in leads:
+        groups.setdefault(industry_group(l.industry, categories, other_label), []).append(l)
+
+    def _sort_key(label: str) -> tuple[int, str]:
+        return (1, label) if label == other_label else (0, label)
+
+    sections = []
+    for label in sorted(groups, key=_sort_key):
+        members = sorted(groups[label], key=lambda x: (x.industry, x.name))
+        rows = list(_ALL_LEADS_HEADER) + [_all_leads_row(l) for l in members]
+        sections.append(
+            f"<details>\n<summary>{label} ({len(members)})</summary>\n\n" + "\n".join(rows) + "\n\n</details>\n"
+        )
+    return "\n".join(sections)
 
 
 def _prioritized_table(leads: list[Lead]) -> str:
@@ -114,6 +142,9 @@ def render_all_leads(
         + "# AI Leads\n\n"
         f"> Generated from `{source_label}` — do not hand-edit, regenerate with `leadpipe report`.\n"
         "> Every business Lead Finder found with **no website**.\n\n"
+        "## By Category\n\n"
+        f"{_grouped_leads_sections(leads)}\n"
+        "## Full List\n\n"
         f"{_all_leads_table(leads)}"
     )
 
@@ -163,17 +194,45 @@ def _lead_sort_rank(lead: Lead) -> tuple[int, int]:
     return (lead.status.rank, lead.photo_rating or -1)
 
 
+_SHARED_ALL_HEADER = ["| Owners | Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|---|"]
+
+
+def _shared_all_row(lead: Lead, owners: list[str]) -> str:
+    maps = f"[map]({lead.google_maps_url})" if lead.google_maps_url else "—"
+    return (
+        f"| {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
+        f"{_cell(lead.location)} | {_cell(lead.status.value)} | {maps} |"
+    )
+
+
 def _shared_all_table(rows_with_owners: list[tuple[Lead, list[str]]]) -> str:
     if not rows_with_owners:
         return "_No shared leads yet — run a profile find command to populate this list._\n"
-    rows = ["| Owners | Business | Industry | Location | Status | Maps |", "|---|---|---|---|---|---|"]
+    rows = list(_SHARED_ALL_HEADER)
     for lead, owners in sorted(rows_with_owners, key=lambda x: (x[0].industry, x[0].name)):
-        maps = f"[map]({lead.google_maps_url})" if lead.google_maps_url else "—"
-        rows.append(
-            f"| {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
-            f"{_cell(lead.location)} | {_cell(lead.status.value)} | {maps} |"
-        )
+        rows.append(_shared_all_row(lead, owners))
     return "\n".join(rows) + "\n"
+
+
+def _grouped_shared_sections(rows_with_owners: list[tuple[Lead, list[str]]]) -> str:
+    if not rows_with_owners:
+        return "_No shared leads yet — run a profile find command to populate this list._\n"
+    categories, other_label = load_industry_categories()
+    groups: dict[str, list[tuple[Lead, list[str]]]] = {}
+    for lead, owners in rows_with_owners:
+        groups.setdefault(industry_group(lead.industry, categories, other_label), []).append((lead, owners))
+
+    def _sort_key(label: str) -> tuple[int, str]:
+        return (1, label) if label == other_label else (0, label)
+
+    sections = []
+    for label in sorted(groups, key=_sort_key):
+        members = sorted(groups[label], key=lambda x: (x[0].industry, x[0].name))
+        rows = list(_SHARED_ALL_HEADER) + [_shared_all_row(lead, owners) for lead, owners in members]
+        sections.append(
+            f"<details>\n<summary>{label} ({len(members)})</summary>\n\n" + "\n".join(rows) + "\n\n</details>\n"
+        )
+    return "\n".join(sections)
 
 
 def _shared_prioritized_table(rows_with_owners: list[tuple[Lead, list[str]]]) -> str:
@@ -215,12 +274,16 @@ def _shared_website_briefs_table(rows_with_owners: list[tuple[Lead, list[str]]])
 
 
 def render_shared_all(profile_leads: dict[str, list[Lead]]) -> str:
+    merged = _merge_shared(profile_leads)
     return (
         _report_frontmatter("shared-ai-leads", ("sean", "matt"), ["report", "leads", "shared"])
         + "# Shared AI Leads\n\n"
         "> Generated from profile stores under `data/<profile>/leads.jsonl` — do not hand-edit.\n"
         "> Archived/invalid leads are hidden by default; owners show who found the same place.\n\n"
-        f"{_shared_all_table(_merge_shared(profile_leads))}"
+        "## By Category\n\n"
+        f"{_grouped_shared_sections(merged)}\n"
+        "## Full List\n\n"
+        f"{_shared_all_table(merged)}"
     )
 
 

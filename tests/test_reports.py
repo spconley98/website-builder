@@ -58,7 +58,8 @@ def test_shared_report_dedupes_by_place_id_and_shows_owners():
 
     rendered = render_shared_all({"sean": [sean], "matt": [matt]})
 
-    assert rendered.count("Fresh Brew Cafe") == 1
+    # appears once in the "By Category" grouped section and once in the full list
+    assert rendered.count("Fresh Brew Cafe") == 2
     assert "Matt, Sean" in rendered
 
 
@@ -104,6 +105,34 @@ def test_shared_website_briefs_dedupes_and_shows_owners():
     assert rendered.count("Fresh Brew Cafe") == 1
     assert "Matt, Sean" in rendered
     assert "Convert map traffic" in rendered
+
+
+def test_all_leads_groups_by_category_and_keeps_full_list():
+    cafe = _lead("p1", name="Fresh Brew Cafe")
+    plumber = _lead("p2", name="Acme Plumbing")
+    plumber = plumber.model_copy(update={"industry": "plumbing"})
+
+    rendered = render_all_leads([cafe, plumber], contributors=("sean",))
+
+    assert "## By Category" in rendered
+    assert "## Full List" in rendered
+    assert "<summary>Food & Beverage (1)</summary>" in rendered
+    assert "<summary>Trades (1)</summary>" in rendered
+    # full list still has both rows, ungrouped
+    assert rendered.count("Fresh Brew Cafe") == 2  # once in grouped section, once in full list
+    assert rendered.count("Acme Plumbing") == 2
+
+
+def test_shared_all_groups_by_category_and_keeps_full_list():
+    cafe = _lead("p1", name="Fresh Brew Cafe")
+    plumber = _lead("p2", name="Acme Plumbing").model_copy(update={"industry": "plumbing"})
+
+    rendered = render_shared_all({"sean": [cafe, plumber]})
+
+    assert "## By Category" in rendered
+    assert "## Full List" in rendered
+    assert "<summary>Food & Beverage (1)</summary>" in rendered
+    assert "<summary>Trades (1)</summary>" in rendered
 
 
 def test_reports_carry_valid_report_frontmatter():

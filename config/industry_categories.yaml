@@ -1,0 +1,26 @@
+# Broad-category groupings for the "AI Leads" reports (reports.py renders each
+# category as a collapsible <details> section). Matching is case-insensitive
+# substring matching against Lead.industry — add keywords as new industries
+# show up from hunts. Anything that matches nothing falls into `other_label`.
+
+categories:
+  - label: Trades
+    match:
+      - plumb
+      - electric
+      - hvac
+      - roof
+      - handyman
+      - landscap
+      - contractor
+
+  - label: Food & Beverage
+    match:
+      - coffee
+      - cafe
+      - restaurant
+      - bakery
+      - bar
+      - brewery
+
+other_label: Other
