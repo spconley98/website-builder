@@ -38,6 +38,9 @@ by available photos, so we can build + sell them websites.
 - **Sean** — owner, sole approver
 - **Matt** — collaborator (onboarding/sync status lives in [[MEMORY]])
 - **[[SYNC_GUIDE]]** — copy-paste before/after-session checklist for Sean & Matt (plain English)
+- **[[AGENT_PROMPT_GUIDE (Matt - Getting Up To Date)]]** — ELI5: git sync words + copy-paste prompt to pull latest before working
+- **[[AGENT_PROMPT_GUIDE (Start Session)]]** — ELI5: what AGENTS.md/_HOT/MEMORY are + copy-paste cold-start prompt for new agent chats
+- **[[AGENT_PROMPT_GUIDE (End Session)]]** — ELI5: why/how to "wrap up" + copy-paste end-of-session prompt
 
 ## 🗂️ Areas
 - **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, visuals)
