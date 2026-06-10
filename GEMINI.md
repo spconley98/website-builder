@@ -2,7 +2,8 @@
 
 > **Read [`AGENTS.md`](./AGENTS.md) first — it is the canonical constitution** for this project
 > (status, contributors, principles, conventions, memory, tooling, git, session protocol).
-> Then read [`MEMORY.md`](./MEMORY.md) for current state.
+> Then follow the cold-start read-path (AGENTS.md §5): [`_HOT.md`](./_HOT.md) → [`_HOME.md`](./_HOME.md)
+> → `docs/_working-context/<proj>.md` → [`past_mistakes.md`](./past_mistakes.md) → [`MEMORY.md`](./MEMORY.md).
 >
 > Do not duplicate constitution content here — update `AGENTS.md` so all agents stay in sync.
 

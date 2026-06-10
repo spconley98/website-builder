@@ -50,7 +50,11 @@ lerna-debug.log*
 # --- Gemini CLI (machine-local skill links + MCP config — absolute paths, not portable) ---
 .gemini/
 
-# --- Obsidian (keep config, ignore volatile UI state) ---
+# --- Obsidian (keep reviewed core config; ignore volatile UI state + the plugin execution surface) ---
+# .obsidian/ is an executable trust boundary (AGENTS.md §6): a real campaign (REF6598) hid a RAT in
+# .obsidian/plugins/<x>/data.json. Never sync community plugins or their data; keep only reviewed core config.
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 .obsidian/graph.json
+.obsidian/plugins/
+.obsidian/community-plugins.json
