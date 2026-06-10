@@ -67,6 +67,7 @@ class Settings(BaseModel):
     llm_model: str
     llm_base_url: str
     targets: list[Target]
+    firecrawl_pause_credits_pct: float | None = 70.0
 
 
 def _load_targets(path: Path) -> list[Target]:
@@ -87,10 +88,18 @@ def _load_targets(path: Path) -> list[Target]:
 def load_settings(targets_path: Path | None = None) -> Settings:
     """Single entry point every module/agent uses to read config."""
     targets_path = targets_path or ROOT / "config" / "targets.yaml"
+    pause_pct_str = os.getenv("FIRECRAWL_PAUSE_CREDITS_PCT")
+    pause_pct = 70.0
+    if pause_pct_str is not None:
+        try:
+            pause_pct = float(pause_pct_str)
+        except ValueError:
+            pass
     return Settings(
         google_places_api_key=os.getenv("GOOGLE_PLACES_API_KEY") or None,
         firecrawl_api_key=os.getenv("FIRECRAWL_API_KEY") or None,
         llm_model=os.getenv("LLM_MODEL", "gemma4-fast"),
         llm_base_url=os.getenv("LLM_BASE_URL", "http://localhost:11434/v1"),
         targets=_load_targets(targets_path),
+        firecrawl_pause_credits_pct=pause_pct,
     )

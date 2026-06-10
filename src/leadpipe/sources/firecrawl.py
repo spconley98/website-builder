@@ -68,3 +68,25 @@ def scrape(url: str) -> str:
     photo-count enrichment when the structured APIs don't give us enough."""
     body = _post("/scrape", {"url": url, "formats": ["markdown"]})
     return body.get("data", {}).get("markdown", "")
+
+
+def get_credit_usage(*, api_key: str | None = None) -> dict | None:
+    """Get the current credit usage from the team API.
+    Returns:
+        dict: {"remainingCredits": int, "planCredits": int, ...} or None on failure.
+    """
+    settings = load_settings()
+    key = api_key or settings.firecrawl_api_key
+    if not key:
+        return None
+    try:
+        with _client(key) as client:
+            resp = client.get("https://api.firecrawl.dev/v2/team/credit-usage")
+            if resp.status_code == 200:
+                body = resp.json()
+                if body.get("success", False):
+                    return body.get("data")
+    except Exception:
+        pass
+    return None
+

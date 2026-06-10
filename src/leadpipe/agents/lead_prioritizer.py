@@ -22,7 +22,7 @@ from datetime import date
 import re
 
 from .. import llm
-from ..config import Target
+from ..config import Target, load_settings
 from ..models import LeadPrioritization
 from ..sources import firecrawl
 from ..store import LeadStore
@@ -168,7 +168,24 @@ def run(store: LeadStore, target: Target) -> AgentResult:
         and (not target.industries or l.industry in target.industries)
     ]
 
+    settings = load_settings()
+    pause_pct = settings.firecrawl_pause_credits_pct
+
     for lead in candidates:
+        if pause_pct is not None and pause_pct > 0:
+            usage = firecrawl.get_credit_usage()
+            if usage:
+                rem = usage.get("remainingCredits", 0)
+                plan = usage.get("planCredits", 0)
+                if plan > 0:
+                    current_pct = (rem / plan) * 100
+                    if current_pct <= pause_pct:
+                        errors.append(
+                            f"Firecrawl credits remaining ({current_pct:.1f}%) reached or dropped below "
+                            f"the pause threshold of {pause_pct}%. Pausing prioritization."
+                        )
+                        break
+
         processed += 1
         try:
             urls = _gather_listing_urls(lead)

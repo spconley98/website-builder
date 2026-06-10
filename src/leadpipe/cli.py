@@ -10,6 +10,7 @@ whole repeatable batch list (ARCHITECTURE.md §8 — config file vs flags).
 """
 from __future__ import annotations
 
+import os
 import typer
 from rich.console import Console
 
@@ -65,11 +66,15 @@ def prioritize(
     area: str | None = typer.Option(None, help="restrict to leads found in this area"),
     industry: str | None = typer.Option(None, help="restrict to this industry"),
     radius: str | None = typer.Option(None),
+    pause_credits_pct: float = typer.Option(70.0, help="Pause if remaining credits drop to or below this percentage (0-100)"),
 ):
     """Run Lead Prioritizer — rate existing 'found' leads by photo availability."""
+    os.environ["FIRECRAWL_PAUSE_CREDITS_PCT"] = str(pause_credits_pct)
     targets = _targets_or_exit(area, industry, radius)
     store = LeadStore()
     console.print(f"[bold]Lead Prioritizer[/bold] — {len(targets)} target(s)")
+    if pause_credits_pct > 0:
+        console.print(f"[dim]Credit threshold check active: will pause if remaining credits drop to or below {pause_credits_pct}%.[/dim]")
     _print_report(pipeline.run_stage("prioritize", store, targets))
     reports.write_reports(store)
     console.print("[dim]Reports refreshed in reports/[/dim]")
@@ -80,11 +85,15 @@ def run(
     area: str | None = typer.Option(None, help="override targets.yaml for one run"),
     industry: str | None = typer.Option(None),
     radius: str | None = typer.Option(None),
+    pause_credits_pct: float = typer.Option(70.0, help="Pause if remaining credits drop to or below this percentage (0-100)"),
 ):
     """Run the full pipeline (find -> prioritize) across every target."""
+    os.environ["FIRECRAWL_PAUSE_CREDITS_PCT"] = str(pause_credits_pct)
     targets = _targets_or_exit(area, industry, radius)
     store = LeadStore()
     console.print(f"[bold]Full pipeline[/bold] — {len(targets)} target(s)")
+    if pause_credits_pct > 0:
+        console.print(f"[dim]Credit threshold check active: will pause if remaining credits drop to or below {pause_credits_pct}%.[/dim]")
     _print_report(pipeline.run_all(store, targets))
     reports.write_reports(store)
     console.print("[dim]Reports refreshed in reports/[/dim]")
