@@ -16,12 +16,13 @@ Closes out a work session cleanly so the next agent (or future you) has full con
 
 ## Step 1: Health Check
 
-If build/lint/typecheck scripts exist (check `package.json`), run them and report results
-before continuing. Fix failures before proceeding. Skip silently if no such tooling exists yet.
+This is a **Python/uv** project (`pyproject.toml`) — **not** npm. Run the test suite and the vault
+checks; report results before continuing and fix failures before proceeding.
 
 ```powershell
-npm run lint
-npx tsc --noEmit
+uv run pytest tests/ -q          # riskiest-contract tests — should be all green
+uv run leadpipe vault validate   # frontmatter schema on the allowlisted notes
+uv run leadpipe vault heartbeat  # broken [[wikilinks]] / orphans / stale notes (report-only)
 ```
 
 ---
