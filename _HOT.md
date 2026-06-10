@@ -5,7 +5,7 @@ status: active
 created: 2026-06-09
 updated: 2026-06-09
 topic: hot-cache
-generated: 2026-06-09T22:22:07
+generated: 2026-06-09T22:42:28
 stale_after: 2026-06-14
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -18,14 +18,13 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 **Phase:** lead generator operational; first real Northern CA trade hunt run — 49 new no-website
 
 ## Active tasks
-- Sean — re-run `leadpipe report` and commit refreshed reports once pending
-  `config/targets.sean.yaml` / `data/sean/leads.jsonl` changes are resolved (these were modified
-  before this session and left uncommitted; current `reports/*` working tree mixes those data
-  changes with the new "By Category" sections — needs a clean regenerate+commit pass).
-- Sean — push commit `94ccef9` (industry-category grouping) once ready.
-- Sean — implement new §1 scoring signals (`phone_present`, `recent_review_count`, `hours_present`,
-  `staleness_flags` as soft penalties) in `lead_prioritizer` — spec'd via three-brain/Codex, not yet
-  coded.
+- Sean — push latest `main` commits once ready (Northern CA hunt/category grouping + scoring/wrap-up).
+- Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
+  last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
+- Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
+- Sean — review the 49 new Northern CA trade leads in `reports/Sean - Prioritized Leads.md`; run
+  `leadpipe intelligence --use-firecrawl` on prioritized leads for Website Briefs; retry/investigate
+  "Spark Electricians" Ollama timeout (possible content-truncation guard needed in `lead_prioritizer`).
 
 ## Next
 1. ~~Build the scaffold~~ ✅ **DONE — working end-to-end on real data.**
@@ -42,10 +41,10 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 ## Handoff
 Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are
 implemented with stage-scoped writes; Firecrawl-backed commands are request-only behind `--use-firecrawl`.
-Current `main` is the canonical foundation; do not merge `origin/onboarding-matt` wholesale. Matt's lead
-data is already imported exactly, and his branch targets are captured as research notes until Sean/Matt
-choose a smaller active run list. Continue using profile stores, generated human-readable reports, and
-session handoffs under `docs/session-logs/<contributor>/`.
+The §1 scoring signals are now coded for future finds/prioritization; existing prioritized records display
+report fallback scores until re-prioritized with the richer Places facts. Current `main` is the canonical
+foundation; do not merge `origin/onboarding-matt` wholesale. Continue using profile stores, generated
+human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
 
 ## Latest session
 `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md` — Sean Session Log — 2026-06-09 — Northern CA Trade Lead Hunt

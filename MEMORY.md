@@ -14,14 +14,15 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T00:00:00-07:00 · **Last agent:** Claude Sonnet 4.6 — Northern CA trade lead hunt + Matt onboarding guides + AI Leads category grouping (Sean)
+**Last updated:** 2026-06-09T22:38:42-07:00 · **Last agent:** Codex — deterministic scoring signals + report refresh (Sean)
 **Phase:** lead generator operational; first real Northern CA trade hunt run — 49 new no-website
 leads found across Sacramento/San Jose/Oakland/Fresno/Santa Rosa (HVAC, plumbing, electrical,
 handyman, landscaping), 25/26 prioritized via Firecrawl; `AGENTS.md` §1 North Star scoring signals
-still not yet implemented in code; `matt-wip-2026-06-09` mostly resolved — only stray React/Vite
-scaffold fate still open. NEW: "AI Leads" reports now group leads by broad industry category
-(collapsible `<details>`, `config/industry_categories.yaml`) above the unchanged full master
-list; 3 new ELI5 onboarding guides for Matt added to `docs/project/`.
+are now implemented in code (`phone_present`, `recent_review_count`, `hours_present`,
+`staleness_flags`, plus deterministic `lead_score`); `matt-wip-2026-06-09` mostly resolved — only
+stray React/Vite scaffold fate still open. "AI Leads" reports group leads by broad industry category
+(collapsible `<details>`, `config/industry_categories.yaml`) above the unchanged full master list;
+Prioritized reports now include a score column.
 
 ---
 
@@ -38,6 +39,12 @@ list; 3 new ELI5 onboarding guides for Matt added to `docs/project/`.
   `<details>` blocks per category above the unchanged "## Full List" master table. Pure
   reporting change, no new agent. 47/47 tests pass (4 new in `tests/test_industries.py`, 2 new
   in `tests/test_reports.py`). Grow the YAML as new industries appear from hunts.
+- **Deterministic §1 scoring signals implemented** — Google Places Details now captures
+  `phone_present`, `recent_review_count`, `hours_present`, and `staleness_flags` as acquisition
+  facts on newly found leads. Lead Prioritizer writes a bounded 0-100 `lead_score` from photo count
+  plus those soft reachability/staleness signals. Prioritized reports display score columns and use
+  a legacy photo-rating fallback for older records until they are re-prioritized with the richer
+  Places facts. 50/50 tests pass.
 - **ELI5 onboarding guides for Matt** (`docs/project/`, linked from `_HOME.md`):
   `AGENT_PROMPT_GUIDE (Matt - Getting Up To Date).md` (git sync + copy-paste prompt),
   `AGENT_PROMPT_GUIDE (Start Session).md` (cold-start prompt + what AGENTS.md/_HOT/MEMORY are),
@@ -123,14 +130,7 @@ list; 3 new ELI5 onboarding guides for Matt added to `docs/project/`.
   `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md`.
 
 ## 🔨 In progress
-- Sean — re-run `leadpipe report` and commit refreshed reports once pending
-  `config/targets.sean.yaml` / `data/sean/leads.jsonl` changes are resolved (these were modified
-  before this session and left uncommitted; current `reports/*` working tree mixes those data
-  changes with the new "By Category" sections — needs a clean regenerate+commit pass).
-- Sean — push commit `94ccef9` (industry-category grouping) once ready.
-- Sean — implement new §1 scoring signals (`phone_present`, `recent_review_count`, `hours_present`,
-  `staleness_flags` as soft penalties) in `lead_prioritizer` — spec'd via three-brain/Codex, not yet
-  coded.
+- Sean — push latest `main` commits once ready (Northern CA hunt/category grouping + scoring/wrap-up).
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
@@ -169,7 +169,10 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
 9. **Review Matt imported leads** — especially before prioritizing or using them for outreach.
 10. ~~Build agent #3~~ ✅ **Done — Website Intelligence**. Next: run it on prioritized leads with
     `leadpipe intelligence --profile sean --use-firecrawl`.
-11. **Sync Matt onto canonical `main`** — after Sean pushes, Matt/Matt's agent should run
+11. ~~Implement §1 scoring signals~~ ✅ **Done** — Places-backed facts now include
+    `phone_present`, `recent_review_count`, `hours_present`, and `staleness_flags`; Prioritizer writes
+    deterministic `lead_score`; reports display score columns.
+12. **Sync Matt onto canonical `main`** — after Sean pushes, Matt/Matt's agent should run
     `git status --short --branch`, `git fetch origin`, preserve any dirty work on a Matt WIP branch if
     needed, then fast-forward `main`, run `uv sync --group dev`, and run `uv run pytest tests/ -q`.
 
@@ -216,21 +219,15 @@ does; don't "simplify" them away without re-reading the reasoning).
 ## Context for next agent
 Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are
 implemented with stage-scoped writes; Firecrawl-backed commands are request-only behind `--use-firecrawl`.
-Current `main` is the canonical foundation; do not merge `origin/onboarding-matt` wholesale. Matt's lead
-data is already imported exactly, and his branch targets are captured as research notes until Sean/Matt
-choose a smaller active run list. Continue using profile stores, generated human-readable reports, and
-session handoffs under `docs/session-logs/<contributor>/`.
+The §1 scoring signals are now coded for future finds/prioritization; existing prioritized records display
+report fallback scores until re-prioritized with the richer Places facts. Current `main` is the canonical
+foundation; do not merge `origin/onboarding-matt` wholesale. Continue using profile stores, generated
+human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
 
 ## 👤 Contributors this session
-- **Sean** — ran first real Northern CA trade lead hunt (Sacramento, San Jose, Oakland, Fresno,
-  Santa Rosa; HVAC/plumbing/electrical/handyman/landscaping), 49 leads found, 25/26 prioritized.
-- **Sean** — chose current `main` as the canonical foundation and approved preserving Matt's branch as an
-  artifact source instead of a merge target.
-- **Codex** — fixed Markdown report table escaping, added the regression test, regenerated reports, verified
-  Matt/Sean data counts, wrote Matt branch audit/proposed-target notes, updated NotebookLM provenance state,
-  and prepared this handoff.
-- **Matt / Matt's agent** — contributed imported lead/research context now isolated under Matt-owned
-  files for Sean review.
+- **Sean** — directed the pending lead/report cleanup and requested implementation of the §1 scoring signals.
+- **Codex** — implemented Places-backed scoring facts, deterministic `lead_score`, report score columns,
+  focused regression tests, regenerated profile/shared reports, and prepared this context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
@@ -243,6 +240,9 @@ session handoffs under `docs/session-logs/<contributor>/`.
   hard delete from shared history.
 - Automation safety: no Firecrawl-backed scraping unless explicitly prompted by CLI guard flag; Finder
   defaults to 20 Google Places candidates per industry/request.
+- Lead scoring: `lead_score` is deterministic and bounded 0-100. Photo availability remains the main
+  buildability signal; phone/hours/recent reviews add reachability confidence; staleness flags are soft
+  penalties only, never hard excludes.
 - Matt stale-copy protocol: when Matt or Matt's agent notices his local repo is behind `origin/main`,
   pause feature work, inspect status/fetch/log divergence, pull fast-forward if clean, or preserve
   Matt's local edits on a Matt branch/WIP commit before reconciling. Never reset or overwrite Matt's
@@ -255,7 +255,8 @@ session handoffs under `docs/session-logs/<contributor>/`.
   new `docs/context-transfers/` or `docs/project/sessions/` logs. Use profile stores, human-readable
   report names, and `docs/session-logs/<contributor>/`.
 - NotebookLM shared-brain sync initially failed on 2026-06-07 due expired local auth, then succeeded
-  after re-authentication. Uploaded `MEMORY.md` source ID: `5881645e-4009-4413-816f-4c15d562b57f`.
+  after re-authentication. Latest uploaded `MEMORY.md` source ID:
+  `770a10a8-9851-4c5e-9450-f4c42c2489dc` (`[Sean] MEMORY.md - 2026-06-09 2238 - scoring-signals`).
   Local semantic memory reindex also succeeded.
 - NotebookLM source-title rule: all future shared-brain uploads must include contributor, timestamp,
   and topic. Context-transfer `MEMORY.md` uploads must use `[<Name>] MEMORY.md - YYYY-MM-DD HHMM -
