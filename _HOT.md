@@ -5,7 +5,7 @@ status: active
 created: 2026-06-09
 updated: 2026-06-09
 topic: hot-cache
-generated: 2026-06-09T18:09:20
+generated: 2026-06-09T21:22:49
 stale_after: 2026-06-14
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,13 +15,13 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** lead generator operational; **Obsidian agent-brain shipped** (authority model + `leadpipe vault` + frontmatter/MOCs/Bases) on branch `obsidian-agent-brain`, pending push/PR/merge
+**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean (39/39); Codex/Gemini now have reciprocal three-brain routing in `AGENTS.md` §5; Matt's WIP preserved on `matt-wip-2026-06-09` pending review
 
 ## Active tasks
-- Sean/Claude — **Obsidian agent-brain on branch `obsidian-agent-brain`** (5 phases, 39 tests green); pending push/PR + merge to `main`.
+- Sean — reviewing Matt's `matt-wip-2026-06-09` diff: decide on `firecrawl.py` `get_credit_usage()` +
+  2 credit-guard tests (cherry-pick candidate); decide fate of stray React/Vite scaffold (delete vs
+  separate repo).
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
-- Sean — pushing canonical `main` so Matt can fast-forward to the current scaffold instead of continuing on
-  `origin/onboarding-matt`.
 - Sean — tuning real hunt targets. The first guarded Sean-config run completed but found 0 new no-website
   candidates for the current Austin/San Antonio target list.
 - Sean — running Website Intelligence on prioritized leads once the desired target scope has prioritized
@@ -48,4 +48,4 @@ choose a smaller active run list. Continue using profile stores, generated human
 session handoffs under `docs/session-logs/<contributor>/`.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-09-1807-obsidian-agent-brain.md` — Session Handoff — Obsidian Agent-Brain Build
+`docs/session-logs/sean/2026-06-09-2100-merge-sync-three-brain-codex.md` — Session Handoff — PR #2 merge, Matt sync, reciprocal three-brain for Codex

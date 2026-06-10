@@ -14,8 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T18:07:35-07:00 · **Last agent:** Claude Opus 4.8 — Obsidian agent-brain build, Codex-reviewed, on branch `obsidian-agent-brain` (Sean)
-**Phase:** lead generator operational; **Obsidian agent-brain shipped** (authority model + `leadpipe vault` + frontmatter/MOCs/Bases) on branch `obsidian-agent-brain`, pending push/PR/merge
+**Last updated:** 2026-06-09T21:00:00-07:00 · **Last agent:** Claude Sonnet 4.6 — PR #2 merge, Matt sync, reciprocal three-brain for Codex/Gemini (Sean)
+**Phase:** lead generator operational; **Obsidian agent-brain MERGED to `main`** (`e289f49`); Matt synced clean (39/39); Codex/Gemini now have reciprocal three-brain routing in `AGENTS.md` §5; Matt's WIP preserved on `matt-wip-2026-06-09` pending review
 
 ---
 
@@ -24,12 +24,23 @@ tags: [canon, state]
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
-- **Obsidian agent-brain (branch `obsidian-agent-brain`, pending merge)** — the vault is now the primary
-  brain with an Authority model (`AGENTS.md` §5), a cold-start read-path (`_HOT.md` → `_HOME.md` MOCs →
-  `docs/_working-context/` → `past_mistakes.md` → `MEMORY.md`), schema frontmatter on every note, four
-  `docs/_bases/` dashboards, and a repo-native `uv run leadpipe vault validate|heartbeat|hot` maintenance
-  engine (no plugins — Matt/Gemini run the mandatory loop too). Built from `/grill-me` + the NotebookLM
-  "Obsidian best practices" notebook (49 sources) + a three-brain/Codex adversarial review. 39 tests green.
+- **Obsidian agent-brain — MERGED to `main`** (`e289f49`, was branch `obsidian-agent-brain`, PR #2) —
+  the vault is now the primary brain with an Authority model (`AGENTS.md` §5), a cold-start read-path
+  (`_HOT.md` → `_HOME.md` MOCs → `docs/_working-context/` → `past_mistakes.md` → `MEMORY.md`), schema
+  frontmatter on every note, four `docs/_bases/` dashboards, and a repo-native
+  `uv run leadpipe vault validate|heartbeat|hot` maintenance engine (no plugins — Matt/Gemini run the
+  mandatory loop too). Built from `/grill-me` + the NotebookLM "Obsidian best practices" notebook
+  (49 sources) + a three-brain/Codex adversarial review. 39 tests green on both Sean's and Matt's machines.
+- **Reciprocal three-brain routing for Codex/Gemini** — `AGENTS.md` §5 "Reciprocal routing" subsection:
+  when Codex or Gemini drives, 2x-stuck / self-review / risk-path edits hand off to Claude (or Gemini
+  for media/whole-repo scans), mirroring Claude's `~/.claude/commands/three-brain.md`. Codex CLI reads
+  `AGENTS.md` natively.
+- **Matt's WIP preserved on `matt-wip-2026-06-09`** (not merged) — 16 modified Python files (triaged:
+  `config.py`/`cli.py` changes are HIGH risk, revert profile-isolation, do NOT cherry-pick;
+  `firecrawl.py` `get_credit_usage()` + 2 credit-guard tests are low-risk/additive, future candidate),
+  a stray React/Vite scaffold (unknown origin, stays on that branch only), and his own
+  `.claude/skills/three-brain/` (independently installed, separate from the AGENTS.md routing rules
+  above). See `docs/research/matt/2026-06-09-wip-branch-diff-summary.md`.
 - GitHub repo (public, shared) + `.gitignore` + `.mcp.json.example` + `.env.example`.
 - Multi-agent constitution: `AGENTS.md` (canonical), `CLAUDE.md` + `GEMINI.md` (pointers), this file.
 - Skills: `context-transfer`, `reference-visualizer`.
@@ -77,10 +88,10 @@ tags: [canon, state]
     containing `|`, regenerated reports, and kept `config/targets.matt.yaml` empty pending a small chosen run.
 
 ## 🔨 In progress
-- Sean/Claude — **Obsidian agent-brain on branch `obsidian-agent-brain`** (5 phases, 39 tests green); pending push/PR + merge to `main`.
+- Sean — reviewing Matt's `matt-wip-2026-06-09` diff: decide on `firecrawl.py` `get_credit_usage()` +
+  2 credit-guard tests (cherry-pick candidate); decide fate of stray React/Vite scaffold (delete vs
+  separate repo).
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
-- Sean — pushing canonical `main` so Matt can fast-forward to the current scaffold instead of continuing on
-  `origin/onboarding-matt`.
 - Sean — tuning real hunt targets. The first guarded Sean-config run completed but found 0 new no-website
   candidates for the current Austin/San Antonio target list.
 - Sean — running Website Intelligence on prioritized leads once the desired target scope has prioritized

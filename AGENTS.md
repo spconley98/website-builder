@@ -93,6 +93,17 @@ is **not** a decision to use it. Each doc has three tiers:
   NotebookLM brain, commit. Run it at the end of a work session.
 - Full menu of available + recommended skills: `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md`.
 
+### Skill set for this project (business lead pipeline)
+This is a lead-pipeline app, not a marketing/design site — design/genmedia skills (aas-design,
+aas-section-builder, aas-seo-content, frontend-design, impeccable, ui-ux-pro-max, fal-*, marketing,
+ugc, storytelling, etc.) are **not relevant** and should not be invoked here. Relevant skills:
+- `vercel:*` (nextjs, deploy, env-vars, vercel-storage, ai-sdk for any LLM enrichment/scoring)
+- `run`, `verify`, `code-review`, `simplify`, `security-review`
+- `context-transfer`, `three-brain`, `grill-me`
+- `caveman:*`
+- `claude-api` (if calling an LLM for lead enrichment/scoring)
+- `website-intelligence` (if scraping/researching lead sources)
+
 ---
 
 ## 5. Memory & knowledge — the Obsidian agent brain
@@ -154,6 +165,25 @@ session logs, generated reports) stays as long as it needs to be.
   other items as `[<Name>] <doc/topic>`; use `[Unknown] ... - needs-review` only when authorship can't be
   proven. **Do not mirror `_HOT.md`** (it's a local generated digest — mirroring it would create a second
   conflicting "current state" in the brain).
+
+### Reciprocal routing — when Codex (or Gemini) is the active driver
+Claude's `three-brain` command (`~/.claude/commands/three-brain.md`) routes Claude→Codex/Gemini. The
+mirror applies when **Codex is the driver** in this repo (e.g. invoked via `codex exec` directly, or as
+Matt/Sean's active agent):
+
+- **Stuck / 2x same failure** (same test fail, same error, same edit re-tried with no progress) →
+  hand off to Claude: `git diff | claude -p "rescue: <task>. Codex tried 2x and failed. Full context attached."`
+  (or equivalent Claude Code CLI invocation). Announce before handing off, one line.
+- **User asks Codex to "check/review/sanity-check your own output"** → same no-self-review law as
+  three-brain: route to Claude for an independent pass rather than reviewing its own diff.
+- **Risk-path edits** (`src/auth/**`, `src/billing/**`, `**/migrations/**`, `**/deploy/**`, `**/.env*`,
+  `**/secrets/**`, `**/policy/**`, `infra/**`) → forced second-opinion from Claude before saying "done."
+- **Long media / whole-repo scans** → Gemini, same as three-brain (`gemini -p "..." @file`,
+  `/cc-gemini-plugin:gemini --dirs <paths> "..."`).
+- Output filing + `./three-brain-out/log.md` convention applies regardless of which agent drives.
+
+This keeps the no-self-review guarantee no matter which CLI (Claude, Codex, Gemini) is in the driver's
+seat for a given session.
 
 ---
 
