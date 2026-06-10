@@ -5,7 +5,7 @@ status: active
 created: 2026-06-09
 updated: 2026-06-09
 topic: hot-cache
-generated: 2026-06-09T21:22:49
+generated: 2026-06-09T23:40:03
 stale_after: 2026-06-14
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -48,4 +48,4 @@ choose a smaller active run list. Continue using profile stores, generated human
 session handoffs under `docs/session-logs/<contributor>/`.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-09-2100-merge-sync-three-brain-codex.md` — Session Handoff — PR #2 merge, Matt sync, reciprocal three-brain for Codex
+`docs/session-logs/matt/2026-06-09-2331-wip-push-context-transfer.md` — Matt Session Log — 2026-06-09 23:31 — WIP Push + Context Transfer
