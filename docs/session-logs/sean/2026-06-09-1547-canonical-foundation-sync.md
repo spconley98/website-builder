@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [sean]
+status: active
+created: 2026-06-09
+updated: 2026-06-09
+topic: canonical-foundation-sync
+tags: [sessions]
+---
+
 # Canonical Foundation Sync - 2026-06-09 1547
 
 ## Contributor

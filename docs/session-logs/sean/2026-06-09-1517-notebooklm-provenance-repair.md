@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [sean]
+status: active
+created: 2026-06-09
+updated: 2026-06-09
+topic: notebooklm-provenance-repair
+tags: [sessions]
+---
+
 # Session Handoff — NotebookLM Provenance Repair
 
 - **Contributor:** Sean

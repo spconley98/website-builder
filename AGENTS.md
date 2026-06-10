@@ -1,3 +1,13 @@
+---
+type: project
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-09
+topic: constitution
+tags: [canon]
+---
+
 # AGENTS.md — website-builder Constitution
 
 > **This is the canonical front door for every agent (Claude Code, OpenAI Codex, Gemini) and every

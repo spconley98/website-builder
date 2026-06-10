@@ -1,3 +1,13 @@
+---
+type: project
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-09
+topic: project-state
+tags: [canon, state]
+---
+
 # MEMORY.md — website-builder (shared project state)
 
 > Portable, multi-agent state file. **Read on session start, update on session end.** This is the

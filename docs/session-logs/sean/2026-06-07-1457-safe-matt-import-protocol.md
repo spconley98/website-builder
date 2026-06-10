@@ -1,3 +1,13 @@
+---
+type: session-log
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-07
+topic: safe-matt-import-protocol
+tags: [sessions]
+---
+
 # Sean Context Transfer - Safe Matt Import Protocol
 
 **Contributor:** Sean  

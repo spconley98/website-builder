@@ -1,3 +1,13 @@
+---
+type: project
+contributors: [sean]
+status: active
+created: 2026-06-07
+updated: 2026-06-09
+topic: architecture
+tags: [canon, design]
+---
+
 # website-builder — Architecture & Vision
 
 > **Project canon.** This is the real architecture and plan (distinct from `docs/_reference-library/`,
