@@ -17,6 +17,74 @@ from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus
 from leadpipe.store import LeadStore
 
 
+def test_prioritizer_pauses_when_credits_low(tmp_path, monkeypatch):
+    from unittest.mock import MagicMock
+
+    from leadpipe.agents import lead_prioritizer
+
+    store = LeadStore(tmp_path / "leads.jsonl")
+    store.create(
+        LeadCreate(
+            place_id="p1",
+            name="Pizza Joint",
+            industry="restaurants",
+            location="Austin, TX",
+            has_website=False,
+            found_date=date(2026, 1, 1),
+        )
+    )
+
+    monkeypatch.setenv("FIRECRAWL_PAUSE_CREDITS_PCT", "70.0")
+    monkeypatch.setattr(
+        lead_prioritizer.firecrawl,
+        "get_credit_usage",
+        MagicMock(return_value={"remainingCredits": 650, "planCredits": 1000}),
+    )
+
+    target = Target(area="Austin, TX", radius="5km", industries=["restaurants"])
+    res = lead_prioritizer.run(store, target)
+
+    assert res.processed == 0
+    assert res.created_or_updated == 0
+    assert len(res.errors) == 1
+    assert "dropped below" in res.errors[0]
+
+
+def test_prioritizer_does_not_pause_when_credits_healthy(tmp_path, monkeypatch):
+    from unittest.mock import MagicMock
+
+    from leadpipe.agents import lead_prioritizer
+
+    store = LeadStore(tmp_path / "leads.jsonl")
+    store.create(
+        LeadCreate(
+            place_id="p1",
+            name="Pizza Joint",
+            industry="restaurants",
+            location="Austin, TX",
+            has_website=False,
+            found_date=date(2026, 1, 1),
+            google_maps_url="https://maps.example/p1",
+        )
+    )
+
+    monkeypatch.setenv("FIRECRAWL_PAUSE_CREDITS_PCT", "70.0")
+    monkeypatch.setattr(
+        lead_prioritizer.firecrawl,
+        "get_credit_usage",
+        MagicMock(return_value={"remainingCredits": 800, "planCredits": 1000}),
+    )
+    monkeypatch.setattr(lead_prioritizer.firecrawl, "scrape", lambda url: "some markdown")
+    monkeypatch.setattr(lead_prioritizer, "_estimate_photo_count", lambda md: (10, "good"))
+
+    target = Target(area="Austin, TX", radius="5km", industries=["restaurants"])
+    res = lead_prioritizer.run(store, target)
+
+    assert res.processed == 1
+    assert res.created_or_updated == 1
+    assert len(res.errors) == 0
+
+
 def test_rate_from_count_thresholds():
     assert rate_from_count(0) == 0
     assert rate_from_count(1) == 1

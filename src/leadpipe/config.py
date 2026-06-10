@@ -65,6 +65,7 @@ class TargetsFile(BaseModel):
 class Settings(BaseModel):
     google_places_api_key: str | None
     firecrawl_api_key: str | None
+    firecrawl_pause_credits_pct: float
     llm_model: str
     llm_base_url: str
     targets: list[Target]
@@ -107,6 +108,7 @@ def load_settings(targets_path: Path | None = None) -> Settings:
     return Settings(
         google_places_api_key=_env_str("GOOGLE_PLACES_API_KEY"),
         firecrawl_api_key=_env_str("FIRECRAWL_API_KEY"),
+        firecrawl_pause_credits_pct=float(_env_str("FIRECRAWL_PAUSE_CREDITS_PCT", "5.0") or "5.0"),
         llm_model=_env_str("LLM_MODEL", "gemma4-fast") or "gemma4-fast",
         llm_base_url=_env_str("LLM_BASE_URL", "http://localhost:11434/v1") or "http://localhost:11434/v1",
         targets=_load_targets(targets_path),

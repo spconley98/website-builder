@@ -21,7 +21,7 @@ from __future__ import annotations
 from datetime import date
 
 from .. import llm
-from ..config import Target
+from ..config import Target, load_settings
 from ..models import LeadPrioritization
 from ..sources import firecrawl
 from ..store import LeadStore
@@ -127,9 +127,35 @@ def _matches_target(lead, target: Target) -> bool:
     return in_area and in_industry
 
 
+def _credit_pause_error(settings) -> str | None:
+    """None means proceed (or "can't tell, don't block"). A string is the
+    reason to pause — Firecrawl credit usage is account-wide and shared
+    across Sean/Matt, so dropping below the threshold pauses everyone's
+    Firecrawl-backed prioritization until credits are topped up."""
+    usage = firecrawl.get_credit_usage()
+    if not usage:
+        return None
+    remaining = usage.get("remainingCredits")
+    plan = usage.get("planCredits")
+    if not remaining or not plan:
+        return None
+    pct_remaining = remaining / plan * 100
+    if pct_remaining < settings.firecrawl_pause_credits_pct:
+        return (
+            f"Firecrawl credits dropped below {settings.firecrawl_pause_credits_pct}% "
+            f"({pct_remaining:.1f}% remaining) — pausing prioritization until topped up"
+        )
+    return None
+
+
 def run(store: LeadStore, target: Target) -> AgentResult:
     processed = created_or_updated = skipped = 0
     errors: list[str] = []
+
+    settings = load_settings()
+    credit_error = _credit_pause_error(settings)
+    if credit_error:
+        return AgentResult(NAME, processed, created_or_updated, skipped, [credit_error])
 
     # Prioritizer works the existing FOUND queue — it doesn't search Places
     # again. `target` scopes WHICH found leads to work (by area/industry),

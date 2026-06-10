@@ -68,3 +68,22 @@ def scrape(url: str) -> str:
     photo-count enrichment when the structured APIs don't give us enough."""
     body = _post("/scrape", {"url": url, "formats": ["markdown"]})
     return body.get("data", {}).get("markdown", "")
+
+
+def get_credit_usage() -> dict | None:
+    """Remaining/plan credit totals from Firecrawl's team endpoint, or None if
+    unavailable (no key, request failure, unexpected response). Used by the
+    Prioritizer to pause before burning the last of the team's credits —
+    `None` means "couldn't tell", so the caller should NOT pause on that basis."""
+    settings = load_settings()
+    if not settings.firecrawl_api_key:
+        return None
+    try:
+        with _client(settings.firecrawl_api_key) as client:
+            resp = client.get("https://api.firecrawl.dev/v2/team/credit-usage")
+        body = resp.json()
+        if resp.status_code == 200 and body.get("success", False):
+            return body.get("data")
+    except (httpx.TimeoutException, httpx.ConnectError):
+        pass
+    return None
