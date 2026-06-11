@@ -14,8 +14,11 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T22:49-07:00 · **Last Agent:** Claude Sonnet 4.6 — token/context-economy research + 2 adopted agent standards (Sean)
-**Phase:** operational with active safety/ops hardening. This session: researched token conservation (NotebookLM Nate Herk + official Claude docs + Antigravity review), stress-tested via three-brain/Gemini, added a reference doc, and adopted 2 native agent standards (patch-don't-rewrite + AI-context exclusion guardrails via `.geminiignore`/`.aiexclude`). SQLite + `asyncio` remain the next larger engine upgrades.
+**Last updated:** 2026-06-10T23:02:57-07:00 · **Last Agent:** Codex — conservative Obsidian/code cleanup and context transfer (Sean)
+**Phase:** operational with active safety/ops hardening. This session clarified Obsidian navigation and
+research/reference boundaries without changing project rules, updated stale report/session indexes, and
+lightly deduplicated report-rendering helpers without changing report output. SQLite + `asyncio` remain
+the next larger engine upgrades.
 
 ---
 
@@ -24,6 +27,14 @@ tags: [canon, state]
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Conservative Obsidian + report cleanup — Sean/Codex, 2026-06-10**: Refreshed `_HOME.md`,
+  `Research-MOC`, `Reference-MOC`, and `Sessions-MOC` so agents/users can distinguish canonical state,
+  derived NotebookLM research, reference source material, session logs, and generated reports more
+  quickly. Clarified `docs/research/README.md`, `docs/research/notebooklm-insights/00_INSIGHTS_INDEX.md`,
+  and `reports/README.md` (including Website Brief reports + human-review warning). `reports.py` now
+  shares small helpers for repeated link/category rendering while preserving report output; regenerating
+  Sean/Matt reports produced no report-content churn. `uv run leadpipe vault validate`,
+  `uv run leadpipe vault heartbeat`, and `uv run pytest tests/ -q` pass (56/56).
 - **Token & context economy — research + 2 adopted standards — Sean/Claude, 2026-06-10**: Deep-dived
   the `NATE HERK GUIDE` NotebookLM notebook + scraped official Claude Code best-practices, a
   context-window deep-dive, and the Antigravity technical review (Firecrawl). Stress-tested 15 draft
@@ -248,19 +259,17 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked and built. Latest session was non-pipeline: added 2 token/context-economy agent
-standards to `AGENTS.md` §6.x (patch-don't-rewrite + `.geminiignore`/`.aiexclude` exclusion guardrails)
-plus a reference doc, stress-tested via Gemini because the Codex three-brain route is currently broken
-(service_tier config). No pipeline/lead-data changed, so no report regeneration was needed. Agent 3 is
-robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review before
-outreach). Next technical priority remains the SQLite migration then async/pooling; do not start broad
-new hunts until data/report diffs are pushed and territory/state are synced.
+Architecture is locked and built. Latest session was non-pipeline cleanup: Obsidian navigation now more
+clearly separates canon (`AGENTS.md`/`MEMORY.md`), derived research, reference-only material, generated
+reports, and session logs; `reports.py` got a tiny duplicate-helper cleanup with no report-content churn.
+Agent 3 is robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review
+before outreach). Next technical priority remains the SQLite migration then async/pooling; do not start
+broad new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## 👤 Contributors this session
-- **Sean** — directed the token-economy research, chose exclusion scope + AGENTS.md placement, approved the plan.
-- **Claude** — ran NotebookLM/Firecrawl research, three-brain (Gemini) stress test, wrote the reference
-  doc, implemented the 2 adopted standards, ran the context transfer.
-- **Gemini** — adversarial stress test of the 15 draft conclusions (Codex route unavailable).
+- **Sean** — requested a conservative cleanup audit/implementation and selected the conservative depth.
+- **Codex** — audited the vault/code flow, clarified Obsidian navigation and research/reference labels,
+  refactored small repeated report-rendering helpers, regenerated reports, and ran context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
@@ -290,6 +299,9 @@ new hunts until data/report diffs are pushed and territory/state are synced.
 - Framework cleanup rule: no new `data/leads.jsonl`, no `(report)` / `(Sean)` style report names, no
   new `docs/context-transfers/` or `docs/project/sessions/` logs. Use profile stores, human-readable
   report names, and `docs/session-logs/<contributor>/`.
+- Information architecture cleanup is conservative: keep historical research/reference/session material,
+  but label it clearly. `docs/_reference-library/` is source/reference material; `docs/research/` is
+  working or derived research; `AGENTS.md`/`MEMORY.md` remain the authorities.
 - NotebookLM shared-brain sync initially failed on 2026-06-07 due expired local auth, then succeeded
   after re-authentication. Latest uploaded `MEMORY.md` source ID:
   `d1f9e159-031e-42f8-a1e0-0ced5c395a63` (`[Sean] MEMORY.md - 2026-06-10 2235 - today-path-implementation`).

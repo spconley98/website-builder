@@ -5,7 +5,7 @@ status: active
 created: 2026-06-10
 updated: 2026-06-10
 topic: hot-cache
-generated: 2026-06-10T22:51:10
+generated: 2026-06-10T23:04:04
 stale_after: 2026-06-15
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. This session: researched token conservation (NotebookLM Nate Herk + official Claude docs + Antigravity review), stress-tested via three-brain/Gemini, added a reference doc, and adopted 2 native agent standards (patch-don't-rewrite + AI-context exclusion guardrails via `.geminiignore`/`.aiexclude`). SQLite + `asyncio` remain the next larger engine upgrades.
+**Phase:** operational with active safety/ops hardening. This session clarified Obsidian navigation and
 
 ## Active tasks
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
@@ -44,13 +44,12 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   uploaded successfully.
 
 ## Handoff
-Architecture is locked and built. Latest session was non-pipeline: added 2 token/context-economy agent
-standards to `AGENTS.md` §6.x (patch-don't-rewrite + `.geminiignore`/`.aiexclude` exclusion guardrails)
-plus a reference doc, stress-tested via Gemini because the Codex three-brain route is currently broken
-(service_tier config). No pipeline/lead-data changed, so no report regeneration was needed. Agent 3 is
-robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review before
-outreach). Next technical priority remains the SQLite migration then async/pooling; do not start broad
-new hunts until data/report diffs are pushed and territory/state are synced.
+Architecture is locked and built. Latest session was non-pipeline cleanup: Obsidian navigation now more
+clearly separates canon (`AGENTS.md`/`MEMORY.md`), derived research, reference-only material, generated
+reports, and session logs; `reports.py` got a tiny duplicate-helper cleanup with no report-content churn.
+Agent 3 is robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review
+before outreach). Next technical priority remains the SQLite migration then async/pooling; do not start
+broad new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-10-2249-token-economy-standards.md` — Session — Token & context economy research + two adopted standards
+`docs/session-logs/sean/2026-06-10-2301-obsidian-cleanup.md` — Session Log — Obsidian Cleanup
