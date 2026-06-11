@@ -14,13 +14,11 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T23:33:00-07:00 · **Last Agent:** Claude Opus 4.8 — Nate Herk integration: tiered LLM (A1) + sell methodology (C1) (Sean)
-**Phase:** operational with active safety/ops hardening. This session: digested the 10 NotebookLM
-`NATE HERK GUIDE` reports → 9-item recommendation catalog; Sean picked + shipped **A1** (tiered/two-pass
-local LLM — recovers timed-out leads instead of skipping) and **C1** (sell-methodology doc +
-leverage-anchored Website Intelligence briefs) on branch `nateherk-tiered-llm-sales`. NOTE: a concurrent
-Codex session (23:02) committed Obsidian/report cleanup; that work is preserved below. SQLite + `asyncio`
-remain the next larger engine upgrades.
+**Last updated:** 2026-06-10T23:56:04-07:00 · **Last Agent:** Codex — lead-source/platform research and wrap-up (Sean)
+**Phase:** operational with active safety/ops hardening. This session used Firecrawl-backed web research
+to map low-cost/free lead-source expansion paths and image-asset rules for the future sister website-build
+project. The branch still carries the Nate Herk tiered-LLM/sales-methodology work plus existing lead/report
+diffs; SQLite + `asyncio` remain the next larger engine upgrades.
 
 ---
 
@@ -29,6 +27,16 @@ remain the next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Lead-source/platform expansion research — Sean/Codex, 2026-06-10**: Researched additional avenues for
+  large lead databases and no-website verification. Direction: keep Google Places as the high-confidence
+  paid verifier, but do not use paid APIs as the bulk database engine. Best low-cost/free expansion lanes
+  are OpenStreetMap/Overpass for small polite queries, Overture Maps Places for larger bulk seeding, and
+  public/license/permit datasets for vertical-specific lead seeds. Yelp/Foursquare are useful as secondary
+  validation/enrichment sources, not free bulk sources. Apify/Bright Data/Clay/Apollo/n8n are useful reference
+  ecosystems but generally paid. For the sister website-building project, public business photos may be used
+  for research/mockups, but final publishing should require owner permission and asset provenance; avoid
+  customer-uploaded review photos unless rights are clear. Session log:
+  `docs/session-logs/sean/2026-06-10-2356-lead-source-research.md`.
 - **Nate Herk integration: tiered LLM (A1) + sell methodology (C1) — Sean/Claude, 2026-06-10**:
   Digested all 10 **Reports** in the NotebookLM `NATE HERK GUIDE` notebook (`191dfe34`), cross-referenced
   against the project (found ~60% of Nate's ideas already implemented; numerology already rejected last
@@ -189,6 +197,8 @@ remain the next larger engine upgrades.
 - Sean — investigate/retry the remaining `found` Sean leads when useful, including "Spark Electricians";
   prompt compaction is now in place, but that lead was not re-prioritized during this session.
 - Sean — plan SQLite migration and async/pooling work as separate larger engine upgrades.
+- Sean — evaluate a free/open bulk-seeding spike after the current branch/data diffs are settled:
+  likely `leadpipe seed-osm` first, then Overture Maps Places or public permit/license datasets.
 - Sean — fix Codex `service_tier` config to restore three-brain Codex routes (see Blocked).
 - Sean — optionally generate `(Mind Map)` + `(Visualization)` tiers for the new token-economy
   reference doc via `reference-visualizer`.
@@ -281,17 +291,17 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked and built. Latest session was non-pipeline cleanup: Obsidian navigation now more
-clearly separates canon (`AGENTS.md`/`MEMORY.md`), derived research, reference-only material, generated
-reports, and session logs; `reports.py` got a tiny duplicate-helper cleanup with no report-content churn.
-Agent 3 is robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review
-before outreach). Next technical priority remains the SQLite migration then async/pooling; do not start
-broad new hunts until data/report diffs are pushed and territory/state are synced.
+Architecture is locked and built. Latest Codex session was research-only: for large lead databases, prefer
+free/open bulk seeds (OpenStreetMap/Overpass, Overture Maps, public registries) and reserve paid APIs like
+Google Places/Yelp/Foursquare/Firecrawl/Apify for small verification or enrichment batches. The worktree
+already had modified lead/report/docs files before this wrap-up; preserve those and do not start broad new
+hunts until data/report diffs are understood, pushed, and territory/state are synced.
 
 ## 👤 Contributors this session
-- **Sean** — requested a conservative cleanup audit/implementation and selected the conservative depth.
-- **Codex** — audited the vault/code flow, clarified Obsidian navigation and research/reference labels,
-  refactored small repeated report-rendering helpers, regenerated reports, and ran context transfer.
+- **Sean** — asked for research on additional no-website lead sources, cost-safe large database strategy,
+  Google/Yelp/API billing implications, and image-source rules for the future sister website project.
+- **Codex** — used Firecrawl/web research, explained options in lay terms, clarified paid-vs-free sources,
+  ran wrap-up checks, and documented the session.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
@@ -307,6 +317,13 @@ broad new hunts until data/report diffs are pushed and territory/state are synce
   hard delete from shared history.
 - Automation safety: no Firecrawl-backed scraping unless explicitly prompted by CLI guard flag; Finder
   defaults to 20 Google Places candidates per industry/request.
+- Large database strategy: use free/open data for bulk lead seeding first (OpenStreetMap/Overpass,
+  Overture Maps Places, public registries/permits/licenses), then use paid APIs only for deduped,
+  shortlisted verification/enrichment batches. Do not treat "missing website in one source" as a hard
+  no-website fact until verified.
+- Sister website-build asset rule: scraped/public photos are acceptable for research and private drafts;
+  final client websites should only publish images marked `approved` or `client_provided`, with source and
+  permission provenance tracked.
 - Lead scoring: `lead_score` is deterministic and bounded 0-100. Photo availability remains the main
   buildability signal; phone/hours/recent reviews add reachability confidence; staleness flags are soft
   penalties only, never hard excludes.

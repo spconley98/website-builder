@@ -5,7 +5,7 @@ status: active
 created: 2026-06-10
 updated: 2026-06-10
 topic: hot-cache
-generated: 2026-06-10T23:36:13
+generated: 2026-06-10T23:57:03
 stale_after: 2026-06-15
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. This session: digested the 10 NotebookLM
+**Phase:** operational with active safety/ops hardening. This session used Firecrawl-backed web research
 
 ## Active tasks
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
@@ -49,12 +49,11 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   website-builder project skill manually (done this session).
 
 ## Handoff
-Architecture is locked and built. Latest session was non-pipeline cleanup: Obsidian navigation now more
-clearly separates canon (`AGENTS.md`/`MEMORY.md`), derived research, reference-only material, generated
-reports, and session logs; `reports.py` got a tiny duplicate-helper cleanup with no report-content churn.
-Agent 3 is robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review
-before outreach). Next technical priority remains the SQLite migration then async/pooling; do not start
-broad new hunts until data/report diffs are pushed and territory/state are synced.
+Architecture is locked and built. Latest Codex session was research-only: for large lead databases, prefer
+free/open bulk seeds (OpenStreetMap/Overpass, Overture Maps, public registries) and reserve paid APIs like
+Google Places/Yelp/Foursquare/Firecrawl/Apify for small verification or enrichment batches. The worktree
+already had modified lead/report/docs files before this wrap-up; preserve those and do not start broad new
+hunts until data/report diffs are understood, pushed, and territory/state are synced.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-10-2333-nateherk-tiered-llm-sales.md` — Session — Nate Herk integration: tiered LLM (A1) + sell methodology (C1)
+`docs/session-logs/sean/2026-06-10-2356-lead-source-research.md` — Session Log — Lead Source Research
