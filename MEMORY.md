@@ -14,8 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-09T23:59:00-07:00 · **Last Agent:** Gemini — Project Analysis & Context Transfer (Sean)
-**Phase:** operational with active efficiency improvements; completed a full pressure test, constitution review, and market analysis. `AGENTS.md` updates and a migration from JSONL to SQLite + `asyncio` are queued up next to resolve critical I/O bottlenecks.
+**Last updated:** 2026-06-10T22:35:18-07:00 · **Last Agent:** Codex — Today Path implementation and context transfer (Sean)
+**Phase:** operational with active safety/ops hardening. Today Path cleanup is complete: canonical NotebookLM context restored, hunt operations rules added, prompt compaction/Agent 3 fallback hardened, legacy scores backfilled, and Sean's Northern CA Website Briefs generated. SQLite + `asyncio` remain the next larger engine upgrades.
 
 ---
 
@@ -24,6 +24,22 @@ tags: [canon, state]
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Today Path implementation — Sean/Codex, 2026-06-10**: NotebookLM CLI context was corrected to the
+  canonical `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`), the stray local Matt
+  morning-brief artifact under `docs/project/` was removed after confirming the canonical brain already
+  had `[Sean] Matt Morning Brief - 06/10/2026`, and the previous local `main` commit (`5fdc6c8`) was
+  pushed to `origin/main`. `AGENTS.md` now includes Hunt Operations (hunt rhythm, territory coordination,
+  post-hunt sync, and Website Brief review before outreach), and `past_mistakes.md` documents that
+  NotebookLM active context can drift.
+- **Prompt compaction + Website Intelligence hardening** — oversized scraped markdown is now compacted
+  before Ollama prompts, preserving head, relevant middle snippets, and tail content instead of blindly
+  truncating the top. Website Intelligence now tolerates Markdown-style labels, skips leads that already
+  have briefs to avoid repeated Firecrawl spend, and writes a conservative fact-only fallback brief if
+  Ollama ignores the required schema twice. Tests cover the new behavior; current suite is 56/56 passing.
+- **Lead data trust refresh** — legacy prioritized records now have persisted deterministic `lead_score`
+  values instead of relying on report-only fallback (Sean 26/26, Matt 68/68). Sean's configured Northern
+  CA target leads now have Website Briefs for 25 prioritized CA leads; Fresh Brew Cafe remains unbriefed
+  because it is outside the current Sean target config. Reports regenerated.
 - **Project Analysis & Pressure Test completed** — Spawned multiple sub-agents to analyze the project's efficiency, review the constitution, and conduct competitive market research. Findings are saved in `docs/session-logs/sean/2026-06-09-2359-efficiency-market-analysis.md`. Identified O(N²) JSONL read/write bottleneck, synchronous I/O blocks, and recommended SQLite, `asyncio`, and `tenacity`.
 - **AI Leads reports grouped by industry category** — `config/industry_categories.yaml`
   (broad category → keyword match, e.g. "Trades" ← plumb/electric/hvac/roof/handyman/landscap;
@@ -124,13 +140,15 @@ tags: [canon, state]
   `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md`.
 
 ## 🔨 In progress
-- Sean — push latest `main` commits once ready (Northern CA hunt/category grouping + scoring/wrap-up).
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
-- Sean — review the 49 new Northern CA trade leads in `reports/Sean - Prioritized Leads.md`; run
-  `leadpipe intelligence --use-firecrawl` on prioritized leads for Website Briefs; retry/investigate
-  "Spark Electricians" Ollama timeout (possible content-truncation guard needed in `lead_prioritizer`).
+- Sean — review the 25 generated Northern CA Website Briefs in `reports/Sean - Website Briefs.md`
+  before using them for sales outreach; fallback-generated briefs are conservative and still need human
+  review.
+- Sean — investigate/retry the remaining `found` Sean leads when useful, including "Spark Electricians";
+  prompt compaction is now in place, but that lead was not re-prioritized during this session.
+- Sean — plan SQLite migration and async/pooling work as separate larger engine upgrades.
 
 ## 🚫 Blocked / waiting
 - None currently. NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and
@@ -211,13 +229,11 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are implemented.
-**URGENT PRIORITY:** Address the critical bottlenecks identified in `docs/session-logs/sean/2026-06-09-2359-efficiency-market-analysis.md`. The most critical technical fixes are replacing JSONL with SQLite and adding `asyncio` for network calls. The critical procedural fixes are updating `AGENTS.md` with Hunt Rhythms, Territory Coordination, and Post-Hunt Syncs. 
-Current `main` is the canonical foundation. Continue using profile stores, generated human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
+Architecture is locked and built; today's implementation finished the immediate cleanup/safety path before bigger engine work. Agent 3 is now more robust and Sean's Northern CA prioritized target leads have Website Briefs, but those briefs must be human-reviewed before outreach. Next technical priority is still the larger SQLite migration, followed by async/pooling; do not start broad new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## 👤 Contributors this session
-- **Sean** — directed a comprehensive codebase pressure test and market analysis.
-- **Gemini** — spawned sub-agents for analysis, synthesized the findings into a session log, and prepared this context transfer.
+- **Sean** — approved and directed the Today Path implementation.
+- **Codex** — implemented cleanup, docs rules, prompt compaction, score backfill, Website Intelligence hardening, report regeneration, and context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
@@ -225,6 +241,9 @@ Current `main` is the canonical foundation. Continue using profile stores, gener
   lightweight `leadpipe` agent-stage pattern.
 - Operation is request-only, not 24/7 scheduled. Firecrawl-heavy stages (`prioritize`, `run`, and
   `intelligence`) require explicit `--use-firecrawl`.
+- Hunt operations now require the AGENTS.md Hunt Operations rhythm: check git/profile/targets, run
+  `leadpipe check`, use `find` first, spend Firecrawl only on explicit request, regenerate reports after
+  data changes, and review Website Briefs before outreach.
 - Collaboration protocol: Sean and Matt agents should write separate stores; shared visibility comes
   from generated Obsidian reports. Leads may auto-update and auto-archive/soft-delete; no autonomous
   hard delete from shared history.
@@ -246,7 +265,7 @@ Current `main` is the canonical foundation. Continue using profile stores, gener
   report names, and `docs/session-logs/<contributor>/`.
 - NotebookLM shared-brain sync initially failed on 2026-06-07 due expired local auth, then succeeded
   after re-authentication. Latest uploaded `MEMORY.md` source ID:
-  `770a10a8-9851-4c5e-9450-f4c42c2489dc` (`[Sean] MEMORY.md - 2026-06-09 2238 - scoring-signals`).
+  `d1f9e159-031e-42f8-a1e0-0ced5c395a63` (`[Sean] MEMORY.md - 2026-06-10 2235 - today-path-implementation`).
   Local semantic memory reindex also succeeded.
 - NotebookLM source-title rule: all future shared-brain uploads must include contributor, timestamp,
   and topic. Context-transfer `MEMORY.md` uploads must use `[<Name>] MEMORY.md - YYYY-MM-DD HHMM -

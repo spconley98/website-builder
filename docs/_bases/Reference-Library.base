@@ -1,6 +1,6 @@
 filters:
   and:
-    - 'file.ext == "md"'
+    - file.ext == "md"
     - file.inFolder("docs/_reference-library")
 views:
   - type: table

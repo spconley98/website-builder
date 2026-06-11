@@ -2,11 +2,11 @@
 type: context
 contributors: [sean]
 status: active
-created: 2026-06-09
-updated: 2026-06-09
+created: 2026-06-10
+updated: 2026-06-10
 topic: hot-cache
-generated: 2026-06-09T23:57:59
-stale_after: 2026-06-14
+generated: 2026-06-10T22:37:31
+stale_after: 2026-06-15
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
 ---
@@ -15,16 +15,17 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active efficiency improvements; completed a full pressure test, constitution review, and market analysis. `AGENTS.md` updates and a migration from JSONL to SQLite + `asyncio` are queued up next to resolve critical I/O bottlenecks.
+**Phase:** operational with active safety/ops hardening. Today Path cleanup is complete: canonical NotebookLM context restored, hunt operations rules added, prompt compaction/Agent 3 fallback hardened, legacy scores backfilled, and Sean's Northern CA Website Briefs generated. SQLite + `asyncio` remain the next larger engine upgrades.
 
 ## Active tasks
-- Sean — push latest `main` commits once ready (Northern CA hunt/category grouping + scoring/wrap-up).
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
-- Sean — review the 49 new Northern CA trade leads in `reports/Sean - Prioritized Leads.md`; run
-  `leadpipe intelligence --use-firecrawl` on prioritized leads for Website Briefs; retry/investigate
-  "Spark Electricians" Ollama timeout (possible content-truncation guard needed in `lead_prioritizer`).
+- Sean — review the 25 generated Northern CA Website Briefs in `reports/Sean - Website Briefs.md`
+  before using them for sales outreach; fallback-generated briefs are conservative and still need human
+  review.
+- Sean — investigate/retry the remaining `found` Sean leads when useful, including "Spark Electricians";
+  prompt compaction is now in place, but that lead was not re-prioritized during this session.
 
 ## Next
 1. ~~Build the scaffold~~ ✅ **DONE — working end-to-end on real data.**
@@ -39,9 +40,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   `MEMORY.md` was uploaded successfully.
 
 ## Handoff
-Architecture is locked AND BUILT. Lead Finder, Lead Prioritizer, and Agent 3 Website Intelligence are implemented.
-**URGENT PRIORITY:** Address the critical bottlenecks identified in `docs/session-logs/sean/2026-06-09-2359-efficiency-market-analysis.md`. The most critical technical fixes are replacing JSONL with SQLite and adding `asyncio` for network calls. The critical procedural fixes are updating `AGENTS.md` with Hunt Rhythms, Territory Coordination, and Post-Hunt Syncs. 
-Current `main` is the canonical foundation. Continue using profile stores, generated human-readable reports, and session handoffs under `docs/session-logs/<contributor>/`.
+Architecture is locked and built; today's implementation finished the immediate cleanup/safety path before bigger engine work. Agent 3 is now more robust and Sean's Northern CA prioritized target leads have Website Briefs, but those briefs must be human-reviewed before outreach. Next technical priority is still the larger SQLite migration, followed by async/pooling; do not start broad new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md` — Sean Session Log — 2026-06-09 — Northern CA Trade Lead Hunt
+`docs/session-logs/sean/2026-06-10-2235-today-path-implementation.md` — Session Log — Today Path Implementation

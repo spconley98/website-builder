@@ -231,6 +231,23 @@ seat for a given session.
 - **No hard deletes from automation.** Agents may mark leads `invalid`/`archived`; shared reports hide
   those by default while preserving recovery/audit history.
 
+### Hunt operations
+- **Hunt rhythm:** before any real acquisition run, check `git status --short --branch`, confirm the
+  active profile/targets, run `leadpipe check` (add `--google` before a new Places hunt), then run
+  `find` first. Only run Firecrawl-backed `prioritize`, `run`, or `intelligence` when Sean explicitly
+  asked for that spend and the CLI includes `--use-firecrawl`.
+- **Territory coordination:** active territory claims live in `MEMORY.md`, not ad hoc notes. If a task
+  changes who is hunting which areas/industries, update `MEMORY.md` only during an explicit state update
+  or context-transfer wrap-up. Default current territory is Sean = Northern California; Matt must choose
+  targets before `config/targets.matt.yaml` is populated.
+- **Post-hunt sync:** after any hunt that changes `data/<profile>/leads.jsonl`, regenerate profile and
+  shared reports immediately, run tests/health checks, write the session handoff, and push or otherwise
+  preserve the data/report diff before another collaborator starts a hunt. Cross-profile dedup only works
+  when `data/` and `reports/` are current.
+- **Website Brief review:** `leadpipe intelligence` produces draft build/sales judgment, not cleared
+  outreach copy. A human (Sean by default) or a routed second LLM review must approve Website Briefs
+  before they are used for sales outreach.
+
 ---
 
 ## 7. Git & secrets

@@ -38,6 +38,11 @@ Don't "simplify" the stage-scoped writes in `models.py`/`store.py` away without 
 Duplicate plain `MEMORY.md` uploads once required a provenance repair. Mirror **`MEMORY.md` only** (never
 `_HOT.md`), titled `[<Name>] MEMORY.md - YYYY-MM-DD HHMM - <topic>`; retire/rename stale sources.
 
+## NotebookLM active context can drift
+The CLI can be pointed at a different shared notebook than the canonical `website-builder-brain`
+(`bd83690f-e997-46c5-b054-6ff3139e11d6`). Before listing, asking, or uploading, run
+`py -m notebooklm status` or pass `-n bd83690f-e997-46c5-b054-6ff3139e11d6` explicitly.
+
 ## Obsidian types properties globally by name
 A property name has one type across the whole vault, so `contributors` must ALWAYS be a list (even for one
 person) or Bases/Properties misbehave. Leave optional fields absent rather than blank — an empty date breaks

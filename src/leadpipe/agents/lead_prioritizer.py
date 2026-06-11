@@ -26,8 +26,10 @@ from ..models import LeadPrioritization
 from ..sources import firecrawl
 from ..store import LeadStore
 from .base import AgentResult
+from .scraped_content import compact_scraped_content
 
 NAME = "lead_prioritizer"
+PHOTO_PROMPT_CONTENT_LIMIT = 6000
 
 _COUNT_SYSTEM = (
     "You are a strict data-extraction function. You are NOT answering a user "
@@ -82,9 +84,10 @@ def score_from_signals(
 def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
     """LLM reasoning step over scraped page content. Raises LLMError on failure
     or on an unparseable response — caller decides how to degrade."""
+    compacted = compact_scraped_content(scraped_markdown, max_chars=PHOTO_PROMPT_CONTENT_LIMIT)
     prompt = (
         "Return only the two-line photo estimate for this scraped listing content.\n\n"
-        f"SCRAPED_CONTENT:\n{scraped_markdown[:6000]}\n\n"
+        f"SCRAPED_CONTENT:\n{compacted}\n\n"
         "Your response must be exactly:\n"
         "COUNT: <integer>\n"
         "REASON: <one short sentence>"
@@ -103,7 +106,7 @@ def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
             "Re-read the scraped listing content below and output ONLY:\n"
             "COUNT: <integer>\n"
             "REASON: <one short sentence>\n\n"
-            f"SCRAPED_CONTENT:\n{scraped_markdown[:6000]}",
+            f"SCRAPED_CONTENT:\n{compacted}",
             system=_COUNT_SYSTEM,
             temperature=0.0,
         )

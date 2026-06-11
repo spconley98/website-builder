@@ -16,8 +16,10 @@ from ..sources import firecrawl
 from ..store import LeadStore
 from .base import AgentResult
 from .lead_prioritizer import _matches_target
+from .scraped_content import compact_scraped_content
 
 NAME = "website_intelligence"
+INTELLIGENCE_PROMPT_CONTENT_LIMIT = 8000
 
 _INTELLIGENCE_SYSTEM = (
     "You write concise website-build briefs for local-business sales. Use only "
@@ -42,6 +44,7 @@ def _listing_urls(lead) -> list[str]:
 
 
 def _build_prompt(lead, scraped_content: str) -> str:
+    compacted = compact_scraped_content(scraped_content, max_chars=INTELLIGENCE_PROMPT_CONTENT_LIMIT)
     return (
         "Create the website intelligence brief for this lead.\n\n"
         f"Business: {lead.name}\n"
@@ -51,7 +54,7 @@ def _build_prompt(lead, scraped_content: str) -> str:
         f"Photo rating: {lead.photo_rating}\n"
         f"Photo count: {lead.photo_count}\n"
         f"Prioritizer reason: {lead.rating_reason or 'unknown'}\n\n"
-        f"SCRAPED_LISTING_CONTENT:\n{scraped_content[:8000]}\n\n"
+        f"SCRAPED_LISTING_CONTENT:\n{compacted}\n\n"
         "Return exactly:\n"
         "BRIEF: <one sentence>\n"
         "ANGLE: <one concise selling angle>\n"
@@ -67,9 +70,9 @@ def _parse_response(response: str) -> dict[str, object]:
         if ":" not in line:
             continue
         key, value = line.split(":", 1)
-        key = key.strip().upper()
+        key = key.strip().strip("*`# ").upper()
         if key in {"BRIEF", "ANGLE", "PAGES", "CONTENT", "VISUAL"}:
-            fields[key] = value.strip()
+            fields[key] = value.strip().strip("*` ")
     missing = {"BRIEF", "ANGLE", "PAGES", "CONTENT", "VISUAL"} - set(fields)
     if missing:
         raise llm.LLMError(f"could not parse website intelligence fields: {', '.join(sorted(missing))}")
@@ -80,6 +83,19 @@ def _parse_response(response: str) -> dict[str, object]:
         "suggested_pages": pages,
         "content_notes": fields["CONTENT"],
         "visual_notes": fields["VISUAL"],
+    }
+
+
+def _fallback_intelligence(lead) -> dict[str, object]:
+    """Conservative fallback when the LLM ignores the required wire format."""
+    industry = lead.industry or "local business"
+    location = lead.location or "its service area"
+    return {
+        "site_brief": f"A simple credibility website for {lead.name}, a {industry} lead in {location}.",
+        "selling_angle": "Turn listing views into direct inquiries with a clear owned web presence.",
+        "suggested_pages": ["Home", "Services", "Gallery", "Contact"],
+        "content_notes": "Verify services, hours, contact details, and service area before outreach.",
+        "visual_notes": "Use only verified listing photos or owner-provided images.",
     }
 
 
@@ -99,7 +115,10 @@ def _generate_intelligence(lead, scraped_content: str) -> dict[str, object]:
             system=_INTELLIGENCE_SYSTEM,
             temperature=0.0,
         )
-        return _parse_response(repair)
+        try:
+            return _parse_response(repair)
+        except llm.LLMError:
+            return _fallback_intelligence(lead)
 
 
 def run(store: LeadStore, target: Target) -> AgentResult:
@@ -109,7 +128,7 @@ def run(store: LeadStore, target: Target) -> AgentResult:
     candidates = [
         l
         for l in store.by_status(LeadStatus.PRIORITIZED)
-        if l.photo_rating is not None and _matches_target(l, target)
+        if l.photo_rating is not None and not l.site_brief and _matches_target(l, target)
     ]
 
     for lead in candidates:

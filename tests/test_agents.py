@@ -16,6 +16,7 @@ from leadpipe.agents.lead_prioritizer import (
     rate_from_count,
     score_from_signals,
 )
+from leadpipe.agents.scraped_content import compact_scraped_content
 from leadpipe.config import load_settings
 from leadpipe.config import Target
 from leadpipe.models import Lead, LeadCreate, LeadPrioritization, LeadStatus
@@ -195,6 +196,111 @@ def test_parse_photo_count_response():
     assert reason == "visible menu and cafe photos"
 
 
+def test_compact_scraped_content_preserves_head_middle_and_tail():
+    markdown = (
+        "START useful listing identity\n"
+        + ("filler\n" * 600)
+        + "Photo gallery shows finished projects\n"
+        + ("more filler\n" * 600)
+        + "TAIL contact and hours"
+    )
+
+    compacted = compact_scraped_content(markdown, max_chars=900)
+
+    assert len(compacted) <= 900
+    assert "START useful listing identity" in compacted
+    assert "Photo gallery shows finished projects" in compacted
+    assert "TAIL contact and hours" in compacted
+    assert "compacted for local LLM timeout guard" in compacted
+
+
+def test_prioritizer_prompt_uses_compacted_scraped_content(monkeypatch):
+    from leadpipe.agents import lead_prioritizer
+
+    huge_markdown = (
+        "BUSINESS HEADER\n"
+        + ("plain filler\n" * 700)
+        + "Photo gallery mentions service images\n"
+        + ("extra filler\n" * 700)
+        + "BOTTOM hours and contact"
+    )
+    prompts = []
+
+    def fake_generate(prompt, **kwargs):
+        prompts.append(prompt)
+        return "COUNT: 4\nREASON: visible project photos"
+
+    monkeypatch.setattr(lead_prioritizer.llm, "generate", fake_generate)
+
+    count, reason = lead_prioritizer._estimate_photo_count(huge_markdown)
+
+    assert count == 4
+    assert reason == "visible project photos"
+    assert len(prompts[0]) < len(huge_markdown)
+    assert "BUSINESS HEADER" in prompts[0]
+    assert "Photo gallery mentions service images" in prompts[0]
+    assert "BOTTOM hours and contact" in prompts[0]
+
+
+def test_website_intelligence_prompt_uses_compacted_scraped_content():
+    lead = Lead(
+        place_id="p1",
+        name="Ready Cafe",
+        industry="coffee shops",
+        location="Round Rock, TX",
+        has_website=False,
+        found_date=date(2026, 6, 7),
+        photo_rating=3,
+        lead_score=50,
+        photo_count=15,
+        rating_reason="visible listing photos",
+    )
+    huge_markdown = (
+        "TOP listing summary\n"
+        + ("plain filler\n" * 900)
+        + "Gallery has interior photos and menu images\n"
+        + ("extra filler\n" * 900)
+        + "BOTTOM phone and hours"
+    )
+
+    prompt = website_intelligence._build_prompt(lead, huge_markdown)
+
+    assert len(prompt) < len(huge_markdown)
+    assert "TOP listing summary" in prompt
+    assert "Gallery has interior photos and menu images" in prompt
+    assert "BOTTOM phone and hours" in prompt
+
+
+def test_website_intelligence_parser_accepts_markdown_labels():
+    parsed = website_intelligence._parse_response(
+        "**BRIEF:** Build a service website.\n"
+        "**ANGLE:** Convert listing views.\n"
+        "**PAGES:** Home, Services, Contact\n"
+        "**CONTENT:** Verify hours.\n"
+        "**VISUAL:** Use listing photos."
+    )
+
+    assert parsed["site_brief"] == "Build a service website."
+    assert parsed["suggested_pages"] == ["Home", "Services", "Contact"]
+
+
+def test_website_intelligence_falls_back_after_unparseable_repair(monkeypatch):
+    lead = Lead(
+        place_id="p1",
+        name="Ready Cafe",
+        industry="coffee shops",
+        location="Round Rock, TX",
+        has_website=False,
+        found_date=date(2026, 6, 7),
+    )
+    monkeypatch.setattr(website_intelligence.llm, "generate", lambda *args, **kwargs: "not structured")
+
+    parsed = website_intelligence._generate_intelligence(lead, "listing content")
+
+    assert parsed["site_brief"].startswith("A simple credibility website for Ready Cafe")
+    assert parsed["suggested_pages"] == ["Home", "Services", "Gallery", "Contact"]
+
+
 def test_website_intelligence_only_processes_prioritized_active_leads(tmp_path, monkeypatch):
     store = LeadStore(tmp_path / "leads.jsonl")
     for place_id, name in [("p1", "Ready Cafe"), ("p2", "Found Cafe"), ("p3", "Archived Cafe")]:
@@ -261,3 +367,51 @@ def test_website_intelligence_only_processes_prioritized_active_leads(tmp_path, 
     assert leads["p1"].site_brief == "Build a simple cafe site."
     assert leads["p2"].site_brief is None
     assert leads["p3"].site_brief is None
+
+
+def test_website_intelligence_skips_existing_briefs(tmp_path, monkeypatch):
+    store = LeadStore(tmp_path / "leads.jsonl")
+    store.create(
+        LeadCreate(
+            place_id="p1",
+            name="Ready Cafe",
+            industry="coffee shops",
+            location="Round Rock, TX",
+            has_website=False,
+            found_date=date(2026, 6, 7),
+            google_maps_url="https://maps.example/p1",
+        )
+    )
+    store.apply_prioritization(
+        LeadPrioritization(
+            place_id="p1",
+            photo_rating=3,
+            lead_score=50,
+            photo_count=15,
+            photo_links=["https://listing.example/ready"],
+            photo_sources=["google_maps"],
+            rating_reason="visible listing photos",
+            prioritized_date=date(2026, 6, 8),
+        )
+    )
+    store.apply_website_intelligence(
+        website_intelligence.LeadWebsiteIntelligence(
+            place_id="p1",
+            site_brief="Existing brief.",
+            selling_angle="Existing angle.",
+            suggested_pages=["Home"],
+            content_notes="Existing notes.",
+            visual_notes="Existing visual notes.",
+            intelligence_sources=["https://listing.example/ready"],
+            intelligence_date=date(2026, 6, 9),
+        )
+    )
+    monkeypatch.setattr(website_intelligence.firecrawl, "scrape", lambda url: (_ for _ in ()).throw(AssertionError))
+
+    result = website_intelligence.run(
+        store,
+        Target(area="Round Rock, TX", radius="5km", industries=["coffee shops"]),
+    )
+
+    assert result.processed == 0
+    assert store.load()["p1"].site_brief == "Existing brief."
