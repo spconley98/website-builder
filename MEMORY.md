@@ -14,7 +14,7 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-11T00:10:00-07:00 · **Last Agent:** Claude Sonnet 4.6 — small-town retarget (Sean)
+**Last updated:** 2026-06-10T23:59:00-07:00 · **Last Agent:** Gemini CLI — CA Nursery Leads Hunt (Sean)
 **Phase:** operational with active safety/ops hardening. `config/targets.sean.yaml` retargeted to 12 small
 CA towns (was 5 big cities); new `config/ca_small_towns.yaml` reference menu added. Branch still carries
 Nate Herk tiered-LLM/sales-methodology work plus existing lead/report diffs; SQLite + `asyncio` remain the
@@ -27,6 +27,7 @@ next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **CA Nursery Leads Hunt — Sean/Gemini, 2026-06-10**: Ran a targeted hunt for "plant nursery" and "garden center" across several California cities (Sacramento, Fresno, San Jose, Los Angeles, San Diego, Bakersfield, Stockton). Acquired 20 new leads without websites in the `found` state. Verified health with `leadpipe check --google` before the hunt and `pytest` after. Changes to `data/sean/leads.jsonl` and generated reports were committed directly to the `nateherk-tiered-llm-sales` branch. Session log: `docs/session-logs/sean/2026-06-10-2358-ca-nursery-leads.md`. Next: run `prioritize` on these leads.
 - **Small-town retarget — Sean/Claude, 2026-06-11**: Sean noticed hunts only hit big
   CA cities and believes smaller towns have more no-website opportunity (less
   tech-savvy, less competition). `config/targets.sean.yaml` fully retargeted from 5
@@ -306,17 +307,11 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked and built. Latest Codex session was research-only: for large lead databases, prefer
-free/open bulk seeds (OpenStreetMap/Overpass, Overture Maps, public registries) and reserve paid APIs like
-Google Places/Yelp/Foursquare/Firecrawl/Apify for small verification or enrichment batches. The worktree
-already had modified lead/report/docs files before this wrap-up; preserve those and do not start broad new
-hunts until data/report diffs are understood, pushed, and territory/state are synced.
+Architecture is locked and built. Latest Gemini session completed a targeted hunt across several California cities for garden/nursery businesses, adding 20 new leads. Next step is to prioritize these new leads and potentially run website intelligence on them. The worktree remains on the `nateherk-tiered-llm-sales` branch.
 
 ## 👤 Contributors this session
-- **Sean** — asked for research on additional no-website lead sources, cost-safe large database strategy,
-  Google/Yelp/API billing implications, and image-source rules for the future sister website project.
-- **Codex** — used Firecrawl/web research, explained options in lay terms, clarified paid-vs-free sources,
-  ran wrap-up checks, and documented the session.
+- **Sean** — requested a hunt for garden/nursery businesses in California without websites.
+- **Gemini** — ran `leadpipe find` across multiple CA cities, committed the resulting 20 leads and reports, and ran the context transfer protocol.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.

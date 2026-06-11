@@ -5,7 +5,7 @@ status: active
 created: 2026-06-11
 updated: 2026-06-11
 topic: hot-cache
-generated: 2026-06-11T00:12:35
+generated: 2026-06-11T00:26:59
 stale_after: 2026-06-16
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -49,11 +49,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   website-builder project skill manually (done this session).
 
 ## Handoff
-Architecture is locked and built. Latest Codex session was research-only: for large lead databases, prefer
-free/open bulk seeds (OpenStreetMap/Overpass, Overture Maps, public registries) and reserve paid APIs like
-Google Places/Yelp/Foursquare/Firecrawl/Apify for small verification or enrichment batches. The worktree
-already had modified lead/report/docs files before this wrap-up; preserve those and do not start broad new
-hunts until data/report diffs are understood, pushed, and territory/state are synced.
+Architecture is locked and built. Latest Gemini session completed a targeted hunt across several California cities for garden/nursery businesses, adding 20 new leads. Next step is to prioritize these new leads and potentially run website intelligence on them. The worktree remains on the `nateherk-tiered-llm-sales` branch.
 
 ## Latest session
 `docs/session-logs/sean/2026-06-11-0000-small-town-retarget.md` — Session Log — Small-Town Retarget
