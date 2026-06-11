@@ -45,13 +45,21 @@ def generate(
     system: str | None = None,
     temperature: float = 0.2,
     settings: Settings | None = None,
+    model: str | None = None,
+    timeout: float | None = None,
 ) -> str:
     """Single-shot text generation — the default for classify/summarize/rate calls.
+
+    `model`/`timeout` override the configured fast model + DEFAULT_TIMEOUT — agents
+    pass these to escalate a hard case to the deep tier (config.llm_model_deep /
+    llm_deep_timeout) after the fast model times out or returns garbage.
 
     Raises LLMError (never a raw SDK/connection exception) so agent code can
     catch one thing and decide how to degrade (skip the lead, retry, etc).
     """
-    client, model = get_client(settings)
+    client, default_model = get_client(settings)
+    model = model or default_model
+    timeout = timeout if timeout is not None else DEFAULT_TIMEOUT
     messages = []
     if system:
         messages.append({"role": "system", "content": system})
@@ -62,11 +70,11 @@ def generate(
             model=model,
             messages=messages,
             temperature=temperature,
-            timeout=DEFAULT_TIMEOUT,
+            timeout=timeout,
         )
     except APITimeoutError as e:
         raise LLMError(
-            f"local LLM timed out after {DEFAULT_TIMEOUT}s "
+            f"local LLM timed out after {timeout}s "
             f"(model={model!r}, base_url={client.base_url!r}). Is Ollama running and is the "
             f"model pulled? Try: `ollama run {model}`"
         ) from e

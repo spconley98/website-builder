@@ -5,7 +5,7 @@ status: active
 created: 2026-06-10
 updated: 2026-06-10
 topic: hot-cache
-generated: 2026-06-10T23:04:04
+generated: 2026-06-10T23:36:13
 stale_after: 2026-06-15
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. This session clarified Obsidian navigation and
+**Phase:** operational with active safety/ops hardening. This session: digested the 10 NotebookLM
 
 ## Active tasks
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
@@ -42,6 +42,11 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   meanwhile. Fix = set a valid/supported `service_tier` (or remove the line) in `~/.codex/config.toml`.
 - NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and `MEMORY.md` was
   uploaded successfully.
+- **Skill collision** — invoking `context-transfer` resolves to the GLOBAL AAS-WEBSITE skill
+  (`~/.claude/skills/context-transfer`: npm/tsc + AAS notebook) instead of this project's
+  `.claude/skills/context-transfer`. The AAS skill is project-specific but lives in global skills, so it
+  shadows every repo. Fix = move it into the AAS repo's `.claude/skills/`. Workaround: run the
+  website-builder project skill manually (done this session).
 
 ## Handoff
 Architecture is locked and built. Latest session was non-pipeline cleanup: Obsidian navigation now more
@@ -52,4 +57,4 @@ before outreach). Next technical priority remains the SQLite migration then asyn
 broad new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-10-2301-obsidian-cleanup.md` — Session Log — Obsidian Cleanup
+`docs/session-logs/sean/2026-06-10-2333-nateherk-tiered-llm-sales.md` — Session — Nate Herk integration: tiered LLM (A1) + sell methodology (C1)

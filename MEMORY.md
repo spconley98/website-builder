@@ -14,11 +14,13 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T23:02:57-07:00 · **Last Agent:** Codex — conservative Obsidian/code cleanup and context transfer (Sean)
-**Phase:** operational with active safety/ops hardening. This session clarified Obsidian navigation and
-research/reference boundaries without changing project rules, updated stale report/session indexes, and
-lightly deduplicated report-rendering helpers without changing report output. SQLite + `asyncio` remain
-the next larger engine upgrades.
+**Last updated:** 2026-06-10T23:33:00-07:00 · **Last Agent:** Claude Opus 4.8 — Nate Herk integration: tiered LLM (A1) + sell methodology (C1) (Sean)
+**Phase:** operational with active safety/ops hardening. This session: digested the 10 NotebookLM
+`NATE HERK GUIDE` reports → 9-item recommendation catalog; Sean picked + shipped **A1** (tiered/two-pass
+local LLM — recovers timed-out leads instead of skipping) and **C1** (sell-methodology doc +
+leverage-anchored Website Intelligence briefs) on branch `nateherk-tiered-llm-sales`. NOTE: a concurrent
+Codex session (23:02) committed Obsidian/report cleanup; that work is preserved below. SQLite + `asyncio`
+remain the next larger engine upgrades.
 
 ---
 
@@ -27,6 +29,21 @@ the next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Nate Herk integration: tiered LLM (A1) + sell methodology (C1) — Sean/Claude, 2026-06-10**:
+  Digested all 10 **Reports** in the NotebookLM `NATE HERK GUIDE` notebook (`191dfe34`), cross-referenced
+  against the project (found ~60% of Nate's ideas already implemented; numerology already rejected last
+  session), and produced a 9-item recommendation catalog (plan
+  `access-notebook-lm-and-prancy-ember.md`). Sean shipped two on branch `nateherk-tiered-llm-sales`:
+  **A1 tiered/two-pass local LLM** — `config.py`/`.env.example` add `LLM_MODEL_DEEP=gemma4:31b` +
+  `LLM_DEEP_TIMEOUT=180`; `llm.generate()` gains optional `model`/`timeout`; `lead_prioritizer` +
+  `website_intelligence` escalate the same prompt to the deep tier on any `LLMError` (timeout/unparseable)
+  before degrading — recovers the previously-stuck "Spark Electricians" timeout path.
+  **C1 sales methodology** — new `docs/project/SELL_METHODOLOGY.md` (Nate framework → no-website-lead
+  value story + leverage qualification tests + future sell-repo positioning; linked from `_HOME.md`) and
+  leverage/ROI-anchored `_INTELLIGENCE_SYSTEM` + fallback (5-field wire format unchanged). **59/59 tests**
+  (+3 new). Gemini three-brain cross-challenge (Codex route still down): 2 false positives disproven by
+  tests, 1 valid drift fix applied. Session log:
+  `docs/session-logs/sean/2026-06-10-2333-nateherk-tiered-llm-sales.md`.
 - **Conservative Obsidian + report cleanup — Sean/Codex, 2026-06-10**: Refreshed `_HOME.md`,
   `Research-MOC`, `Reference-MOC`, and `Sessions-MOC` so agents/users can distinguish canonical state,
   derived NotebookLM research, reference source material, session logs, and generated reports more
@@ -183,6 +200,11 @@ the next larger engine upgrades.
   meanwhile. Fix = set a valid/supported `service_tier` (or remove the line) in `~/.codex/config.toml`.
 - NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and `MEMORY.md` was
   uploaded successfully.
+- **Skill collision** — invoking `context-transfer` resolves to the GLOBAL AAS-WEBSITE skill
+  (`~/.claude/skills/context-transfer`: npm/tsc + AAS notebook) instead of this project's
+  `.claude/skills/context-transfer`. The AAS skill is project-specific but lives in global skills, so it
+  shadows every repo. Fix = move it into the AAS repo's `.claude/skills/`. Workaround: run the
+  website-builder project skill manually (done this session).
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places

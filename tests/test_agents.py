@@ -301,6 +301,82 @@ def test_website_intelligence_falls_back_after_unparseable_repair(monkeypatch):
     assert parsed["suggested_pages"] == ["Home", "Services", "Gallery", "Contact"]
 
 
+def test_estimate_photo_count_escalates_to_deep_model_on_failure(monkeypatch):
+    """A1 tiering: when the fast model fails (timeout/garbage), the retry must use the
+    deep model + deep timeout — this is what recovers the previously-stuck lead."""
+    from leadpipe.agents import lead_prioritizer
+
+    calls = []
+
+    def fake_generate(prompt, **kwargs):
+        calls.append(kwargs)
+        if len(calls) == 1:
+            raise lead_prioritizer.llm.LLMError("fast model timed out after 60.0s")
+        return "COUNT: 8\nREASON: visible work photos"
+
+    monkeypatch.setattr(lead_prioritizer.llm, "generate", fake_generate)
+
+    count, reason = lead_prioritizer._estimate_photo_count("some scraped markdown")
+    settings = load_settings()
+
+    assert count == 8
+    assert len(calls) == 2
+    assert calls[0].get("model") in (None, settings.llm_model)  # fast/default first
+    assert calls[1]["model"] == settings.llm_model_deep
+    assert calls[1]["timeout"] == settings.llm_deep_timeout
+
+
+def test_website_intelligence_escalates_to_deep_model_before_fallback(monkeypatch):
+    """A1 tiering for Agent 3: fast failure escalates to the deep model, which can then
+    succeed instead of dropping straight to the conservative fallback."""
+    lead = Lead(
+        place_id="p1",
+        name="Ready Cafe",
+        industry="coffee shops",
+        location="Round Rock, TX",
+        has_website=False,
+        found_date=date(2026, 6, 7),
+    )
+    calls = []
+
+    def fake_generate(prompt, **kwargs):
+        calls.append(kwargs)
+        if len(calls) == 1:
+            raise website_intelligence.llm.LLMError("fast model timed out")
+        return (
+            "BRIEF: Build a service site.\nANGLE: Convert listing views.\n"
+            "PAGES: Home, Contact\nCONTENT: Gather reviews.\nVISUAL: Use listing photos."
+        )
+
+    monkeypatch.setattr(website_intelligence.llm, "generate", fake_generate)
+
+    parsed = website_intelligence._generate_intelligence(lead, "listing content")
+    settings = load_settings()
+
+    assert parsed["site_brief"] == "Build a service site."
+    assert len(calls) == 2
+    assert calls[1]["model"] == settings.llm_model_deep
+    assert calls[1]["timeout"] == settings.llm_deep_timeout
+
+
+def test_intelligence_system_prompt_carries_leverage_frame():
+    """C1: the brief's selling voice must be ROI/leverage-anchored, not generic."""
+    system = website_intelligence._INTELLIGENCE_SYSTEM.lower()
+    assert "listing view" in system
+    assert "roi" in system or "leverage" in system
+    fallback = website_intelligence._fallback_intelligence(
+        Lead(
+            place_id="p1",
+            name="Ready Cafe",
+            industry="coffee shops",
+            location="Round Rock, TX",
+            has_website=False,
+            found_date=date(2026, 6, 7),
+        )
+    )
+    assert "leak" in fallback["selling_angle"].lower()
+
+
 def test_website_intelligence_only_processes_prioritized_active_leads(tmp_path, monkeypatch):
     store = LeadStore(tmp_path / "leads.jsonl")
     for place_id, name in [("p1", "Ready Cafe"), ("p2", "Found Cafe"), ("p3", "Archived Cafe")]:

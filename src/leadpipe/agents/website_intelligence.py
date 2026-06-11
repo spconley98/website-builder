@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import date
 
 from .. import llm
-from ..config import Target
+from ..config import Target, load_settings
 from ..models import LeadStatus, LeadWebsiteIntelligence
 from ..sources import firecrawl
 from ..store import LeadStore
@@ -24,11 +24,18 @@ INTELLIGENCE_PROMPT_CONTENT_LIMIT = 8000
 _INTELLIGENCE_SYSTEM = (
     "You write concise website-build briefs for local-business sales. Use only "
     "the provided lead record and scraped listing content. Do not invent facts. "
-    "If something is unclear, say so briefly. Respond in EXACTLY this format:\n"
+    "If something is unclear, say so briefly.\n"
+    "SELLING FRAME (see docs/project/SELL_METHODOLOGY.md): this business already gets "
+    "discovery views on its Google listing but owns no website, so inquiries leak to "
+    "competitors. The ANGLE must be a concrete ROI/leverage point — converting existing "
+    "listing views into direct owned-channel inquiries and credibility — not a generic "
+    "'you need a website'. The CONTENT note should capture proof/trust material (reviews, "
+    "service area, credentials) that turns a viewer into a lead.\n"
+    "Respond in EXACTLY this format:\n"
     "BRIEF: <one sentence describing what site this business likely needs>\n"
-    "ANGLE: <one concise selling angle>\n"
+    "ANGLE: <one concise ROI/leverage selling angle>\n"
     "PAGES: <comma-separated page names>\n"
-    "CONTENT: <one short note about copy/content to gather>\n"
+    "CONTENT: <one short note about proof/trust copy to gather>\n"
     "VISUAL: <one short note about photos/design direction>"
 )
 
@@ -92,30 +99,37 @@ def _fallback_intelligence(lead) -> dict[str, object]:
     location = lead.location or "its service area"
     return {
         "site_brief": f"A simple credibility website for {lead.name}, a {industry} lead in {location}.",
-        "selling_angle": "Turn listing views into direct inquiries with a clear owned web presence.",
+        "selling_angle": (
+            "Capture the inquiries already leaking from listing views — an owned site "
+            "converts existing discovery traffic into direct, credible leads."
+        ),
         "suggested_pages": ["Home", "Services", "Gallery", "Contact"],
-        "content_notes": "Verify services, hours, contact details, and service area before outreach.",
+        "content_notes": "Gather proof/trust copy — reviews, credentials, service area, hours — and verify before outreach.",
         "visual_notes": "Use only verified listing photos or owner-provided images.",
     }
 
 
 def _generate_intelligence(lead, scraped_content: str) -> dict[str, object]:
-    response = llm.generate(
-        _build_prompt(lead, scraped_content),
-        system=_INTELLIGENCE_SYSTEM,
-        temperature=0.2,
-    )
+    """Tiered (Nate Herk model tiering): fast model first; if it times out or returns
+    an unparseable brief, escalate the retry to the deep model + longer timeout before
+    falling back to the conservative canned brief."""
     try:
+        response = llm.generate(
+            _build_prompt(lead, scraped_content),
+            system=_INTELLIGENCE_SYSTEM,
+            temperature=0.2,
+        )
         return _parse_response(response)
     except llm.LLMError:
-        repair = llm.generate(
-            "Your previous response did not follow the required format.\n\n"
-            f"Previous response:\n{response}\n\n"
-            f"{_build_prompt(lead, scraped_content)}",
-            system=_INTELLIGENCE_SYSTEM,
-            temperature=0.0,
-        )
+        settings = load_settings()
         try:
+            repair = llm.generate(
+                _build_prompt(lead, scraped_content),
+                system=_INTELLIGENCE_SYSTEM,
+                temperature=0.0,
+                model=settings.llm_model_deep,
+                timeout=settings.llm_deep_timeout,
+            )
             return _parse_response(repair)
         except llm.LLMError:
             return _fallback_intelligence(lead)

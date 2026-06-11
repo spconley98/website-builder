@@ -83,7 +83,13 @@ def score_from_signals(
 
 def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
     """LLM reasoning step over scraped page content. Raises LLMError on failure
-    or on an unparseable response — caller decides how to degrade."""
+    or on an unparseable response — caller decides how to degrade.
+
+    Tiered (Nate Herk model tiering): the fast model handles the common case; if it
+    times out OR returns an unparseable response, escalate the retry to the deep
+    model + longer timeout (config.llm_model_deep / llm_deep_timeout). This recovers
+    hard leads that the fast model can't handle in 60s instead of skipping them
+    (e.g. the previously-stuck "Spark Electricians")."""
     compacted = compact_scraped_content(scraped_markdown, max_chars=PHOTO_PROMPT_CONTENT_LIMIT)
     prompt = (
         "Return only the two-line photo estimate for this scraped listing content.\n\n"
@@ -92,23 +98,20 @@ def _estimate_photo_count(scraped_markdown: str) -> tuple[int, str]:
         "COUNT: <integer>\n"
         "REASON: <one short sentence>"
     )
-    response = llm.generate(
-        prompt,
-        system=_COUNT_SYSTEM,
-        temperature=0.0,
-    )
     try:
+        response = llm.generate(prompt, system=_COUNT_SYSTEM, temperature=0.0)
         return _parse_photo_count_response(response)
     except llm.LLMError:
+        # Escalate the SAME prompt to the deep tier — reusing `prompt` (not a reworded
+        # inline copy) keeps the extraction instructions in one place. Note: we escalate
+        # on any LLMError; a connection error just fails fast again, which is acceptable.
+        settings = load_settings()
         repair = llm.generate(
-            "Your previous response did not follow the required format.\n\n"
-            f"Previous response:\n{response}\n\n"
-            "Re-read the scraped listing content below and output ONLY:\n"
-            "COUNT: <integer>\n"
-            "REASON: <one short sentence>\n\n"
-            f"SCRAPED_CONTENT:\n{compacted}",
+            prompt,
             system=_COUNT_SYSTEM,
             temperature=0.0,
+            model=settings.llm_model_deep,
+            timeout=settings.llm_deep_timeout,
         )
         return _parse_photo_count_response(repair)
 

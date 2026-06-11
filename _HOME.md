@@ -43,7 +43,7 @@ by available photos, so we can build + sell them websites.
 - **[[AGENT_PROMPT_GUIDE (End Session)]]** — ELI5: why/how to "wrap up" + copy-paste end-of-session prompt
 
 ## 🗂️ Areas
-- **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, visuals)
+- **Project canon** — `docs/project/` (ARCHITECTURE, [[SELL_METHODOLOGY]], onboarding, visuals)
 - **Reference library** — `docs/_reference-library/` — *source material + generated tiers; ideas only, NOT the scaffold*
 - **Research** — `docs/research/` — *working notes and synthesized guidance; not canonical state*
 - **Skills** — `.claude/skills/` — `context-transfer`, `reference-visualizer`
