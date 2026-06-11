@@ -1,8 +1,12 @@
 # Sean's hunt list. `leadpipe run --profile sean` uses this file.
 # One-off CLI flags (`--area`, `--industry`) override this file.
+#
+# Retargeted 2026-06-11: small-town-first. Bigger cities (Sacramento, San Jose,
+# Oakland, Fresno, Santa Rosa) are saturated/competitive; smaller CA towns have
+# more no-website opportunity. See config/ca_small_towns.yaml for more options.
 
 targets:
-  - area: "Sacramento, CA"
+  - area: "Placerville, CA"
     radius: 8km
     industries:
       - HVAC contractors
@@ -11,7 +15,7 @@ targets:
       - handyman
       - landscaping
 
-  - area: "San Jose, CA"
+  - area: "Grass Valley, CA"
     radius: 8km
     industries:
       - HVAC contractors
@@ -20,7 +24,7 @@ targets:
       - handyman
       - landscaping
 
-  - area: "Oakland, CA"
+  - area: "Auburn, CA"
     radius: 8km
     industries:
       - HVAC contractors
@@ -29,7 +33,7 @@ targets:
       - handyman
       - landscaping
 
-  - area: "Fresno, CA"
+  - area: "Yuba City, CA"
     radius: 8km
     industries:
       - HVAC contractors
@@ -38,7 +42,70 @@ targets:
       - handyman
       - landscaping
 
-  - area: "Santa Rosa, CA"
+  - area: "Turlock, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Manteca, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Porterville, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Hanford, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Petaluma, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Ukiah, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Sonora, CA"
+    radius: 8km
+    industries:
+      - HVAC contractors
+      - plumbers
+      - electricians
+      - handyman
+      - landscaping
+
+  - area: "Jackson, CA"
     radius: 8km
     industries:
       - HVAC contractors

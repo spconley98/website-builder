@@ -2,11 +2,11 @@
 type: context
 contributors: [sean]
 status: active
-created: 2026-06-10
-updated: 2026-06-10
+created: 2026-06-11
+updated: 2026-06-11
 topic: hot-cache
-generated: 2026-06-10T23:57:03
-stale_after: 2026-06-15
+generated: 2026-06-11T00:12:35
+stale_after: 2026-06-16
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
 ---
@@ -15,17 +15,17 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. This session used Firecrawl-backed web research
+**Phase:** operational with active safety/ops hardening. `config/targets.sean.yaml` retargeted to 12 small
 
 ## Active tasks
+- Sean — run `leadpipe check --google` + `leadpipe find` (no Firecrawl) on the new
+  small-town targets in `config/targets.sean.yaml`, then regenerate reports.
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
 - Sean — review the 25 generated Northern CA Website Briefs in `reports/Sean - Website Briefs.md`
   before using them for sales outreach; fallback-generated briefs are conservative and still need human
   review.
-- Sean — investigate/retry the remaining `found` Sean leads when useful, including "Spark Electricians";
-  prompt compaction is now in place, but that lead was not re-prioritized during this session.
 
 ## Next
 1. ~~Build the scaffold~~ ✅ **DONE — working end-to-end on real data.**
@@ -56,4 +56,4 @@ already had modified lead/report/docs files before this wrap-up; preserve those 
 hunts until data/report diffs are understood, pushed, and territory/state are synced.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-10-2356-lead-source-research.md` — Session Log — Lead Source Research
+`docs/session-logs/sean/2026-06-11-0000-small-town-retarget.md` — Session Log — Small-Town Retarget

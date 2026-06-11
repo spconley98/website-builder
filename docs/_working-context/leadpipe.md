@@ -17,6 +17,10 @@ upgrade (this branch) plus real hunts. One file per active project — regenerat
 ## In scope right now
 - Obsidian agent-brain spine: authority model, `_HOT`/MOCs, `leadpipe vault` (this branch).
 - Real hunts from `config/targets.sean.yaml` / `config/targets.matt.yaml`.
+- **Small-town-first targeting (2026-06-11)**: `targets.sean.yaml` retargeted from 5
+  big NorCal cities to 12 smaller CA towns (less competition, less tech-savvy
+  market). `config/ca_small_towns.yaml` is a reference menu (by county, not read by
+  code) for picking more towns or one-off `--area`/county hunts.
 - Reviewing Matt's imported leads in `data/matt/leads.jsonl` before any outreach.
 
 ## Open questions

@@ -1,0 +1,80 @@
+# Reference menu of smaller CA towns/counties for hunt targeting.
+# NOT read by code — pure reference for humans/agents picking targets.
+# To use: copy an entry into targets.<profile>.yaml as a new Target, or run a
+# one-off hunt: `leadpipe find --area "<town>, CA" --industry "<industry>"`.
+#
+# Rationale: smaller towns (roughly pop. 5k-60k) tend to have less tech-savvy
+# local businesses and less competition for "no website" leads than big cities.
+
+counties:
+  El Dorado:
+    - Placerville, CA
+    - South Lake Tahoe, CA
+    - Cameron Park, CA
+
+  Nevada:
+    - Grass Valley, CA
+    - Nevada City, CA
+    - Truckee, CA
+
+  Placer:
+    - Auburn, CA
+    - Colfax, CA
+    - Lincoln, CA
+
+  Sutter:
+    - Yuba City, CA
+    - Live Oak, CA
+
+  Stanislaus:
+    - Turlock, CA
+    - Modesto, CA
+    - Ceres, CA
+    - Oakdale, CA
+
+  San Joaquin:
+    - Manteca, CA
+    - Tracy, CA
+    - Lodi, CA
+
+  Tulare:
+    - Porterville, CA
+    - Visalia, CA
+    - Tulare, CA
+    - Dinuba, CA
+
+  Kings:
+    - Hanford, CA
+    - Lemoore, CA
+
+  Sonoma:
+    - Petaluma, CA
+    - Healdsburg, CA
+    - Rohnert Park, CA
+    - Sebastopol, CA
+
+  Mendocino:
+    - Ukiah, CA
+    - Fort Bragg, CA
+    - Willits, CA
+
+  Tuolumne:
+    - Sonora, CA
+    - Jamestown, CA
+
+  Amador:
+    - Jackson, CA
+    - Sutter Creek, CA
+
+  Calaveras:
+    - Angels Camp, CA
+    - San Andreas, CA
+
+  Yolo:
+    - Woodland, CA
+    - Davis, CA
+
+  Butte:
+    - Chico, CA
+    - Oroville, CA
+    - Paradise, CA

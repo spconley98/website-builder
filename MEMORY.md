@@ -14,11 +14,11 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T23:56:04-07:00 · **Last Agent:** Codex — lead-source/platform research and wrap-up (Sean)
-**Phase:** operational with active safety/ops hardening. This session used Firecrawl-backed web research
-to map low-cost/free lead-source expansion paths and image-asset rules for the future sister website-build
-project. The branch still carries the Nate Herk tiered-LLM/sales-methodology work plus existing lead/report
-diffs; SQLite + `asyncio` remain the next larger engine upgrades.
+**Last updated:** 2026-06-11T00:10:00-07:00 · **Last Agent:** Claude Sonnet 4.6 — small-town retarget (Sean)
+**Phase:** operational with active safety/ops hardening. `config/targets.sean.yaml` retargeted to 12 small
+CA towns (was 5 big cities); new `config/ca_small_towns.yaml` reference menu added. Branch still carries
+Nate Herk tiered-LLM/sales-methodology work plus existing lead/report diffs; SQLite + `asyncio` remain the
+next larger engine upgrades.
 
 ---
 
@@ -27,6 +27,19 @@ diffs; SQLite + `asyncio` remain the next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Small-town retarget — Sean/Claude, 2026-06-11**: Sean noticed hunts only hit big
+  CA cities and believes smaller towns have more no-website opportunity (less
+  tech-savvy, less competition). `config/targets.sean.yaml` fully retargeted from 5
+  big cities (Sacramento, San Jose, Oakland, Fresno, Santa Rosa) to 12 small CA towns
+  (Placerville, Grass Valley, Auburn, Yuba City, Turlock, Manteca, Porterville,
+  Hanford, Petaluma, Ukiah, Sonora, Jackson), same 5 trades + 8km radius. New
+  `config/ca_small_towns.yaml` (not read by code) is a reference menu of ~30 more
+  small CA towns by county for future targets or one-off `--area`/county hunts.
+  No code change needed — `Target.area` is free-text into Places Text Search and the
+  CLI `--area` override already supports any town/county. 59/59 tests pass, vault
+  validate (44 notes) + heartbeat (0 broken links) clean. Session log:
+  `docs/session-logs/sean/2026-06-11-0000-small-town-retarget.md`. **Next: run a real
+  `leadpipe find` (no Firecrawl) on the new targets to validate geocoding/results.**
 - **Lead-source/platform expansion research — Sean/Codex, 2026-06-10**: Researched additional avenues for
   large lead databases and no-website verification. Direction: keep Google Places as the high-confidence
   paid verifier, but do not use paid APIs as the bulk database engine. Best low-cost/free expansion lanes
@@ -188,6 +201,8 @@ diffs; SQLite + `asyncio` remain the next larger engine upgrades.
   `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md`.
 
 ## 🔨 In progress
+- Sean — run `leadpipe check --google` + `leadpipe find` (no Firecrawl) on the new
+  small-town targets in `config/targets.sean.yaml`, then regenerate reports.
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
