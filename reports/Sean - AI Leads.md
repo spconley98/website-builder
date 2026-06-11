@@ -103,6 +103,34 @@ tags: [report, leads]
 
 </details>
 
+<details>
+<summary>Other (20)</summary>
+
+| Business | Industry | Location | Status | Maps |
+|---|---|---|---|---|
+| Avalon Nursery & Ceramics | garden center | 5334 S Avalon Blvd, Los Angeles, CA 90011, USA | found | [map](https://maps.google.com/?cid=14529039767862298087&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Enchanted Gardens Nursery | garden center | 3401 Engle Rd, Bakersfield, CA 93313, USA | found | [map](https://maps.google.com/?cid=6565453545483430828&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Exotic Gardens | garden center | 14269 Olde Hwy 80, El Cajon, CA 92021, USA | found | [map](https://maps.google.com/?cid=4744846872169122181&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Los Tulipanes Nursery | garden center | 246 W North Ave, Fresno, CA 93706, USA | found | [map](https://maps.google.com/?cid=16191569319414580612&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Majestic Palms & Tropicals Fountains | garden center | 7500 Rosedale Hwy, Bakersfield, CA 93308, USA | found | [map](https://maps.google.com/?cid=14878804518533471248&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Phuong Nam Plants | garden center | 2114 Senter Rd Ste 9, San Jose, CA 95112, USA | found | [map](https://maps.google.com/?cid=12373027448490037523&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Rancho San Diego Nursery Inc. | garden center | 2031 Jamacha Rd, El Cajon, CA 92019, USA | found | [map](https://maps.google.com/?cid=9012530966175537448&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Rose Garden Pottery & Plants | garden center | 724 Rose Marie Ln, Stockton, CA 95207, USA | found | [map](https://maps.google.com/?cid=14377385927429356338&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sunset Nursery | garden center | 14850 Curry Ave, Lodi, CA 95240, USA | found | [map](https://maps.google.com/?cid=2102289428086702578&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Victor’s Nursery | garden center | 5709 E Fremont St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=7464113605660330706&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Gods Little Acre Nursery | plant nursery | 19810 Almaden Rd, San Jose, CA 95120, USA | found | [map](https://maps.google.com/?cid=12742430111080462116&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Green Paradise Nursery | plant nursery | 8995 Bradshaw Rd, Elk Grove, CA 95624, USA | found | [map](https://maps.google.com/?cid=14885422720732749666&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Hollandutch Nursery | plant nursery | 11677 N Davis Rd, Lodi, CA 95242, USA | found | [map](https://maps.google.com/?cid=18187129416719005911&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Lamont Wholesale Nursery | plant nursery | 7575 Weedpatch Hwy, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=4277807764412195745&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Luxurious Succulents | plant nursery | 1410 E Shields Ave, Fresno, CA 93704, USA | found | [map](https://maps.google.com/?cid=7334807079967271645&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| N & A’s Nursery | plant nursery | 6912 E Main St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=2754703060546700553&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Pegoji Nursery Inc | plant nursery | 14128 Chevalier Rd, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=2490241063251846245&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Port Stockton Nursery | plant nursery | 2910 E Main St, Stockton, CA 95205, USA | found | [map](https://maps.google.com/?cid=11628346848172109471&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| RainForest Nursery | plant nursery | 13373 CA-120, Manteca, CA 95336, USA | found | [map](https://maps.google.com/?cid=5321110430719554868&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| San Antonio Wholesale Nursery Corp. | plant nursery | 13042 S Union Ave, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=12597113729410859891&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+
+</details>
+
 ## Full List
 
 | Business | Industry | Location | Status | Maps |
@@ -125,6 +153,16 @@ tags: [report, leads]
 | Spark Electricians | electricians | 2608 S Bascom Ave #492, San Jose, CA 95124, USA | found | [map](https://maps.google.com/?cid=10814322033498108861&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Surge Electric | electricians | 7340 S Land Park Dr, Sacramento, CA 95831, USA | prioritized | [map](https://maps.google.com/?cid=16143966399080166641&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Urban Edge Electrician | electricians | 5026 Telegraph Ave, Oakland, CA 94609, USA | prioritized | [map](https://maps.google.com/?cid=7443881457713376639&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
+| Avalon Nursery & Ceramics | garden center | 5334 S Avalon Blvd, Los Angeles, CA 90011, USA | found | [map](https://maps.google.com/?cid=14529039767862298087&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Enchanted Gardens Nursery | garden center | 3401 Engle Rd, Bakersfield, CA 93313, USA | found | [map](https://maps.google.com/?cid=6565453545483430828&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Exotic Gardens | garden center | 14269 Olde Hwy 80, El Cajon, CA 92021, USA | found | [map](https://maps.google.com/?cid=4744846872169122181&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Los Tulipanes Nursery | garden center | 246 W North Ave, Fresno, CA 93706, USA | found | [map](https://maps.google.com/?cid=16191569319414580612&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Majestic Palms & Tropicals Fountains | garden center | 7500 Rosedale Hwy, Bakersfield, CA 93308, USA | found | [map](https://maps.google.com/?cid=14878804518533471248&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Phuong Nam Plants | garden center | 2114 Senter Rd Ste 9, San Jose, CA 95112, USA | found | [map](https://maps.google.com/?cid=12373027448490037523&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Rancho San Diego Nursery Inc. | garden center | 2031 Jamacha Rd, El Cajon, CA 92019, USA | found | [map](https://maps.google.com/?cid=9012530966175537448&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Rose Garden Pottery & Plants | garden center | 724 Rose Marie Ln, Stockton, CA 95207, USA | found | [map](https://maps.google.com/?cid=14377385927429356338&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sunset Nursery | garden center | 14850 Curry Ave, Lodi, CA 95240, USA | found | [map](https://maps.google.com/?cid=2102289428086702578&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Victor’s Nursery | garden center | 5709 E Fremont St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=7464113605660330706&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
 | Amg Elite LLC | handyman | 576 N First St, San Jose, CA 95112, USA | prioritized | [map](https://maps.google.com/?cid=9663093344680573000&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Douglas services handyman | handyman | 4616 Rotherhaven Way, San Jose, CA 95111, USA | prioritized | [map](https://maps.google.com/?cid=6127387072831140265&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | F&G handyman | handyman | 2541 Chant Ct, San Jose, CA 95122, USA | prioritized | [map](https://maps.google.com/?cid=83835858898899520&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
@@ -151,6 +189,16 @@ tags: [report, leads]
 | Monarch Home Services - Fresno | hvac services | 5623 W Barstow Ave, Fresno, CA 93722, USA | found | [map](https://maps.google.com/?cid=12224157303453700134&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Barriga Landscaping | landscaping | 2805 Wah Ave, Sacramento, CA 95822, USA | prioritized | [map](https://maps.google.com/?cid=6268209619033116399&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Landscaping WITH Elias Andres | landscaping | 2803 19th Ave, Oakland, CA 94606, USA | prioritized | [map](https://maps.google.com/?cid=7593866905439489665&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
+| Gods Little Acre Nursery | plant nursery | 19810 Almaden Rd, San Jose, CA 95120, USA | found | [map](https://maps.google.com/?cid=12742430111080462116&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Green Paradise Nursery | plant nursery | 8995 Bradshaw Rd, Elk Grove, CA 95624, USA | found | [map](https://maps.google.com/?cid=14885422720732749666&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Hollandutch Nursery | plant nursery | 11677 N Davis Rd, Lodi, CA 95242, USA | found | [map](https://maps.google.com/?cid=18187129416719005911&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Lamont Wholesale Nursery | plant nursery | 7575 Weedpatch Hwy, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=4277807764412195745&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Luxurious Succulents | plant nursery | 1410 E Shields Ave, Fresno, CA 93704, USA | found | [map](https://maps.google.com/?cid=7334807079967271645&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| N & A’s Nursery | plant nursery | 6912 E Main St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=2754703060546700553&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Pegoji Nursery Inc | plant nursery | 14128 Chevalier Rd, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=2490241063251846245&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Port Stockton Nursery | plant nursery | 2910 E Main St, Stockton, CA 95205, USA | found | [map](https://maps.google.com/?cid=11628346848172109471&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| RainForest Nursery | plant nursery | 13373 CA-120, Manteca, CA 95336, USA | found | [map](https://maps.google.com/?cid=5321110430719554868&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| San Antonio Wholesale Nursery Corp. | plant nursery | 13042 S Union Ave, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=12597113729410859891&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
 | 24/7 Plumbers and Rooters Inc | plumbing | 2536 St Andrews Dr, Glendale, CA 91206, USA | found | [map](https://maps.google.com/?cid=5676982852459525118&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | A&A Plumbing Solutions | plumbing | 1244 S Lyon St, Santa Ana, CA 92705, USA | found | [map](https://maps.google.com/?cid=3811840530802171655&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Absolute Plumbing And Rooting, Inc. | plumbing | 2261 Palma Dr #5, Ventura, CA 93003, USA | found | [map](https://maps.google.com/?cid=5763336698582015813&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |

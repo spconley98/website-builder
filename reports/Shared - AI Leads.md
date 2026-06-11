@@ -151,7 +151,7 @@ tags: [report, leads, shared]
 </details>
 
 <details>
-<summary>Other (118)</summary>
+<summary>Other (138)</summary>
 
 | Owners | Business | Industry | Location | Status | Maps |
 |---|---|---|---|---|---|
@@ -194,6 +194,16 @@ tags: [report, leads, shared]
 | Matt | Roy's Wash and Dry | dry cleaners | 3634 Old Jacksboro Hwy, Wichita Falls, TX 76302, USA | found | [map](https://maps.google.com/?cid=4788782185741164125&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Sheppard Cleaners | dry cleaners | 239 Sheppard Access Rd, Sheppard AFB, TX 76311, USA | found | [map](https://maps.google.com/?cid=7982736731806461737&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Speed Queen Equipment | dry cleaners | 1404 Beverly Dr, Wichita Falls, TX 76309, USA | found | [map](https://maps.google.com/?cid=16747536554256425409&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
+| Sean | Avalon Nursery & Ceramics | garden center | 5334 S Avalon Blvd, Los Angeles, CA 90011, USA | found | [map](https://maps.google.com/?cid=14529039767862298087&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Enchanted Gardens Nursery | garden center | 3401 Engle Rd, Bakersfield, CA 93313, USA | found | [map](https://maps.google.com/?cid=6565453545483430828&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Exotic Gardens | garden center | 14269 Olde Hwy 80, El Cajon, CA 92021, USA | found | [map](https://maps.google.com/?cid=4744846872169122181&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Los Tulipanes Nursery | garden center | 246 W North Ave, Fresno, CA 93706, USA | found | [map](https://maps.google.com/?cid=16191569319414580612&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Majestic Palms & Tropicals Fountains | garden center | 7500 Rosedale Hwy, Bakersfield, CA 93308, USA | found | [map](https://maps.google.com/?cid=14878804518533471248&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Phuong Nam Plants | garden center | 2114 Senter Rd Ste 9, San Jose, CA 95112, USA | found | [map](https://maps.google.com/?cid=12373027448490037523&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Rancho San Diego Nursery Inc. | garden center | 2031 Jamacha Rd, El Cajon, CA 92019, USA | found | [map](https://maps.google.com/?cid=9012530966175537448&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Rose Garden Pottery & Plants | garden center | 724 Rose Marie Ln, Stockton, CA 95207, USA | found | [map](https://maps.google.com/?cid=14377385927429356338&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Sunset Nursery | garden center | 14850 Curry Ave, Lodi, CA 95240, USA | found | [map](https://maps.google.com/?cid=2102289428086702578&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Victor’s Nursery | garden center | 5709 E Fremont St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=7464113605660330706&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
 | Matt | Ken Bahnsen Gym | gyms | W Highland St, Denton, TX 76203, USA | prioritized | [map](https://maps.google.com/?cid=10828274376960829283&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | LaMothe Gym | gyms | E Northgate Dr, Irving, TX 75062, USA | prioritized | [map](https://maps.google.com/?cid=16650643671827837958&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Rx Strength | gyms | 4020 Rhea Rd # 8A, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=6144720830683498378&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
@@ -255,6 +265,16 @@ tags: [report, leads, shared]
 | Matt | T Nail and Spa | nail salons | 4701 Southwest Pkwy #12, Wichita Falls, TX 76310, USA | found | [map](https://maps.google.com/?cid=124343654082903335&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | V Y Nails | nail salons | 4520 Southwest Pkwy E, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=1506963781726245296&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Vienna Nails | nail salons | 3100 Midwestern Pkwy, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=4511962252040971578&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
+| Sean | Gods Little Acre Nursery | plant nursery | 19810 Almaden Rd, San Jose, CA 95120, USA | found | [map](https://maps.google.com/?cid=12742430111080462116&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Green Paradise Nursery | plant nursery | 8995 Bradshaw Rd, Elk Grove, CA 95624, USA | found | [map](https://maps.google.com/?cid=14885422720732749666&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Hollandutch Nursery | plant nursery | 11677 N Davis Rd, Lodi, CA 95242, USA | found | [map](https://maps.google.com/?cid=18187129416719005911&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Lamont Wholesale Nursery | plant nursery | 7575 Weedpatch Hwy, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=4277807764412195745&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Luxurious Succulents | plant nursery | 1410 E Shields Ave, Fresno, CA 93704, USA | found | [map](https://maps.google.com/?cid=7334807079967271645&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | N & A’s Nursery | plant nursery | 6912 E Main St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=2754703060546700553&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Pegoji Nursery Inc | plant nursery | 14128 Chevalier Rd, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=2490241063251846245&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Port Stockton Nursery | plant nursery | 2910 E Main St, Stockton, CA 95205, USA | found | [map](https://maps.google.com/?cid=11628346848172109471&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | RainForest Nursery | plant nursery | 13373 CA-120, Manteca, CA 95336, USA | found | [map](https://maps.google.com/?cid=5321110430719554868&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | San Antonio Wholesale Nursery Corp. | plant nursery | 13042 S Union Ave, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=12597113729410859891&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
 | Matt | Relax Reflexology Wichita Falls | spa | 3916 Call Field Rd #500, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=7438329150972424716&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Total Massage | spa | 2708 Southwest Pkwy #125, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=12296957497540376859&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Body & Soul Massage | spas | 2910 Kemp Blvd #125, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=29243707524029788&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
@@ -337,6 +357,16 @@ tags: [report, leads, shared]
 | Sean | Spark Electricians | electricians | 2608 S Bascom Ave #492, San Jose, CA 95124, USA | found | [map](https://maps.google.com/?cid=10814322033498108861&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Sean | Surge Electric | electricians | 7340 S Land Park Dr, Sacramento, CA 95831, USA | prioritized | [map](https://maps.google.com/?cid=16143966399080166641&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Sean | Urban Edge Electrician | electricians | 5026 Telegraph Ave, Oakland, CA 94609, USA | prioritized | [map](https://maps.google.com/?cid=7443881457713376639&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
+| Sean | Avalon Nursery & Ceramics | garden center | 5334 S Avalon Blvd, Los Angeles, CA 90011, USA | found | [map](https://maps.google.com/?cid=14529039767862298087&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Enchanted Gardens Nursery | garden center | 3401 Engle Rd, Bakersfield, CA 93313, USA | found | [map](https://maps.google.com/?cid=6565453545483430828&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Exotic Gardens | garden center | 14269 Olde Hwy 80, El Cajon, CA 92021, USA | found | [map](https://maps.google.com/?cid=4744846872169122181&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Los Tulipanes Nursery | garden center | 246 W North Ave, Fresno, CA 93706, USA | found | [map](https://maps.google.com/?cid=16191569319414580612&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Majestic Palms & Tropicals Fountains | garden center | 7500 Rosedale Hwy, Bakersfield, CA 93308, USA | found | [map](https://maps.google.com/?cid=14878804518533471248&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Phuong Nam Plants | garden center | 2114 Senter Rd Ste 9, San Jose, CA 95112, USA | found | [map](https://maps.google.com/?cid=12373027448490037523&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Rancho San Diego Nursery Inc. | garden center | 2031 Jamacha Rd, El Cajon, CA 92019, USA | found | [map](https://maps.google.com/?cid=9012530966175537448&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Rose Garden Pottery & Plants | garden center | 724 Rose Marie Ln, Stockton, CA 95207, USA | found | [map](https://maps.google.com/?cid=14377385927429356338&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Sunset Nursery | garden center | 14850 Curry Ave, Lodi, CA 95240, USA | found | [map](https://maps.google.com/?cid=2102289428086702578&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Victor’s Nursery | garden center | 5709 E Fremont St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=7464113605660330706&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
 | Matt | Ken Bahnsen Gym | gyms | W Highland St, Denton, TX 76203, USA | prioritized | [map](https://maps.google.com/?cid=10828274376960829283&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | LaMothe Gym | gyms | E Northgate Dr, Irving, TX 75062, USA | prioritized | [map](https://maps.google.com/?cid=16650643671827837958&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Rx Strength | gyms | 4020 Rhea Rd # 8A, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=6144720830683498378&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
@@ -424,6 +454,16 @@ tags: [report, leads, shared]
 | Matt | T Nail and Spa | nail salons | 4701 Southwest Pkwy #12, Wichita Falls, TX 76310, USA | found | [map](https://maps.google.com/?cid=124343654082903335&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | V Y Nails | nail salons | 4520 Southwest Pkwy E, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=1506963781726245296&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Vienna Nails | nail salons | 3100 Midwestern Pkwy, Wichita Falls, TX 76308, USA | found | [map](https://maps.google.com/?cid=4511962252040971578&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
+| Sean | Gods Little Acre Nursery | plant nursery | 19810 Almaden Rd, San Jose, CA 95120, USA | found | [map](https://maps.google.com/?cid=12742430111080462116&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Green Paradise Nursery | plant nursery | 8995 Bradshaw Rd, Elk Grove, CA 95624, USA | found | [map](https://maps.google.com/?cid=14885422720732749666&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Hollandutch Nursery | plant nursery | 11677 N Davis Rd, Lodi, CA 95242, USA | found | [map](https://maps.google.com/?cid=18187129416719005911&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Lamont Wholesale Nursery | plant nursery | 7575 Weedpatch Hwy, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=4277807764412195745&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Luxurious Succulents | plant nursery | 1410 E Shields Ave, Fresno, CA 93704, USA | found | [map](https://maps.google.com/?cid=7334807079967271645&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | N & A’s Nursery | plant nursery | 6912 E Main St, Stockton, CA 95215, USA | found | [map](https://maps.google.com/?cid=2754703060546700553&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Pegoji Nursery Inc | plant nursery | 14128 Chevalier Rd, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=2490241063251846245&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | Port Stockton Nursery | plant nursery | 2910 E Main St, Stockton, CA 95205, USA | found | [map](https://maps.google.com/?cid=11628346848172109471&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | RainForest Nursery | plant nursery | 13373 CA-120, Manteca, CA 95336, USA | found | [map](https://maps.google.com/?cid=5321110430719554868&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
+| Sean | San Antonio Wholesale Nursery Corp. | plant nursery | 13042 S Union Ave, Bakersfield, CA 93307, USA | found | [map](https://maps.google.com/?cid=12597113729410859891&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA) |
 | Matt | 24/7 water heater repairs Richardson TX | plumbers | 1621 N Central Expy, Richardson, TX 75080, USA | prioritized | [map](https://maps.google.com/?cid=8444731874497558421&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Las Colinas Plumbing | plumbers | 1905 Univ Business Dr #601, McKinney, TX 75071, USA | prioritized | [map](https://maps.google.com/?cid=9479628091568450716&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Matt | Lightning Plumbing of Wichita Falls | plumbers | 1706 9th St #873, Wichita Falls, TX 76301, USA | found | [map](https://maps.google.com/?cid=14792013481046102991&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
