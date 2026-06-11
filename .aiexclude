@@ -1,0 +1,26 @@
+# .aiexclude — agent-context exclusions (Google AI convention: Gemini Code Assist / Antigravity /
+# Firebase Studio). Mirrors .geminiignore so Matt's stack is covered regardless of which reader is
+# active. Keeps large/generated/lock files OUT of the agent context window.
+# DELIBERATELY broader than .gitignore — uv.lock and data/**/*.jsonl are git-TRACKED but must never be
+# slurped into a prompt. git-ignore != AI-context-exclude. See AGENTS.md §6.x.
+
+# --- Build / deps / caches ---
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+node_modules/
+dist/
+build/
+out/
+.next/
+
+# --- Logs / large media ---
+*.log
+*.mp3
+*.wav
+*.m4a
+
+# --- Tracked-but-huge: keep in git, exclude from agent context ---
+uv.lock
+data/**/*.jsonl

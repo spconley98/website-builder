@@ -1,0 +1,45 @@
+Stress-test the token-conservation game plan for website-builder's native agent standards.
+
+CONTEXT: website-builder is a small Python/uv lead-pipeline CLI (leadpipe). Multi-agent: Claude Code (Sean), Gemini/Antigravity (Matt), Codex routed for review. Already has: lean AGENTS.md (canonical constitution, ~334 lines, READ-ONCE at session start), MEMORY.md (state, single source of truth, mirrored to NotebookLM), thin CLAUDE.md/GEMINI.md pointers (auto-loaded per turn), generated _HOT.md (~500-word cold-start digest), CLI-over-MCP already (NotebookLM CLI, leadpipe CLI, gh; Firecrawl is the only MCP), three-brain cross-challenge routing.
+
+RESEARCH SOURCES: Nate Herk guide (NotebookLM) + official Claude Code best-practices docs + damiangalarza context-window deep-dive + remio Antigravity technical review.
+
+MY DRAFT CONCLUSIONS (the game plan to bake into AGENTS.md as a new "Token & context economy" section):
+
+A. CONTEXT BUDGET
+1. Hard-cap working context ~120k/12% even though models offer 1M (lost-in-middle hits both Claude 1M and Antigravity 1M). Treat 1M as insurance not a target.
+2. Run /context at session start; manual /compact at ~60% with targeted preserve instructions; don't rely on autocompact.
+
+B. FILES
+3. Keep CLAUDE.md/GEMINI.md thin pointers (done). AGENTS.md is read-once so length is acceptable, but apply a router pattern — move detailed protocol to linked docs, keep an index.
+4. Markdown everywhere (HTML->MD ~90% fewer tokens, PDF->MD 65-70%, DOCX 33%).
+5. Surgical file refs: @file + line ranges, grep-before-read.
+
+C. MCP vs CLI/SKILLS
+6. Prefer CLI over MCP (~663 tok/tool def, playwright-mcp = 14.3k just to exist; CLI ~35x more efficient). MCP only when no CLI; disconnect unused MCP per session.
+7. Prefer Skills over MCP (progressive disclosure: ~200 tok at startup vs full load).
+
+D. SUBAGENTS
+8. Offload heavy reads (whole-repo scan, reference-library digestion, competitor research) to subagents; cheap model (Haiku) for heavy-read subagents; return summary only.
+9. three-brain: Gemini for long-context/whole-repo, Codex for review.
+
+E. SESSION HYGIENE
+10. /clear between unrelated tasks. /rewind to ERASE failed attempts (failed code pollutes context) rather than correcting in place.
+11. Session handoff > repeated compaction (repo already does this via context-transfer + MEMORY.md + _HOT.md).
+12. Plan mode mandatory + 95% confidence gate before code. Batch multi-step prompts into one message.
+
+F. CACHING
+13. Prompt cache 1hr TTL, cache reads ~10x cheaper. Don't switch models mid-session (breaks prefix cache). Don't edit early-context files (CLAUDE.md/AGENTS.md) mid-session (invalidates downstream cache).
+
+G. ANTIGRAVITY (Matt/Gemini)
+14. Map Antigravity artifact system (auto markdown task lists/plans/walkthroughs) to repo session-logs + MEMORY.md.
+15. 1M native context != license to dump whole monorepo; front-load critical instructions.
+
+STRESS-TEST DIRECTIVE: Be adversarial. Challenge each conclusion. Specifically attack:
+- Is "ditch MCP / 35x" DATED given Anthropic's advanced tool use + tool-search lazy loading (this harness already uses deferred tools)? Is Anthropic still recommending MCP?
+- Is the 120k/12% hard cap right for AGENTIC CODING, or is it cargo-culting an influencer number? Official docs say "sometimes let context accumulate."
+- Is "Haiku hack" (cheap model for heavy reads) a quality risk for extraction/research?
+- Is this whole exercise OVER-ENGINEERING for a small Python CLI that may not have a token problem at all?
+- Which conclusions are evidence-backed vs vibes? Which are repo-redundant (already solved)?
+- What's MISSING from the plan?
+Return: per-conclusion verdict (KEEP / CUT / REVISE), the single biggest flaw, and what's missing.

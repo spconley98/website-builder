@@ -49,6 +49,8 @@ lerna-debug.log*
 
 # --- Gemini CLI (machine-local skill links + MCP config — absolute paths, not portable) ---
 .gemini/
+# NOTE: .geminiignore and .aiexclude (repo root) are intentionally TRACKED — shared agent-context
+# guardrails (AGENTS.md §6.x), portable + no secrets. Do NOT add them here.
 
 # --- Obsidian (keep reviewed core config; ignore volatile UI state + the plugin execution surface) ---
 # .obsidian/ is an executable trust boundary (AGENTS.md §6): a real campaign (REF6598) hid a RAT in

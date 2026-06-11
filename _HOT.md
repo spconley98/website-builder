@@ -5,7 +5,7 @@ status: active
 created: 2026-06-10
 updated: 2026-06-10
 topic: hot-cache
-generated: 2026-06-10T22:37:31
+generated: 2026-06-10T22:51:10
 stale_after: 2026-06-15
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. Today Path cleanup is complete: canonical NotebookLM context restored, hunt operations rules added, prompt compaction/Agent 3 fallback hardened, legacy scores backfilled, and Sean's Northern CA Website Briefs generated. SQLite + `asyncio` remain the next larger engine upgrades.
+**Phase:** operational with active safety/ops hardening. This session: researched token conservation (NotebookLM Nate Herk + official Claude docs + Antigravity review), stress-tested via three-brain/Gemini, added a reference doc, and adopted 2 native agent standards (patch-don't-rewrite + AI-context exclusion guardrails via `.geminiignore`/`.aiexclude`). SQLite + `asyncio` remain the next larger engine upgrades.
 
 ## Active tasks
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
@@ -36,11 +36,21 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
    areas/industries, then run `leadpipe run --profile sean --use-firecrawl` or profile-specific one-offs.
 
 ## Blockers
-- None currently. NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and
-  `MEMORY.md` was uploaded successfully.
+- **Codex three-brain route DOWN** — `~/.codex/config.toml` has `service_tier = default`, invalid for
+  codex-cli 0.128 (expects `fast`/`flex`; OpenAI account rejects both with "Unsupported service_tier").
+  Codex review/rescue routes unavailable until the config is fixed; use Gemini as the adversarial brain
+  meanwhile. Fix = set a valid/supported `service_tier` (or remove the line) in `~/.codex/config.toml`.
+- NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and `MEMORY.md` was
+  uploaded successfully.
 
 ## Handoff
-Architecture is locked and built; today's implementation finished the immediate cleanup/safety path before bigger engine work. Agent 3 is now more robust and Sean's Northern CA prioritized target leads have Website Briefs, but those briefs must be human-reviewed before outreach. Next technical priority is still the larger SQLite migration, followed by async/pooling; do not start broad new hunts until data/report diffs are pushed and territory/state are synced.
+Architecture is locked and built. Latest session was non-pipeline: added 2 token/context-economy agent
+standards to `AGENTS.md` §6.x (patch-don't-rewrite + `.geminiignore`/`.aiexclude` exclusion guardrails)
+plus a reference doc, stress-tested via Gemini because the Codex three-brain route is currently broken
+(service_tier config). No pipeline/lead-data changed, so no report regeneration was needed. Agent 3 is
+robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review before
+outreach). Next technical priority remains the SQLite migration then async/pooling; do not start broad
+new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## Latest session
-`docs/session-logs/sean/2026-06-10-2235-today-path-implementation.md` — Session Log — Today Path Implementation
+`docs/session-logs/sean/2026-06-10-2249-token-economy-standards.md` — Session — Token & context economy research + two adopted standards

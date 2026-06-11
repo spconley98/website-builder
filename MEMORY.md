@@ -14,8 +14,8 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T22:35:18-07:00 · **Last Agent:** Codex — Today Path implementation and context transfer (Sean)
-**Phase:** operational with active safety/ops hardening. Today Path cleanup is complete: canonical NotebookLM context restored, hunt operations rules added, prompt compaction/Agent 3 fallback hardened, legacy scores backfilled, and Sean's Northern CA Website Briefs generated. SQLite + `asyncio` remain the next larger engine upgrades.
+**Last updated:** 2026-06-10T22:49-07:00 · **Last Agent:** Claude Sonnet 4.6 — token/context-economy research + 2 adopted agent standards (Sean)
+**Phase:** operational with active safety/ops hardening. This session: researched token conservation (NotebookLM Nate Herk + official Claude docs + Antigravity review), stress-tested via three-brain/Gemini, added a reference doc, and adopted 2 native agent standards (patch-don't-rewrite + AI-context exclusion guardrails via `.geminiignore`/`.aiexclude`). SQLite + `asyncio` remain the next larger engine upgrades.
 
 ---
 
@@ -24,6 +24,18 @@ tags: [canon, state]
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Token & context economy — research + 2 adopted standards — Sean/Claude, 2026-06-10**: Deep-dived
+  the `NATE HERK GUIDE` NotebookLM notebook + scraped official Claude Code best-practices, a
+  context-window deep-dive, and the Antigravity technical review (Firecrawl). Stress-tested 15 draft
+  conclusions via `three-brain` — **Codex route was down** (`~/.codex/config.toml` `service_tier =
+  default` invalid for codex-cli 0.128; account rejects `flex`/`fast`), so routed **Gemini** as the
+  adversarial brain. Outcome: repo already does most input-token tricks; killed the influencer numerology
+  (120k cap, /compact-at-60%, 95% gate) and flagged "ditch MCP/35x" as dated (lazy tool loading).
+  **Two genuinely-missing levers adopted as canon in `AGENTS.md` §6.x**: (1) patch-don't-rewrite
+  (output tokens are the bottleneck), (2) exclusion guardrails — new git-tracked `.geminiignore` +
+  `.aiexclude` exclude `uv.lock` + `data/**/*.jsonl` from agent context (git-tracked ≠ AI-excluded).
+  Full playbook (reference-only): `docs/_reference-library/(Raw Text) Token_and_Context_Economy.md`.
+  56/56 tests pass. Session log: `docs/session-logs/sean/2026-06-10-2249-token-economy-standards.md`.
 - **Today Path implementation — Sean/Codex, 2026-06-10**: NotebookLM CLI context was corrected to the
   canonical `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`), the stray local Matt
   morning-brief artifact under `docs/project/` was removed after confirming the canonical brain already
@@ -149,10 +161,17 @@ tags: [canon, state]
 - Sean — investigate/retry the remaining `found` Sean leads when useful, including "Spark Electricians";
   prompt compaction is now in place, but that lead was not re-prioritized during this session.
 - Sean — plan SQLite migration and async/pooling work as separate larger engine upgrades.
+- Sean — fix Codex `service_tier` config to restore three-brain Codex routes (see Blocked).
+- Sean — optionally generate `(Mind Map)` + `(Visualization)` tiers for the new token-economy
+  reference doc via `reference-visualizer`.
 
 ## 🚫 Blocked / waiting
-- None currently. NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and
-  `MEMORY.md` was uploaded successfully.
+- **Codex three-brain route DOWN** — `~/.codex/config.toml` has `service_tier = default`, invalid for
+  codex-cli 0.128 (expects `fast`/`flex`; OpenAI account rejects both with "Unsupported service_tier").
+  Codex review/rescue routes unavailable until the config is fixed; use Gemini as the adversarial brain
+  meanwhile. Fix = set a valid/supported `service_tier` (or remove the line) in `~/.codex/config.toml`.
+- NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and `MEMORY.md` was
+  uploaded successfully.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places
@@ -229,11 +248,19 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked and built; today's implementation finished the immediate cleanup/safety path before bigger engine work. Agent 3 is now more robust and Sean's Northern CA prioritized target leads have Website Briefs, but those briefs must be human-reviewed before outreach. Next technical priority is still the larger SQLite migration, followed by async/pooling; do not start broad new hunts until data/report diffs are pushed and territory/state are synced.
+Architecture is locked and built. Latest session was non-pipeline: added 2 token/context-economy agent
+standards to `AGENTS.md` §6.x (patch-don't-rewrite + `.geminiignore`/`.aiexclude` exclusion guardrails)
+plus a reference doc, stress-tested via Gemini because the Codex three-brain route is currently broken
+(service_tier config). No pipeline/lead-data changed, so no report regeneration was needed. Agent 3 is
+robust and Sean's Northern CA prioritized leads have Website Briefs (still need human review before
+outreach). Next technical priority remains the SQLite migration then async/pooling; do not start broad
+new hunts until data/report diffs are pushed and territory/state are synced.
 
 ## 👤 Contributors this session
-- **Sean** — approved and directed the Today Path implementation.
-- **Codex** — implemented cleanup, docs rules, prompt compaction, score backfill, Website Intelligence hardening, report regeneration, and context transfer.
+- **Sean** — directed the token-economy research, chose exclusion scope + AGENTS.md placement, approved the plan.
+- **Claude** — ran NotebookLM/Firecrawl research, three-brain (Gemini) stress test, wrote the reference
+  doc, implemented the 2 adopted standards, ran the context transfer.
+- **Gemini** — adversarial stress test of the 15 draft conclusions (Codex route unavailable).
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.

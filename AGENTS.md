@@ -3,7 +3,7 @@ type: project
 contributors: [sean]
 status: active
 created: 2026-06-07
-updated: 2026-06-09
+updated: 2026-06-10
 topic: constitution
 tags: [canon]
 ---
@@ -247,6 +247,18 @@ seat for a given session.
 - **Website Brief review:** `leadpipe intelligence` produces draft build/sales judgment, not cleared
   outreach copy. A human (Sean by default) or a routed second LLM review must approve Website Briefs
   before they are used for sales outreach.
+
+### Token & context economy (adopted standards)
+Two rules are canon; the full (reference-only) playbook + rationale lives in
+[`docs/_reference-library/(Raw Text) Token_and_Context_Economy.md`](./docs/_reference-library/(Raw%20Text)%20Token_and_Context_Economy.md).
+- **Patch, don't rewrite.** Edit via minimal targeted diffs (Claude `Edit`, Gemini/Antigravity patch
+  edits) — never regenerate a whole file to change a few lines. Output tokens are the costlier, slower
+  bottleneck in agentic coding.
+- **Exclusion guardrails.** Never read or `cat` build artifacts, `uv.lock`, or `data/**/*.jsonl` into
+  context. `.geminiignore` + `.aiexclude` (both git-tracked) enforce this for Gemini/Antigravity. Claude
+  Code has no read-ignore, so it's behavioral: surgical reads + grep-before-read, never slurp data dumps.
+  These ignore lists are **deliberately broader than `.gitignore`** — `uv.lock` and the lead JSONLs stay
+  git-tracked but must not enter a prompt (git-ignore ≠ AI-context-exclude).
 
 ---
 
