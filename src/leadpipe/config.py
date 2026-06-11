@@ -67,6 +67,8 @@ class Settings(BaseModel):
     firecrawl_api_key: str | None
     firecrawl_pause_credits_pct: float
     llm_model: str
+    llm_model_deep: str
+    llm_deep_timeout: float
     llm_base_url: str
     targets: list[Target]
 
@@ -110,6 +112,8 @@ def load_settings(targets_path: Path | None = None) -> Settings:
         firecrawl_api_key=_env_str("FIRECRAWL_API_KEY"),
         firecrawl_pause_credits_pct=float(_env_str("FIRECRAWL_PAUSE_CREDITS_PCT", "5.0") or "5.0"),
         llm_model=_env_str("LLM_MODEL", "gemma4-fast") or "gemma4-fast",
+        llm_model_deep=_env_str("LLM_MODEL_DEEP", "gemma4:31b") or "gemma4:31b",
+        llm_deep_timeout=float(_env_str("LLM_DEEP_TIMEOUT", "180") or "180"),
         llm_base_url=_env_str("LLM_BASE_URL", "http://localhost:11434/v1") or "http://localhost:11434/v1",
         targets=_load_targets(targets_path),
     )

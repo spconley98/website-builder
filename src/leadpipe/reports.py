@@ -39,6 +39,14 @@ def _cell(value: object) -> str:
     return text.replace("\r", " ").replace("\n", " ").replace("|", "\\|")
 
 
+def _links(urls: list[str]) -> str:
+    return " · ".join(f"[{i+1}]({u})" for i, u in enumerate(urls)) or "—"
+
+
+def _category_sort_key(label: str, other_label: str) -> tuple[int, str]:
+    return (1, label) if label == other_label else (0, label)
+
+
 def _profile_label(profile: str) -> str:
     return normalize_profile(profile).title()
 
@@ -96,11 +104,8 @@ def _grouped_leads_sections(leads: list[Lead]) -> str:
     for l in leads:
         groups.setdefault(industry_group(l.industry, categories, other_label), []).append(l)
 
-    def _sort_key(label: str) -> tuple[int, str]:
-        return (1, label) if label == other_label else (0, label)
-
     sections = []
-    for label in sorted(groups, key=_sort_key):
+    for label in sorted(groups, key=lambda x: _category_sort_key(x, other_label)):
         members = sorted(groups[label], key=lambda x: (x.industry, x.name))
         rows = list(_ALL_LEADS_HEADER) + [_all_leads_row(l) for l in members]
         sections.append(
@@ -119,11 +124,10 @@ def _prioritized_table(leads: list[Lead]) -> str:
     ]
     for l in sorted(rated, key=_score_sort_key):
         stars = _STARS.get(l.photo_rating or 0, "—")
-        links = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(l.photo_links)) or "—"
         why = l.rating_reason or "—"
         rows.append(
             f"| {_cell(_score_value(l))} | {_cell(stars)} | {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.location)} | "
-            f"{_cell(l.photo_count or 0)} | {links} | {_cell(why)} |"
+            f"{_cell(l.photo_count or 0)} | {_links(l.photo_links)} | {_cell(why)} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -141,11 +145,10 @@ def _website_briefs_table(leads: list[Lead]) -> str:
         key=_score_sort_key,
     ):
         pages = ", ".join(l.suggested_pages) or "—"
-        sources = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(l.intelligence_sources)) or "—"
         rows.append(
             f"| {_cell(l.name)} | {_cell(l.industry)} | {_cell(l.site_brief or '—')} | "
             f"{_cell(l.selling_angle or '—')} | {_cell(pages)} | {_cell(l.visual_notes or '—')} | "
-            f"{sources} |"
+            f"{_links(l.intelligence_sources)} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -238,11 +241,8 @@ def _grouped_shared_sections(rows_with_owners: list[tuple[Lead, list[str]]]) -> 
     for lead, owners in rows_with_owners:
         groups.setdefault(industry_group(lead.industry, categories, other_label), []).append((lead, owners))
 
-    def _sort_key(label: str) -> tuple[int, str]:
-        return (1, label) if label == other_label else (0, label)
-
     sections = []
-    for label in sorted(groups, key=_sort_key):
+    for label in sorted(groups, key=lambda x: _category_sort_key(x, other_label)):
         members = sorted(groups[label], key=lambda x: (x[0].industry, x[0].name))
         rows = list(_SHARED_ALL_HEADER) + [_shared_all_row(lead, owners) for lead, owners in members]
         sections.append(
@@ -264,12 +264,11 @@ def _shared_prioritized_table(rows_with_owners: list[tuple[Lead, list[str]]]) ->
         key=lambda x: _score_sort_key(x[0]),
     ):
         stars = _STARS.get(lead.photo_rating or 0, "—")
-        links = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(lead.photo_links)) or "—"
         why = lead.rating_reason or "—"
         rows.append(
             f"| {_cell(_score_value(lead))} | {_cell(stars)} | {_cell(', '.join(owners))} | "
             f"{_cell(lead.name)} | {_cell(lead.industry)} | "
-            f"{_cell(lead.location)} | {_cell(lead.photo_count or 0)} | {links} | {_cell(why)} |"
+            f"{_cell(lead.location)} | {_cell(lead.photo_count or 0)} | {_links(lead.photo_links)} | {_cell(why)} |"
         )
     return "\n".join(rows) + "\n"
 
@@ -287,11 +286,10 @@ def _shared_website_briefs_table(rows_with_owners: list[tuple[Lead, list[str]]])
         key=lambda x: _score_sort_key(x[0]),
     ):
         pages = ", ".join(lead.suggested_pages) or "—"
-        sources = " · ".join(f"[{i+1}]({u})" for i, u in enumerate(lead.intelligence_sources)) or "—"
         rows.append(
             f"| {_cell(', '.join(owners))} | {_cell(lead.name)} | {_cell(lead.industry)} | "
             f"{_cell(lead.site_brief or '—')} | {_cell(lead.selling_angle or '—')} | {_cell(pages)} | "
-            f"{_cell(lead.visual_notes or '—')} | {sources} |"
+            f"{_cell(lead.visual_notes or '—')} | {_links(lead.intelligence_sources)} |"
         )
     return "\n".join(rows) + "\n"
 

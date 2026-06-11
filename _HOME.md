@@ -28,8 +28,8 @@ by available photos, so we can build + sell them websites.
 ## 🗺️ Maps of Content
 - [[Project-MOC]] — canon, design, control surfaces
 - [[Sessions-MOC]] — per-contributor session handoffs
-- [[Research-MOC]] — working research + NotebookLM insights
-- [[Reference-MOC]] — the reference library (ideas only, NOT the scaffold)
+- [[Research-MOC]] — working research + derived NotebookLM insight guides
+- [[Reference-MOC]] — source/reference library (ideas only, NOT the scaffold)
 
 ## 📊 Dashboards (Bases)
 - `docs/_bases/` — Sessions, Reference Library, Research, Pending Approvals (open with the Bases core plugin).
@@ -43,12 +43,13 @@ by available photos, so we can build + sell them websites.
 - **[[AGENT_PROMPT_GUIDE (End Session)]]** — ELI5: why/how to "wrap up" + copy-paste end-of-session prompt
 
 ## 🗂️ Areas
-- **Project canon** — `docs/project/` (ARCHITECTURE, onboarding, visuals)
-- **Reference library** — `docs/_reference-library/` — *ideas/tools only, NOT the scaffold*
+- **Project canon** — `docs/project/` (ARCHITECTURE, [[SELL_METHODOLOGY]], onboarding, visuals)
+- **Reference library** — `docs/_reference-library/` — *source material + generated tiers; ideas only, NOT the scaffold*
+- **Research** — `docs/research/` — *working notes and synthesized guidance; not canonical state*
 - **Skills** — `.claude/skills/` — `context-transfer`, `reference-visualizer`
 - **Session logs** — `docs/session-logs/sean/` and `docs/session-logs/matt/`
 - **Lead data** — `data/sean/` and `data/matt/` profile stores
-- **Reports** — `reports/` generated Sean/Matt/shared views
+- **Reports** — `reports/` generated Sean/Matt/shared lead and Website Brief views
 
 ## 🧠 Shared brain
 - **NotebookLM** — `website-builder-brain` (shared; mirrors `MEMORY.md` only). Attach your name when you add.

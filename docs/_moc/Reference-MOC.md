@@ -12,8 +12,9 @@ related: ["[[_HOME]]"]
 # Reference Library MOC
 
 **Reference ONLY — not the scaffold (AGENTS.md §4).** Each doc has Raw Text / Mind Map / Visualization
-tiers; the links below point to the Mind Map note. Listing a tool here is not a decision to use it.
+tiers where available. Listing a tool here is not a decision to use it.
 
+## Full 3-tier references
 - [[AI_BUILD_BIBLE]]
 - [[Master_Skills_Catalog]]
 - [[Comprehensive_AI_Agents_Database]]
@@ -22,3 +23,7 @@ tiers; the links below point to the Mind Map note. Listing a tool here is not a 
 - [[Comprehensive_Project_Structuring_Guide]]
 - [[BIBLE_Custom_SDKs_and_Proprietary_Logic]]
 - [[Local_AI_Agents_for_Leadpipe]]
+
+## Raw-only / pending generated tiers
+- `docs/_reference-library/(Raw Text) Token_and_Context_Economy.md` — adopted standards live in
+  [[AGENTS]]; this remains reference-only rationale.
