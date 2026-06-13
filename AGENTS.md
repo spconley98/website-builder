@@ -139,6 +139,21 @@ hardcode it into this file or any other "current-truth" surface.
 `_HOT.md`, `docs/_working-context/*`, and `_HOME.md` are **generated/maintained by `leadpipe vault` (§6)**
 — do not hand-edit `_HOT.md`. They are conveniences; if any disagrees with `MEMORY.md`, `MEMORY.md` wins.
 
+### Knowledge graph (graphify) — query before you grep
+A persistent knowledge graph of this whole repo (code + docs + research + visuals) lives in
+`graphify-out/`. Use it to answer "how/where/what-connects" questions for **~10x fewer tokens** than
+grepping or reading files cold:
+- **`graphify query "<question>"`** — traverses the graph, returns the relevant slice + `source_location`
+  citations. Try this *before* fanning out reads across the repo.
+- **`graphify-out/GRAPH_REPORT.md`** — the map: god nodes (core abstractions), community labels,
+  surprising connections, and the questions the graph is best at answering. Read this to orient fast.
+- **`graphify-out/graph.json`** — raw graph (committed, so a fresh clone has it without rebuilding).
+- **`graphify-out/bridges.json` + `apply_bridges.py`** — curated doc↔code edges that re-stitch the
+  strategy docs (e.g. `SELL_METHODOLOGY.md`) to the code that embodies them (`website_intelligence.py`).
+  The graph is **rebuilt** by `/graphify` (or `graphify ... --update`), which **overwrites `graph.json`** —
+  so after any rebuild, re-run `python graphify-out/apply_bridges.py` to re-apply the bridges.
+The graph is a convenience derived from the repo; if it disagrees with the source files, the **source wins**.
+
 ### Note metadata — frontmatter schema (enforced by `leadpipe vault validate`)
 Every hand-written note carries YAML frontmatter (2-space indent; **omit** optional fields rather than
 leave them blank — an empty date breaks Bases filters; single-token keys; no nested properties; no

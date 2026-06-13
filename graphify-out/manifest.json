@@ -1,0 +1,712 @@
+{
+  "C:\\Users\\mysis\\website-builder\\.claude\\settings.json": {
+    "mtime": 1781065180.914141,
+    "ast_hash": "f70fa3b8f43549e423728a2649a48a51",
+    "semantic_hash": "f70fa3b8f43549e423728a2649a48a51"
+  },
+  "C:\\Users\\mysis\\website-builder\\.claude\\settings.local.json": {
+    "mtime": 1780853818.220642,
+    "ast_hash": "46bed2c4c1f3384f1dbf123b3ef2382b",
+    "semantic_hash": "46bed2c4c1f3384f1dbf123b3ef2382b"
+  },
+  "C:\\Users\\mysis\\website-builder\\.obsidian\\app.json": {
+    "mtime": 1781151678.153091,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": "99914b932bd37a50b983c5e7c90ae93b"
+  },
+  "C:\\Users\\mysis\\website-builder\\.obsidian\\appearance.json": {
+    "mtime": 1781151678.1545906,
+    "ast_hash": "99914b932bd37a50b983c5e7c90ae93b",
+    "semantic_hash": "99914b932bd37a50b983c5e7c90ae93b"
+  },
+  "C:\\Users\\mysis\\website-builder\\.obsidian\\core-plugins.json": {
+    "mtime": 1781151678.1510875,
+    "ast_hash": "7c877bea49eaeabb100563bd157b9051",
+    "semantic_hash": "7c877bea49eaeabb100563bd157b9051"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\__init__.py": {
+    "mtime": 1780857437.982195,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\agents\\__init__.py": {
+    "mtime": 1780857995.5780182,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\agents\\base.py": {
+    "mtime": 1780858009.793751,
+    "ast_hash": "188e249185e3f8d7182b460261de5522",
+    "semantic_hash": "188e249185e3f8d7182b460261de5522"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\agents\\lead_finder.py": {
+    "mtime": 1781069444.3985844,
+    "ast_hash": "ca88023b1f88aa628a44b5f67d14cfde",
+    "semantic_hash": "ca88023b1f88aa628a44b5f67d14cfde"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\agents\\lead_prioritizer.py": {
+    "mtime": 1781159095.6919758,
+    "ast_hash": "79edfae4b29060fc5e8d98d56f23916d",
+    "semantic_hash": "79edfae4b29060fc5e8d98d56f23916d"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\agents\\scraped_content.py": {
+    "mtime": 1781155072.2462413,
+    "ast_hash": "70e6f70e1b52f76fed086bce3c3a0c2f",
+    "semantic_hash": "70e6f70e1b52f76fed086bce3c3a0c2f"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\agents\\website_intelligence.py": {
+    "mtime": 1781158838.1148336,
+    "ast_hash": "0c0b1095cf46fa27be3bbcc869b3d1c1",
+    "semantic_hash": "0c0b1095cf46fa27be3bbcc869b3d1c1"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\cli.py": {
+    "mtime": 1781063396.5197105,
+    "ast_hash": "041644cd28839bb0c6f03ea286e0afa6",
+    "semantic_hash": "041644cd28839bb0c6f03ea286e0afa6"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\config.py": {
+    "mtime": 1781158738.805732,
+    "ast_hash": "34ce4c21d0f9f174e287d886fa054ce2",
+    "semantic_hash": "34ce4c21d0f9f174e287d886fa054ce2"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\industries.py": {
+    "mtime": 1781068528.2233438,
+    "ast_hash": "17ab381e59eaa7a996b547c241cbd577",
+    "semantic_hash": "17ab381e59eaa7a996b547c241cbd577"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\llm.py": {
+    "mtime": 1781158771.232897,
+    "ast_hash": "0a434292aece8d9ecf7c9107893218de",
+    "semantic_hash": "0a434292aece8d9ecf7c9107893218de"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\models.py": {
+    "mtime": 1781069411.8755076,
+    "ast_hash": "c42bf26be7b590e2c7d73deee231d16f",
+    "semantic_hash": "c42bf26be7b590e2c7d73deee231d16f"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\pipeline.py": {
+    "mtime": 1780892162.480446,
+    "ast_hash": "0b6159d7a941810e3ef18c2967d60e55",
+    "semantic_hash": "0b6159d7a941810e3ef18c2967d60e55"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\reports.py": {
+    "mtime": 1781157417.6259646,
+    "ast_hash": "ed09479ff8bfb31b1a6321deed4be110",
+    "semantic_hash": "ed09479ff8bfb31b1a6321deed4be110"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\sources\\__init__.py": {
+    "mtime": 1780857494.222229,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\sources\\firecrawl.py": {
+    "mtime": 1781066413.6223187,
+    "ast_hash": "6c4bd26c7e94ec39769b5d229780904f",
+    "semantic_hash": "6c4bd26c7e94ec39769b5d229780904f"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\sources\\google_places.py": {
+    "mtime": 1781069437.218426,
+    "ast_hash": "007a56eedd8e7f8d0e9db566652a371b",
+    "semantic_hash": "007a56eedd8e7f8d0e9db566652a371b"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\store.py": {
+    "mtime": 1780892118.6521525,
+    "ast_hash": "f78bf629fa54e78338fcc7958707dba7",
+    "semantic_hash": "f78bf629fa54e78338fcc7958707dba7"
+  },
+  "C:\\Users\\mysis\\website-builder\\src\\leadpipe\\vault.py": {
+    "mtime": 1781063396.5217266,
+    "ast_hash": "4696cd9d1c48899962ea9fe58684786a",
+    "semantic_hash": "4696cd9d1c48899962ea9fe58684786a"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\__init__.py": {
+    "mtime": 1780858160.2556102,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_agents.py": {
+    "mtime": 1781158917.0752423,
+    "ast_hash": "7f0f90a6f3b5d4b735d265ead620463d",
+    "semantic_hash": "7f0f90a6f3b5d4b735d265ead620463d"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_cli.py": {
+    "mtime": 1780892305.448465,
+    "ast_hash": "f78237c883b2eb00ba840f601cebb327",
+    "semantic_hash": "f78237c883b2eb00ba840f601cebb327"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_google_places.py": {
+    "mtime": 1781069536.8594937,
+    "ast_hash": "203eb7b542e1ee6347373697215b9098",
+    "semantic_hash": "203eb7b542e1ee6347373697215b9098"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_industries.py": {
+    "mtime": 1781068580.0894358,
+    "ast_hash": "7631fcfcede56c8950e07d994c7b26a5",
+    "semantic_hash": "7631fcfcede56c8950e07d994c7b26a5"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_reports.py": {
+    "mtime": 1781069515.3934662,
+    "ast_hash": "5dd1613bebf3ea9ed00c6c0af477bcb9",
+    "semantic_hash": "5dd1613bebf3ea9ed00c6c0af477bcb9"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_store.py": {
+    "mtime": 1781069509.2701635,
+    "ast_hash": "51c04263f0df01699375de910e6a3d36",
+    "semantic_hash": "51c04263f0df01699375de910e6a3d36"
+  },
+  "C:\\Users\\mysis\\website-builder\\tests\\test_vault.py": {
+    "mtime": 1781063396.5232284,
+    "ast_hash": "e2801990b76872d146b2c7f430c17dc1",
+    "semantic_hash": "e2801990b76872d146b2c7f430c17dc1"
+  },
+  "C:\\Users\\mysis\\website-builder\\.claude\\skills\\context-transfer\\SKILL.md": {
+    "mtime": 1781063396.4810944,
+    "ast_hash": "95fe07a87378ab7ce514a45c4fa89eae",
+    "semantic_hash": "95fe07a87378ab7ce514a45c4fa89eae"
+  },
+  "C:\\Users\\mysis\\website-builder\\.claude\\skills\\reference-visualizer\\SKILL.md": {
+    "mtime": 1780835316.5789623,
+    "ast_hash": "d8427fea9c8707fc71768e7e908e165d",
+    "semantic_hash": "d8427fea9c8707fc71768e7e908e165d"
+  },
+  "C:\\Users\\mysis\\website-builder\\AGENTS.md": {
+    "mtime": 1781156773.1644137,
+    "ast_hash": "60bce8672b439a07a89710306757d395",
+    "semantic_hash": "60bce8672b439a07a89710306757d395"
+  },
+  "C:\\Users\\mysis\\website-builder\\CLAUDE.md": {
+    "mtime": 1781063396.4841034,
+    "ast_hash": "970fb264118ac25216bae7c3af4c96c3",
+    "semantic_hash": "970fb264118ac25216bae7c3af4c96c3"
+  },
+  "C:\\Users\\mysis\\website-builder\\GEMINI.md": {
+    "mtime": 1781063396.4851134,
+    "ast_hash": "04691b875b264c73ea235ec4f6582cbd",
+    "semantic_hash": "04691b875b264c73ea235ec4f6582cbd"
+  },
+  "C:\\Users\\mysis\\website-builder\\MEMORY.md": {
+    "mtime": 1781162806.2939353,
+    "ast_hash": "6b70a1084362146bb8cbdb2357c5b9c7",
+    "semantic_hash": "6b70a1084362146bb8cbdb2357c5b9c7"
+  },
+  "C:\\Users\\mysis\\website-builder\\_HOME.md": {
+    "mtime": 1781158880.9276326,
+    "ast_hash": "aa7c482c3e5b769ecdb445a97ce7faa9",
+    "semantic_hash": "aa7c482c3e5b769ecdb445a97ce7faa9"
+  },
+  "C:\\Users\\mysis\\website-builder\\_HOT.md": {
+    "mtime": 1781162819.2873735,
+    "ast_hash": "5a5920eb19d4579ef431de0977aea828",
+    "semantic_hash": "5a5920eb19d4579ef431de0977aea828"
+  },
+  "C:\\Users\\mysis\\website-builder\\config\\README.md": {
+    "mtime": 1780887249.1805947,
+    "ast_hash": "a083ca227e30c66f1d99ca89425c2e75",
+    "semantic_hash": "a083ca227e30c66f1d99ca89425c2e75"
+  },
+  "C:\\Users\\mysis\\website-builder\\config\\ca_small_towns.yaml": {
+    "mtime": 1781161523.6454165,
+    "ast_hash": "8265984e595469dd7540411403064ec4",
+    "semantic_hash": "8265984e595469dd7540411403064ec4"
+  },
+  "C:\\Users\\mysis\\website-builder\\config\\industry_categories.yaml": {
+    "mtime": 1781068519.9939518,
+    "ast_hash": "91459e6b51139cf2ac23950461be43ac",
+    "semantic_hash": "91459e6b51139cf2ac23950461be43ac"
+  },
+  "C:\\Users\\mysis\\website-builder\\config\\targets.example.yaml": {
+    "mtime": 1780887516.2780638,
+    "ast_hash": "7aad3170553be7eac4368d0ced4d0480",
+    "semantic_hash": "7aad3170553be7eac4368d0ced4d0480"
+  },
+  "C:\\Users\\mysis\\website-builder\\config\\targets.matt.yaml": {
+    "mtime": 1780866614.5816665,
+    "ast_hash": "e0a5918956ad300aa1cc89bd3aa41cc4",
+    "semantic_hash": "e0a5918956ad300aa1cc89bd3aa41cc4"
+  },
+  "C:\\Users\\mysis\\website-builder\\config\\targets.sean.yaml": {
+    "mtime": 1781161509.7242887,
+    "ast_hash": "bac767b14835add42ffa99b4360c6717",
+    "semantic_hash": "bac767b14835add42ffa99b4360c6717"
+  },
+  "C:\\Users\\mysis\\website-builder\\data\\README.md": {
+    "mtime": 1780887249.2566657,
+    "ast_hash": "fc9a63fb50c7813bfb3ec6b51a1a89d1",
+    "semantic_hash": "fc9a63fb50c7813bfb3ec6b51a1a89d1"
+  },
+  "C:\\Users\\mysis\\website-builder\\data\\matt\\README.md": {
+    "mtime": 1780887249.4183095,
+    "ast_hash": "96b5683b907d8ca88e57828a5841f167",
+    "semantic_hash": "96b5683b907d8ca88e57828a5841f167"
+  },
+  "C:\\Users\\mysis\\website-builder\\data\\sean\\README.md": {
+    "mtime": 1780887249.3377404,
+    "ast_hash": "f402a53e62f68b6a000a64e3a7f5d432",
+    "semantic_hash": "f402a53e62f68b6a000a64e3a7f5d432"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_moc\\Project-MOC.md": {
+    "mtime": 1781155341.8963273,
+    "ast_hash": "2db6e1651336035e5d9cd74bd3d58a4e",
+    "semantic_hash": "2db6e1651336035e5d9cd74bd3d58a4e"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_moc\\Reference-MOC.md": {
+    "mtime": 1781157382.6940875,
+    "ast_hash": "ef85279a2092a98d470128e6fdf80b23",
+    "semantic_hash": "ef85279a2092a98d470128e6fdf80b23"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_moc\\Research-MOC.md": {
+    "mtime": 1781157382.6160176,
+    "ast_hash": "68324bae5c17404320d1232382e282d3",
+    "semantic_hash": "68324bae5c17404320d1232382e282d3"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_moc\\Sessions-MOC.md": {
+    "mtime": 1781157382.7726648,
+    "ast_hash": "e699943a12692d29917d55b89cc41ac0",
+    "semantic_hash": "e699943a12692d29917d55b89cc41ac0"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) AI_BUILD_BIBLE\\AI_BUILD_BIBLE.md": {
+    "mtime": 1780833822.312471,
+    "ast_hash": "912fcdce1a5eb591d80c2b99ea22ed14",
+    "semantic_hash": "912fcdce1a5eb591d80c2b99ea22ed14"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) BIBLE_Custom_SDKs_and_Proprietary_Logic\\BIBLE_Custom_SDKs_and_Proprietary_Logic.md": {
+    "mtime": 1780833822.458531,
+    "ast_hash": "c7afd38d9ce38ffb6048a9846f685a60",
+    "semantic_hash": "c7afd38d9ce38ffb6048a9846f685a60"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) Comprehensive_AI_Agents_Database\\Comprehensive_AI_Agents_Database.md": {
+    "mtime": 1780833822.5609782,
+    "ast_hash": "a94f836893ed7ec6c93f66f4d918f6c2",
+    "semantic_hash": "a94f836893ed7ec6c93f66f4d918f6c2"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) Comprehensive_AI_Skills\\Comprehensive_AI_Skills.md": {
+    "mtime": 1780833822.6638677,
+    "ast_hash": "4b5251ff54de6e4881c1401b09142e47",
+    "semantic_hash": "4b5251ff54de6e4881c1401b09142e47"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) Comprehensive_MCP_Database\\Comprehensive_MCP_Database.md": {
+    "mtime": 1780833822.7693455,
+    "ast_hash": "03a647518273fdd492830019940c98a9",
+    "semantic_hash": "03a647518273fdd492830019940c98a9"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) Comprehensive_Project_Structuring_Guide\\Comprehensive_Project_Structuring_Guide.md": {
+    "mtime": 1780833822.887331,
+    "ast_hash": "33786dcf31be2873beb4c7ab0499d987",
+    "semantic_hash": "33786dcf31be2873beb4c7ab0499d987"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) Local_AI_Agents_for_Leadpipe\\Local_AI_Agents_for_Leadpipe.md": {
+    "mtime": 1780865201.0291836,
+    "ast_hash": "4186c6dc318b4740a7e2842ae6ffc3cd",
+    "semantic_hash": "4186c6dc318b4740a7e2842ae6ffc3cd"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Mind Map) Master_Skills_Catalog\\Master_Skills_Catalog.md": {
+    "mtime": 1780840014.634385,
+    "ast_hash": "c743ebd9e53e15ea66c623e270d718f4",
+    "semantic_hash": "c743ebd9e53e15ea66c623e270d718f4"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) AI_BUILD_BIBLE.md": {
+    "mtime": 1780832705.0352364,
+    "ast_hash": "0dc05213b60ccbe2211aa41702d67047",
+    "semantic_hash": "0dc05213b60ccbe2211aa41702d67047"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) BIBLE_Custom_SDKs_and_Proprietary_Logic.md": {
+    "mtime": 1780832856.856924,
+    "ast_hash": "a822ceb1f52c11f4537cf87521992bbf",
+    "semantic_hash": "a822ceb1f52c11f4537cf87521992bbf"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Comprehensive_AI_Agents_Database.md": {
+    "mtime": 1780832914.1418536,
+    "ast_hash": "9c8a20d2e1c086a27d62a533187a76cb",
+    "semantic_hash": "9c8a20d2e1c086a27d62a533187a76cb"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Comprehensive_AI_Skills.md": {
+    "mtime": 1780832921.9308572,
+    "ast_hash": "420c7606542c7767726fb82a28da5c4b",
+    "semantic_hash": "420c7606542c7767726fb82a28da5c4b"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Comprehensive_MCP_Database.md": {
+    "mtime": 1780832931.5581374,
+    "ast_hash": "141d2cb67235c597722497839f30fb2f",
+    "semantic_hash": "141d2cb67235c597722497839f30fb2f"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Comprehensive_Project_Structuring_Guide.md": {
+    "mtime": 1780832938.8450909,
+    "ast_hash": "3e5542731cb651a91ac1f759d4dc7e41",
+    "semantic_hash": "3e5542731cb651a91ac1f759d4dc7e41"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Local_AI_Agents_for_Leadpipe.md": {
+    "mtime": 1780862616.2297282,
+    "ast_hash": "ca4b9824b5eb29fb33f981a67d4b8cef",
+    "semantic_hash": "ca4b9824b5eb29fb33f981a67d4b8cef"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Master_Skills_Catalog.md": {
+    "mtime": 1780834533.0078423,
+    "ast_hash": "73cc93b6ce27ec146d1af822d122d328",
+    "semantic_hash": "73cc93b6ce27ec146d1af822d122d328"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Raw Text) Token_and_Context_Economy.md": {
+    "mtime": 1781156182.6384912,
+    "ast_hash": "46c50e5c328bc2088350796d9c594f3a",
+    "semantic_hash": "46c50e5c328bc2088350796d9c594f3a"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_working-context\\leadpipe.md": {
+    "mtime": 1781161533.6873596,
+    "ast_hash": "35163192b7b5d8cc89781ca5f6658f36",
+    "semantic_hash": "35163192b7b5d8cc89781ca5f6658f36"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\AGENT_PROMPT_GUIDE (End Session).md": {
+    "mtime": 1781067515.5112705,
+    "ast_hash": "7c97fc1639e3bfce142919935e9261d1",
+    "semantic_hash": "7c97fc1639e3bfce142919935e9261d1"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\AGENT_PROMPT_GUIDE (Matt - Getting Up To Date).md": {
+    "mtime": 1781067693.3967288,
+    "ast_hash": "d6d5cff497c0bd6f0db5f278c0c6bd23",
+    "semantic_hash": "d6d5cff497c0bd6f0db5f278c0c6bd23"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\AGENT_PROMPT_GUIDE (Start Session).md": {
+    "mtime": 1781067704.6099312,
+    "ast_hash": "cf18c6d35c72e2dbe24e13d20a867857",
+    "semantic_hash": "cf18c6d35c72e2dbe24e13d20a867857"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\ARCHITECTURE.md": {
+    "mtime": 1781156604.9214509,
+    "ast_hash": "358774887bc75d0d5e00e2f1ac46a4e0",
+    "semantic_hash": "358774887bc75d0d5e00e2f1ac46a4e0"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\ONBOARDING_MATT.md": {
+    "mtime": 1781156605.9248717,
+    "ast_hash": "0401354131782db28d9003ea969b6178",
+    "semantic_hash": "0401354131782db28d9003ea969b6178"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\SELL_METHODOLOGY.md": {
+    "mtime": 1781158868.370155,
+    "ast_hash": "17f55d01bdac6c9032faa1308537cde2",
+    "semantic_hash": "17f55d01bdac6c9032faa1308537cde2"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\SYNC_GUIDE.md": {
+    "mtime": 1781065627.3899355,
+    "ast_hash": "173e2b770bee765464bcd4ad23635e4a",
+    "semantic_hash": "173e2b770bee765464bcd4ad23635e4a"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\visuals\\website-builder-pipeline.md": {
+    "mtime": 1781156621.0372083,
+    "ast_hash": "fa6dea80e9bf6d219844eafe729ef7d8",
+    "semantic_hash": "fa6dea80e9bf6d219844eafe729ef7d8"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\README.md": {
+    "mtime": 1781157382.851238,
+    "ast_hash": "fcc78e62a57020eebd94c6ff1aaae84c",
+    "semantic_hash": "fcc78e62a57020eebd94c6ff1aaae84c"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\matt\\2026-06-09-branch-sync-audit.md": {
+    "mtime": 1781063396.5001638,
+    "ast_hash": "fd83e649e3eb0cdc635ff402c9450544",
+    "semantic_hash": "fd83e649e3eb0cdc635ff402c9450544"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\matt\\2026-06-09-proposed-targets-from-onboarding-matt.md": {
+    "mtime": 1781063396.5001638,
+    "ast_hash": "00202ae269531663a9cdcf7de79e555f",
+    "semantic_hash": "00202ae269531663a9cdcf7de79e555f"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\matt\\Matt Research.md": {
+    "mtime": 1781063396.50168,
+    "ast_hash": "08100d2fd2afe0d9883827a2793f09b2",
+    "semantic_hash": "08100d2fd2afe0d9883827a2793f09b2"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\00_INSIGHTS_INDEX.md": {
+    "mtime": 1781157382.9258022,
+    "ast_hash": "1d5cc157152f61af51fad20cbf7671e3",
+    "semantic_hash": "1d5cc157152f61af51fad20cbf7671e3"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\AI_Agents_Database_Guide.md": {
+    "mtime": 1780871794.237953,
+    "ast_hash": "751ee644c9a547ca22b6e5f52cbe2495",
+    "semantic_hash": "751ee644c9a547ca22b6e5f52cbe2495"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\AI_BUILD_BIBLE_Guide.md": {
+    "mtime": 1780871801.6850643,
+    "ast_hash": "c6fe0e233b567e440310adabd3dc0e29",
+    "semantic_hash": "c6fe0e233b567e440310adabd3dc0e29"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\AI_Skills_Guide.md": {
+    "mtime": 1780871342.3754025,
+    "ast_hash": "33f737932e67adb3eebc27de2098296f",
+    "semantic_hash": "33f737932e67adb3eebc27de2098296f"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\Custom_SDKs_Guide.md": {
+    "mtime": 1780871336.2193873,
+    "ast_hash": "257ec56a31899edd6c751155dc51d444",
+    "semantic_hash": "257ec56a31899edd6c751155dc51d444"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\Local_AI_Agents_Guide.md": {
+    "mtime": 1780871805.4088237,
+    "ast_hash": "46d565ff0a916650ba388b3cf4190bfb",
+    "semantic_hash": "46d565ff0a916650ba388b3cf4190bfb"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\MASTER_NOTEBOOK_SUMMARY.md": {
+    "mtime": 1780886316.7612934,
+    "ast_hash": "998d8c05be9167dad4ca258779e5f2b9",
+    "semantic_hash": "998d8c05be9167dad4ca258779e5f2b9"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\MCP_Database_Guide.md": {
+    "mtime": 1780871345.6308088,
+    "ast_hash": "c2b3f2d4ba530d4b7d5a29e5140d6a24",
+    "semantic_hash": "c2b3f2d4ba530d4b7d5a29e5140d6a24"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\Master_Skills_Catalog_Guide.md": {
+    "mtime": 1781063385.4865298,
+    "ast_hash": "a65cdd1cce5918985de93d1b16e18b83",
+    "semantic_hash": "a65cdd1cce5918985de93d1b16e18b83"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\PROJECT_DEEP_DIVE_REPORT.md": {
+    "mtime": 1780871511.3753383,
+    "ast_hash": "2bc993ab172ea3c64d900022ba8f87b1",
+    "semantic_hash": "2bc993ab172ea3c64d900022ba8f87b1"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\research\\notebooklm-insights\\Project_Structuring_Guide.md": {
+    "mtime": 1781063385.4870303,
+    "ast_hash": "9a75ce1bf04f4e25362e40588ec5d9bc",
+    "semantic_hash": "9a75ce1bf04f4e25362e40588ec5d9bc"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\README.md": {
+    "mtime": 1781063396.5021806,
+    "ast_hash": "260af78987150541fc82288f79f5f6d0",
+    "semantic_hash": "260af78987150541fc82288f79f5f6d0"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\matt\\2026-06-09-2331-wip-push-context-transfer.md": {
+    "mtime": 1781066747.4465585,
+    "ast_hash": "c2c9a14e230c22dad16af26940cc594e",
+    "semantic_hash": "c2c9a14e230c22dad16af26940cc594e"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\matt\\Matt Session Logs.md": {
+    "mtime": 1781063396.5031822,
+    "ast_hash": "09f41067be48c36a12499ebac9220ae8",
+    "semantic_hash": "09f41067be48c36a12499ebac9220ae8"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-07-1457-safe-matt-import-protocol.md": {
+    "mtime": 1781063396.504183,
+    "ast_hash": "655f7d859b6caf8c280b4bfa95435c98",
+    "semantic_hash": "655f7d859b6caf8c280b4bfa95435c98"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-07-1926-context-transfer.md": {
+    "mtime": 1781063396.505184,
+    "ast_hash": "7e2d22a08c5ba52e46c6408fd052c9c6",
+    "semantic_hash": "7e2d22a08c5ba52e46c6408fd052c9c6"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-07-2024-context-transfer-notebooklm-obsidian.md": {
+    "mtime": 1781063396.5061855,
+    "ast_hash": "28158538b68a183d647dac36dd76b3c3",
+    "semantic_hash": "28158538b68a183d647dac36dd76b3c3"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-07-2140-manual-hunts-agent3.md": {
+    "mtime": 1781063396.5066855,
+    "ast_hash": "f2f3b962fda285a922b92ef0759d5136",
+    "semantic_hash": "f2f3b962fda285a922b92ef0759d5136"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-07.md": {
+    "mtime": 1781063396.5076866,
+    "ast_hash": "22ebaedb4715d8515063a6cb7e5aa270",
+    "semantic_hash": "22ebaedb4715d8515063a6cb7e5aa270"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-1517-notebooklm-provenance-repair.md": {
+    "mtime": 1781063396.5086877,
+    "ast_hash": "bcd3ed0ea3c619d72a120b3af96c1d42",
+    "semantic_hash": "bcd3ed0ea3c619d72a120b3af96c1d42"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-1547-canonical-foundation-sync.md": {
+    "mtime": 1781063396.5096886,
+    "ast_hash": "07fdf1415a93d81049ea586d821991d4",
+    "semantic_hash": "07fdf1415a93d81049ea586d821991d4"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-1807-obsidian-agent-brain.md": {
+    "mtime": 1781063396.5101888,
+    "ast_hash": "aac402811ce795ff7e2070c64602e113",
+    "semantic_hash": "aac402811ce795ff7e2070c64602e113"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-2100-merge-sync-three-brain-codex.md": {
+    "mtime": 1781065317.6248696,
+    "ast_hash": "377ab2758bbf4833e09c984fd0e2719f",
+    "semantic_hash": "377ab2758bbf4833e09c984fd0e2719f"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-2200-northstar-refine.md": {
+    "mtime": 1781065509.6752703,
+    "ast_hash": "fb4b0d6f3d2216a95196f1e1949d28e0",
+    "semantic_hash": "fb4b0d6f3d2216a95196f1e1949d28e0"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-2238-scoring-signals.md": {
+    "mtime": 1781070128.066182,
+    "ast_hash": "c5a5a8031c5aa39c04e0aae40155894a",
+    "semantic_hash": "c5a5a8031c5aa39c04e0aae40155894a"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-2330-credit-pause-guard.md": {
+    "mtime": 1781066535.6446805,
+    "ast_hash": "77d3e2a8ccf47cc0c00125d826f1690e",
+    "semantic_hash": "77d3e2a8ccf47cc0c00125d826f1690e"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-2345-agent-prompt-guides-and-industry-grouping.md": {
+    "mtime": 1781068870.1702695,
+    "ast_hash": "adb54af6e1078dfc60f56c22378430a9",
+    "semantic_hash": "adb54af6e1078dfc60f56c22378430a9"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-2359-efficiency-market-analysis.md": {
+    "mtime": 1781074585.6548133,
+    "ast_hash": "334d575b6fd35dfed3914f2a6f1f857b",
+    "semantic_hash": "334d575b6fd35dfed3914f2a6f1f857b"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-09-lead-hunt-norcal-trades.md": {
+    "mtime": 1781068844.8308592,
+    "ast_hash": "9ddda0ae3d141c7c65b623cfafdf2038",
+    "semantic_hash": "9ddda0ae3d141c7c65b623cfafdf2038"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-10-2235-today-path-implementation.md": {
+    "mtime": 1781156240.7598076,
+    "ast_hash": "dc203ce7962f1f512ea6f7aecaa55061",
+    "semantic_hash": "dc203ce7962f1f512ea6f7aecaa55061"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-10-2249-token-economy-standards.md": {
+    "mtime": 1781157016.784904,
+    "ast_hash": "d0fe6e7195952e5a0c1107c75add20d8",
+    "semantic_hash": "d0fe6e7195952e5a0c1107c75add20d8"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-10-2301-obsidian-cleanup.md": {
+    "mtime": 1781157830.7622201,
+    "ast_hash": "c3aaeadf387bbcf815366f95f716b830",
+    "semantic_hash": "c3aaeadf387bbcf815366f95f716b830"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-10-2333-nateherk-tiered-llm-sales.md": {
+    "mtime": 1781159616.0297806,
+    "ast_hash": "2afb18e70fc6437626805a853b704afe",
+    "semantic_hash": "2afb18e70fc6437626805a853b704afe"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-10-2356-lead-source-research.md": {
+    "mtime": 1781161151.3185365,
+    "ast_hash": "73ea6208cf7e03b3435c32f0c36e44e9",
+    "semantic_hash": "73ea6208cf7e03b3435c32f0c36e44e9"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-10-2358-ca-nursery-leads.md": {
+    "mtime": 1781162626.995953,
+    "ast_hash": "3107cb1f2570f108e4642d8befaa157e",
+    "semantic_hash": "3107cb1f2570f108e4642d8befaa157e"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\session-logs\\sean\\2026-06-11-0000-small-town-retarget.md": {
+    "mtime": 1781161918.624631,
+    "ast_hash": "543235e82792c4b57b06319c6f34bfd4",
+    "semantic_hash": "543235e82792c4b57b06319c6f34bfd4"
+  },
+  "C:\\Users\\mysis\\website-builder\\past_mistakes.md": {
+    "mtime": 1781154948.1314907,
+    "ast_hash": "7f70489df34ca5754b4d71797496537f",
+    "semantic_hash": "7f70489df34ca5754b4d71797496537f"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Matt - AI Leads.md": {
+    "mtime": 1781157428.1787639,
+    "ast_hash": "bfbf9adf971b334c8041926f2ca93a89",
+    "semantic_hash": "bfbf9adf971b334c8041926f2ca93a89"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Matt - Prioritized Leads.md": {
+    "mtime": 1781157428.179264,
+    "ast_hash": "577433a3de1de4c2c11654ff21e91f0a",
+    "semantic_hash": "577433a3de1de4c2c11654ff21e91f0a"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Matt - Website Briefs.md": {
+    "mtime": 1781157428.1822705,
+    "ast_hash": "d8e03870a5a99bb6deeb5c0fe6106ae4",
+    "semantic_hash": "d8e03870a5a99bb6deeb5c0fe6106ae4"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\README.md": {
+    "mtime": 1781157383.0048735,
+    "ast_hash": "ee83d2d82bab5fdfbc43cf14157e5d74",
+    "semantic_hash": "ee83d2d82bab5fdfbc43cf14157e5d74"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Sean - AI Leads.md": {
+    "mtime": 1781161070.8605978,
+    "ast_hash": "0a4f7ab814f4f18ea68c5f4d3ce24d63",
+    "semantic_hash": "0a4f7ab814f4f18ea68c5f4d3ce24d63"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Sean - Prioritized Leads.md": {
+    "mtime": 1781161070.8610983,
+    "ast_hash": "43fd2e9f0157fd306106e9775a0cbb16",
+    "semantic_hash": "43fd2e9f0157fd306106e9775a0cbb16"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Sean - Website Briefs.md": {
+    "mtime": 1781161070.8636,
+    "ast_hash": "147c2dda1845c1bf56851bf8df71496c",
+    "semantic_hash": "147c2dda1845c1bf56851bf8df71496c"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Shared - AI Leads.md": {
+    "mtime": 1781161070.8726075,
+    "ast_hash": "a2a5e7265e0bd18018169dba123c3963",
+    "semantic_hash": "a2a5e7265e0bd18018169dba123c3963"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Shared - Prioritized Leads.md": {
+    "mtime": 1781161070.874109,
+    "ast_hash": "47e611706cc55ee077414099d274e23d",
+    "semantic_hash": "47e611706cc55ee077414099d274e23d"
+  },
+  "C:\\Users\\mysis\\website-builder\\reports\\Shared - Website Briefs.md": {
+    "mtime": 1781161070.880115,
+    "ast_hash": "adccd643650aa63e3fbc18f119191796",
+    "semantic_hash": "adccd643650aa63e3fbc18f119191796"
+  },
+  "C:\\Users\\mysis\\website-builder\\three-brain-out\\2026-06-10-token-economy\\gemini-review.md": {
+    "mtime": 1781156120.7590978,
+    "ast_hash": "0d16f71ecd8525b48eb836f5a3ff75eb",
+    "semantic_hash": "0d16f71ecd8525b48eb836f5a3ff75eb"
+  },
+  "C:\\Users\\mysis\\website-builder\\three-brain-out\\2026-06-10-token-economy\\input.txt": {
+    "mtime": 1781155735.876929,
+    "ast_hash": "befcbb3484fe95ab73fcab461c8fea3f",
+    "semantic_hash": "befcbb3484fe95ab73fcab461c8fea3f"
+  },
+  "C:\\Users\\mysis\\website-builder\\three-brain-out\\log.md": {
+    "mtime": 1781156103.1546743,
+    "ast_hash": "24eeddba2baf0c5ac2b99d60383ad9d7",
+    "semantic_hash": "24eeddba2baf0c5ac2b99d60383ad9d7"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) AI_BUILD_BIBLE\\AI_BUILD_BIBLE.png": {
+    "mtime": 1780833968.1991432,
+    "ast_hash": "09070267fe25834efae26b3ad2bb4454",
+    "semantic_hash": "09070267fe25834efae26b3ad2bb4454"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) BIBLE_Custom_SDKs_and_Proprietary_Logic\\BIBLE_Custom_SDKs_and_Proprietary_Logic.png": {
+    "mtime": 1780833938.144647,
+    "ast_hash": "a20904f605a030b516a0980b583f4f6c",
+    "semantic_hash": "a20904f605a030b516a0980b583f4f6c"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) Comprehensive_AI_Agents_Database\\Comprehensive_AI_Agents_Database.png": {
+    "mtime": 1780833960.6197407,
+    "ast_hash": "68e3e096d4c62fff8fc87f47065d3bee",
+    "semantic_hash": "68e3e096d4c62fff8fc87f47065d3bee"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) Comprehensive_AI_Skills\\Comprehensive_AI_Skills.png": {
+    "mtime": 1780833953.3346636,
+    "ast_hash": "3979d8b5f3e445ba04d021c1107b8cbd",
+    "semantic_hash": "3979d8b5f3e445ba04d021c1107b8cbd"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) Comprehensive_MCP_Database\\Comprehensive_MCP_Database.png": {
+    "mtime": 1780833945.7147095,
+    "ast_hash": "57293a993c47b51d6b6acb88e874109f",
+    "semantic_hash": "57293a993c47b51d6b6acb88e874109f"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) Comprehensive_Project_Structuring_Guide\\Comprehensive_Project_Structuring_Guide.png": {
+    "mtime": 1780833975.5829623,
+    "ast_hash": "0fd663c966a7a5572f34a99b632f1cac",
+    "semantic_hash": "0fd663c966a7a5572f34a99b632f1cac"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) Local_AI_Agents_for_Leadpipe\\Local_AI_Agents_for_Leadpipe.png": {
+    "mtime": 1780865380.602805,
+    "ast_hash": "1a3a4c248638133d8a8d7bbded9994e4",
+    "semantic_hash": "1a3a4c248638133d8a8d7bbded9994e4"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\_reference-library\\(Visualization) Master_Skills_Catalog\\Master_Skills_Catalog.png": {
+    "mtime": 1780835466.7298505,
+    "ast_hash": "fa80e5353a3ef6bb65788f4e9c31005e",
+    "semantic_hash": "fa80e5353a3ef6bb65788f4e9c31005e"
+  },
+  "C:\\Users\\mysis\\website-builder\\docs\\project\\visuals\\website-builder-pipeline.png": {
+    "mtime": 1780855567.5622604,
+    "ast_hash": "9d1d52e4cb4d8daf04117db99a7dfb14",
+    "semantic_hash": "9d1d52e4cb4d8daf04117db99a7dfb14"
+  }
+}

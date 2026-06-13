@@ -1,0 +1,19 @@
+# Machine-local + regenerable internals — never commit
+.graphify_python
+.graphify_root
+.graphify_labels.json
+.graphify_detect.json
+.graphify_extract.json
+.graphify_ast.json
+.graphify_semantic*.json
+.graphify_analysis.json
+.graphify_chunk_*.json
+.graphify_cached.json
+.graphify_uncached.txt
+.needs_update
+cache/
+*.tmp
+
+# Committed (tracked) so fresh clones have instant graph context:
+#   graph.json, GRAPH_REPORT.md, graph.html, bridges.json, apply_bridges.py,
+#   cost.json, manifest.json
