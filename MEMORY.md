@@ -14,9 +14,10 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-10T23:59:00-07:00 · **Last Agent:** Gemini CLI — CA Nursery Leads Hunt (Sean)
-**Phase:** operational with active safety/ops hardening. `config/targets.sean.yaml` retargeted to 12 small
-CA towns (was 5 big cities); new `config/ca_small_towns.yaml` reference menu added. Branch still carries
+**Last updated:** 2026-06-13T09:20:00-07:00 · **Last Agent:** Claude Opus 4.8 — graphify knowledge graph + doc↔code bridges (Sean)
+**Phase:** operational with active safety/ops hardening. This session added a persistent **graphify**
+knowledge graph of the whole repo (committed under `graphify-out/`, wired into the AGENTS.md cold-start
+read-path) + 17 curated doc↔code bridges. Branch `nateherk-tiered-llm-sales` (PR #4 → main) still carries
 Nate Herk tiered-LLM/sales-methodology work plus existing lead/report diffs; SQLite + `asyncio` remain the
 next larger engine upgrades.
 
@@ -27,6 +28,21 @@ next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Graphify knowledge graph + doc↔code bridges — Sean/Claude, 2026-06-13**: Built a persistent
+  knowledge graph of the whole repo via `/graphify` (142 files → 789 nodes/1437 edges/41 communities;
+  ~10.8x token reduction/query). Finding: the graph was **16 disconnected islands** — a 361-node code
+  island vs. scattered doc/strategy islands; `Sell Methodology` and the `website_intelligence.py` code
+  that embodies it shared zero edges. Fixed with `graphify-out/bridges.json` (17 curated doc↔code edges,
+  each grounded in an existing source citation or strong concept==code link) + idempotent
+  `graphify-out/apply_bridges.py` (re-run after any rebuild — rebuild overwrites `graph.json`). Wired the
+  graph into the agent onboarding path: **AGENTS.md §5 "Knowledge graph (graphify) — query before you
+  grep"**, and committed `graph.json`/`GRAPH_REPORT.md`/`graph.html` so fresh clones get instant context
+  (machine-local dotfiles + cache gitignored). `website_intelligence.py` module docstring now cites
+  `SELL_METHODOLOGY.md`/`ARCHITECTURE.md §3`/tiered-LLM A1. Proved the manual-refresh upkeep path:
+  `graphify --update` re-extracted only the 2 changed files (49k tokens) → graph now 799 nodes/1480
+  edges/39 communities, components 16→10. Chose manual refresh over an auto-rebuild commit hook (recurring
+  token cost). **59/59 tests pass.** PR #4 → main. Session log:
+  `docs/session-logs/sean/2026-06-13-0920-graphify-knowledge-graph.md`.
 - **CA Nursery Leads Hunt — Sean/Gemini, 2026-06-10**: Ran a targeted hunt for "plant nursery" and "garden center" across several California cities (Sacramento, Fresno, San Jose, Los Angeles, San Diego, Bakersfield, Stockton). Acquired 20 new leads without websites in the `found` state. Verified health with `leadpipe check --google` before the hunt and `pytest` after. Changes to `data/sean/leads.jsonl` and generated reports were committed directly to the `nateherk-tiered-llm-sales` branch. Session log: `docs/session-logs/sean/2026-06-10-2358-ca-nursery-leads.md`. Next: run `prioritize` on these leads.
 - **Small-town retarget — Sean/Claude, 2026-06-11**: Sean noticed hunts only hit big
   CA cities and believes smaller towns have more no-website opportunity (less
@@ -307,11 +323,18 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked and built. Latest Gemini session completed a targeted hunt across several California cities for garden/nursery businesses, adding 20 new leads. Next step is to prioritize these new leads and potentially run website intelligence on them. The worktree remains on the `nateherk-tiered-llm-sales` branch.
+Architecture is locked and built. This session added a committed **graphify knowledge graph** under
+`graphify-out/` and wired it into the AGENTS.md §5 cold-start read-path — **query it (`graphify query
+"<q>"`) before grepping the repo cold (~10x cheaper context); read `graphify-out/GRAPH_REPORT.md` for the
+map.** After any graph rebuild (`/graphify --update`), re-run `python graphify-out/apply_bridges.py` to
+re-apply the 17 doc↔code bridges. Prior lead-pipeline work still open: run `leadpipe find` on the new
+small-town `config/targets.sean.yaml`, then prioritize. Worktree on `nateherk-tiered-llm-sales` (PR #4).
 
 ## 👤 Contributors this session
-- **Sean** — requested a hunt for garden/nursery businesses in California without websites.
-- **Gemini** — ran `leadpipe find` across multiple CA cities, committed the resulting 20 leads and reports, and ran the context transfer protocol.
+- **Sean** — asked to graphify the repo, then to bridge the doc↔code islands and point new agents at the
+  graph for efficiency.
+- **Claude (Opus 4.8)** — built the graph, added curated bridges + `apply_bridges.py`, wired graphify into
+  AGENTS.md §5, committed the graph artifacts, ran the incremental refresh, and ran context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.

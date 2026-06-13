@@ -2,11 +2,11 @@
 type: context
 contributors: [sean]
 status: active
-created: 2026-06-11
-updated: 2026-06-11
+created: 2026-06-13
+updated: 2026-06-13
 topic: hot-cache
-generated: 2026-06-11T00:26:59
-stale_after: 2026-06-16
+generated: 2026-06-13T09:21:16
+stale_after: 2026-06-18
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
 ---
@@ -15,7 +15,7 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. `config/targets.sean.yaml` retargeted to 12 small
+**Phase:** operational with active safety/ops hardening. This session added a persistent **graphify**
 
 ## Active tasks
 - Sean — run `leadpipe check --google` + `leadpipe find` (no Firecrawl) on the new
@@ -49,7 +49,12 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
   website-builder project skill manually (done this session).
 
 ## Handoff
-Architecture is locked and built. Latest Gemini session completed a targeted hunt across several California cities for garden/nursery businesses, adding 20 new leads. Next step is to prioritize these new leads and potentially run website intelligence on them. The worktree remains on the `nateherk-tiered-llm-sales` branch.
+Architecture is locked and built. This session added a committed **graphify knowledge graph** under
+`graphify-out/` and wired it into the AGENTS.md §5 cold-start read-path — **query it (`graphify query
+"<q>"`) before grepping the repo cold (~10x cheaper context); read `graphify-out/GRAPH_REPORT.md` for the
+map.** After any graph rebuild (`/graphify --update`), re-run `python graphify-out/apply_bridges.py` to
+re-apply the 17 doc↔code bridges. Prior lead-pipeline work still open: run `leadpipe find` on the new
+small-town `config/targets.sean.yaml`, then prioritize. Worktree on `nateherk-tiered-llm-sales` (PR #4).
 
 ## Latest session
-`docs/session-logs/sean/2026-06-11-0000-small-town-retarget.md` — Session Log — Small-Town Retarget
+`docs/session-logs/sean/2026-06-13-0920-graphify-knowledge-graph.md` — Session — graphify knowledge graph + doc↔code bridges (Sean/Claude, 2026-06-13)
