@@ -4,6 +4,11 @@ This is Agent 3. It works only after Lead Prioritizer has found usable listing
 evidence, then uses Firecrawl-acquired page content plus local LLM reasoning to
 produce a compact website brief. It does not change lifecycle status: this is
 build intelligence, not outreach/contact progress.
+
+See docs/project/SELL_METHODOLOGY.md for the ANGLE/CONTENT selling frame baked
+into `_INTELLIGENCE_SYSTEM` (the Nate Herk-derived C1 leverage positioning), and
+ARCHITECTURE.md §3 for where this agent sits in the pipeline. The fast-then-deep
+model escalation here is the A1 tiered-LLM pattern (see [[tiered-llm]] in MEMORY).
 """
 from __future__ import annotations
 

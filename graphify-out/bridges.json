@@ -1,0 +1,23 @@
+{
+  "_comment": "Curated doc<->code bridge edges. Each is grounded in a citation that already exists in the source files (EXTRACTED) or a strong design implements-link (INFERRED). Re-apply after any rebuild with apply_bridges.py.",
+  "bridges": [
+    {"source": "project_sell_methodology_sell_methodology", "target": "agents_website_intelligence", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "SELL_METHODOLOGY.md L19 cites agents/website_intelligence.py"},
+    {"source": "project_sell_methodology_website_intelligence_agent", "target": "agents_website_intelligence_rationale_1", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "Agent 3 doc concept == website_intelligence.py module"},
+    {"source": "agents_website_intelligence", "target": "project_sell_methodology_sell_methodology", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "website_intelligence.py L28 _INTELLIGENCE_SYSTEM cites docs/project/SELL_METHODOLOGY.md"},
+    {"source": "memory_sell_methodology", "target": "agents_website_intelligence_rationale_1", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.85, "note": "MEMORY note SELL_METHODOLOGY (C1) describes the Agent 3 selling voice"},
+    {"source": "memory_tiered_llm", "target": "leadpipe_llm_generate", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.85, "note": "Tiered LLM (A1) concept realized by llm.generate() model tiering"},
+    {"source": "memory_tiered_llm", "target": "agents_website_intelligence_rationale_113", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "rationale_113 = 'Tiered (Nate Herk model tiering)' in website_intelligence.py"},
+    {"source": "sean_nateherk_tiered_llm_sales", "target": "agents_website_intelligence_rationale_113", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.85, "note": "session log that implemented A1 tiering for Agent 3"},
+    {"source": "sean_nateherk_tiered_llm_sales", "target": "project_sell_methodology_sell_methodology", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.85, "note": "same session produced C1 sell methodology"},
+    {"source": "project_architecture_architecture", "target": "leadpipe_pipeline_rationale_1", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "pipeline.py docstring cites ARCHITECTURE.md §3"},
+    {"source": "project_architecture_architecture", "target": "sources_google_places_rationale_1", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "google_places.py docstring cites ARCHITECTURE.md"},
+    {"source": "project_architecture_architecture", "target": "sources_firecrawl_rationale_1", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "firecrawl.py docstring cites ARCHITECTURE.md §5"},
+    {"source": "project_architecture_architecture", "target": "agents_website_intelligence_rationale_1", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "website_intelligence.py cites ARCHITECTURE.md"},
+    {"source": "project_architecture_architecture", "target": "agents_base_rationale_1", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "note": "base.py agent contract cites ARCHITECTURE.md §3"},
+    {"source": "project_architecture_lead_finder_agent", "target": "agents_lead_finder_rationale_1", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.95, "note": "Lead Finder concept == lead_finder.py"},
+    {"source": "project_architecture_lead_prioritizer_agent", "target": "agents_lead_prioritizer_rationale_1", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.95, "note": "Lead Prioritizer concept == lead_prioritizer.py"},
+    {"source": "project_architecture_google_places_api", "target": "sources_google_places_rationale_1", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.95, "note": "Google Places API concept == google_places.py"},
+    {"source": "project_architecture_leadpipe_pipeline", "target": "leadpipe_pipeline_rationale_1", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.95, "note": "pipeline concept == pipeline.py runner"},
+    {"source": "raw_text_local_ai_agents_for_leadpipe_website_intelligence_agent", "target": "agents_website_intelligence_rationale_1", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.85, "note": "reference-library agent concept == code"}
+  ]
+}
