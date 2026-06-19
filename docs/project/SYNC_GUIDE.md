@@ -55,9 +55,10 @@ easier" — that deletes your work. See `AGENTS.md` §7 "Stale working-copy prot
 ## After you finish working — wrap up cleanly
 
 ```
-wrap up
+/wb-context-transfer
 ```
-(or `/context-transfer`)
+(say `/wb-context-transfer`, **not** the bare `/context-transfer` — that fires a different
+project's global skill)
 
 This single command tells your agent to: run the test suite, write a dated note about what you did
 under `docs/session-logs/<your-name>/`, update the shared `MEMORY.md` if you're allowed to, sync the

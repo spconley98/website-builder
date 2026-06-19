@@ -46,7 +46,7 @@ by available photos, so we can build + sell them websites.
 - **Project canon** — `docs/project/` (ARCHITECTURE, [[SELL_METHODOLOGY]], onboarding, visuals)
 - **Reference library** — `docs/_reference-library/` — *source material + generated tiers; ideas only, NOT the scaffold*
 - **Research** — `docs/research/` — *working notes and synthesized guidance; not canonical state*
-- **Skills** — `.claude/skills/` — `context-transfer`, `reference-visualizer`
+- **Skills** — `.claude/skills/` — `wb-context-transfer`, `reference-visualizer`
 - **Session logs** — `docs/session-logs/sean/` and `docs/session-logs/matt/`
 - **Lead data** — `data/sean/` and `data/matt/` profile stores
 - **Reports** — `reports/` generated Sean/Matt/shared lead and Website Brief views
@@ -56,4 +56,4 @@ by available photos, so we can build + sell them websites.
 - **This Obsidian vault** — the primary brain (you're in it).
 
 ---
-*Maintained by `leadpipe vault` + `context-transfer`. `[[wikilinks]]` resolve to repo-root + docs notes in Obsidian.*
+*Maintained by `leadpipe vault` + `wb-context-transfer`. `[[wikilinks]]` resolve to repo-root + docs notes in Obsidian.*

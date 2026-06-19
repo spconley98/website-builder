@@ -9,10 +9,14 @@ from datetime import date
 
 from leadpipe.vault import (
     HOT_STALE_DAYS,
+    _section,
+    _to_date,
     check_note,
     extract_wikilinks,
+    git_state,
     is_resolvable,
     parse_frontmatter,
+    parse_gotcha_titles,
     render_hot,
     validate_frontmatter,
 )
@@ -122,3 +126,50 @@ def test_render_hot_digests_memory_and_validates():
     assert err is None
     assert validate_frontmatter(data) == []
     assert data["type"] == "context"
+
+
+# --- catch-up (cold-start briefing) -----------------------------------------
+def test_to_date_handles_str_date_datetime_and_garbage():
+    from datetime import datetime
+
+    assert _to_date("2026-06-19") == date(2026, 6, 19)
+    assert _to_date(date(2026, 6, 19)) == date(2026, 6, 19)
+    assert _to_date(datetime(2026, 6, 19, 10, 30)) == date(2026, 6, 19)
+    assert _to_date("06/19/2026") is None  # wrong format → None, never raises
+    assert _to_date(None) is None
+
+
+def test_parse_gotcha_titles_returns_first_n_h2_headers():
+    pm = (
+        "> intro line\n\n"
+        "## IPv6 DNS hang\nbody\n\n"
+        "## Places API 403\nbody\n\n"
+        "## Firecrawl credits\nbody\n"
+    )
+    assert parse_gotcha_titles(pm, 2) == ["IPv6 DNS hang", "Places API 403"]
+    assert parse_gotcha_titles(pm, 10) == ["IPv6 DNS hang", "Places API 403", "Firecrawl credits"]
+    assert parse_gotcha_titles("no headers here", 3) == []
+
+
+def test_catch_up_renders_sections_from_a_hot_digest():
+    # catch-up is a PRINTER over _HOT.md — prove its section extraction reads _HOT's own headers
+    # (Active tasks / Blockers / Latest session), not MEMORY.md's (In progress / Blocked).
+    hot = (
+        "**Phase:** operational\n\n"
+        "## Active tasks\n- Sean — first task\n- Sean — second task\n\n"
+        "## Next\n1. later\n\n"
+        "## Blockers\n- None currently.\n\n"
+        "## Latest session\n`docs/session-logs/sean/x.md` — topic\n"
+    )
+    assert "first task" in _section(hot, "active tasks")
+    assert "None currently" in _section(hot, "blockers")
+    assert "x.md" in _section(hot, "latest session")
+
+
+def test_git_state_default_is_local_only():
+    # Default path must make NO network call: it returns exactly the local branch/dirty line and
+    # never the "vs origin" comparison line (that is gated behind --sync-check / --fetch).
+    lines = git_state(sync_check=False, fetch=False)
+    assert len(lines) == 1
+    assert lines[0].startswith("branch ")
+    assert not any("vs origin" in l for l in lines)

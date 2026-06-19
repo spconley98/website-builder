@@ -1,14 +1,19 @@
 ---
-name: context-transfer
+name: wb-context-transfer
 description: >
   website-builder session wrapup skill. Verifies build health (if applicable), updates
   contributor-owned context-transfer notes, optionally updates MEMORY.md when allowed by
   AGENTS.md, optionally uploads to NotebookLM project brain, and commits all changes. Trigger
-  when user says "wrap up", "end session", "context transfer", "close session",
-  "/context-transfer", or "update memory".
+  when user says "/wb-context-transfer", "wrap up", "end session", "close session", or
+  "update memory". ⚠️ Canonical invocation is `/wb-context-transfer` — the bare name
+  `context-transfer` resolves to a global AAS-WEBSITE skill pointed at the wrong project brain.
 ---
 
 # Context Transfer — website-builder Session Wrapup
+
+> **Invoke as `/wb-context-transfer`.** The bare `/context-transfer` (and sometimes "wrap up")
+> resolves to the GLOBAL AAS-WEBSITE skill, which runs an npm/tsc health check and uploads to the
+> wrong NotebookLM brain. This project skill is `wb-`-prefixed to win the name resolution.
 
 Closes out a work session cleanly so the next agent (or future you) has full context.
 

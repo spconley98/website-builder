@@ -33,8 +33,9 @@ Matt's, or Sean's) picks up exactly where you left off.
 
 ## What "wrap up" actually does (in plain English)
 
-Saying `wrap up` (or `/context-transfer`) tells the agent to run the **`context-transfer`**
-skill, which does all of this automatically:
+Saying `/wb-context-transfer` (or "wrap up") tells the agent to run the **`wb-context-transfer`**
+skill, which does all of this automatically. ⚠️ Use `/wb-context-transfer`, **not** the bare
+`/context-transfer` — the bare name resolves to a different project's global skill:
 
 | Step | Think of it as... | Why it matters |
 |---|---|---|
@@ -55,9 +56,9 @@ You don't need to remember any of these individually — `wrap up` triggers all 
 Paste this as your message when you're done working, **before closing the chat**:
 
 ```
-wrap up
+/wb-context-transfer
 
-Follow AGENTS.md §8 session protocol + the context-transfer skill:
+Follow AGENTS.md §8 session protocol + the wb-context-transfer skill:
 - run the test suite (uv run pytest tests/ -q)
 - write my session log under docs/session-logs/<my-name>/
 - regenerate _HOT.md (leadpipe vault hot) and run leadpipe vault heartbeat

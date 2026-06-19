@@ -66,6 +66,20 @@ early and is more likely to stick around or get re-summarized correctly. It's ch
 
 ---
 
+## The one-command shortcut (preferred)
+
+Before the copy-paste block below, the fastest catch-up is one command — it prints the `_HOT.md`
+digest + your live git state + the top gotchas in a single briefing:
+
+```powershell
+uv run leadpipe vault catch-up                # local-only, instant
+uv run leadpipe vault catch-up --sync-check   # also compare against origin (uses existing refs)
+uv run leadpipe vault catch-up --fetch        # refresh remote refs first, then compare (network)
+```
+
+The copy-paste prompt below is the fuller fallback (it has the agent read each file and reason
+about it) — use it when you want the agent oriented, not just yourself.
+
 ## The copy-paste prompt — use this at the start of EVERY session
 
 Paste this as your **first message** in a brand-new chat (Claude, Codex, or Gemini — works for
@@ -100,10 +114,10 @@ start new work.
 Just say:
 
 ```
-wrap up
+/wb-context-transfer
 ```
 
-This runs the `context-transfer` skill: writes a session log, updates `_HOT.md`/`MEMORY.md` if
+This runs the `wb-context-transfer` skill: writes a session log, updates `_HOT.md`/`MEMORY.md` if
 allowed, syncs the shared NotebookLM brain, and commits. **This is what makes the cold-start
 prompt above actually useful next time** — if nobody wraps up, `_HOT.md` goes stale and the next
 agent starts more blind.

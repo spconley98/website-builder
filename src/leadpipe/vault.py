@@ -16,6 +16,7 @@ never hand-edited — and an agent falls back to MEMORY.md once it is stale.
 from __future__ import annotations
 
 import re
+import subprocess
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -285,8 +286,91 @@ def render_hot(memory_md: str, session_log: Path | None, today: date) -> str:
     return frontmatter + body
 
 
+# --- catch-up (cold-start briefing) -----------------------------------------
+# Post three-brain/Codex review: `catch-up` is a NON-AUTHORITATIVE PRINTER over the already-generated
+# _HOT.md (+ live local git + gotchas). It must never re-derive "current state" from MEMORY.md — that
+# would create a second drift-prone digest competing with _HOT.md and violate the §5 authority model.
+def _to_date(value: object) -> date | None:
+    if isinstance(value, datetime):
+        return value.date()
+    if isinstance(value, date):
+        return value
+    if isinstance(value, str):
+        try:
+            return datetime.strptime(value, "%Y-%m-%d").date()
+        except ValueError:
+            return None
+    return None
+
+
+def read_hot() -> tuple[str, date | None]:
+    """Return (_HOT.md text, its stale_after date). ('', None) when _HOT.md is absent."""
+    hot_path = ROOT / "_HOT.md"
+    if not hot_path.exists():
+        return "", None
+    text = _normalize(hot_path.read_text(encoding="utf-8"))
+    data, _ = parse_frontmatter(text)
+    return text, _to_date(data.get("stale_after")) if data else None
+
+
+def parse_gotcha_titles(text: str, n: int) -> list[str]:
+    """First N `## ` headers from past_mistakes.md text (the gotcha titles). Pure → unit-testable."""
+    out: list[str] = []
+    for line in _normalize(text).split("\n"):
+        if line.startswith("## "):
+            out.append(line.lstrip("# ").strip())
+            if len(out) >= n:
+                break
+    return out
+
+
+def top_gotchas(n: int) -> list[str]:
+    """First N gotcha titles from past_mistakes.md (empty when the file is absent)."""
+    pm = ROOT / "past_mistakes.md"
+    if not pm.exists():
+        return []
+    return parse_gotcha_titles(pm.read_text(encoding="utf-8"), n)
+
+
+def _git(args: list[str], timeout: float = 5.0) -> tuple[bool, str]:
+    """Run a git command under ROOT. Returns (ok, stdout-or-error). Never raises."""
+    try:
+        r = subprocess.run(
+            ["git", *args], cwd=ROOT, capture_output=True, text=True, timeout=timeout
+        )
+        return r.returncode == 0, (r.stdout.strip() or r.stderr.strip())
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:  # offline / no git
+        return False, f"git unavailable: {e}"
+
+
+def git_state(sync_check: bool, fetch: bool) -> list[str]:
+    """Local-only by default (no network). --sync-check compares existing origin refs;
+    --fetch refreshes them first (network, bounded timeout, degrades on failure)."""
+    lines: list[str] = []
+    ok, branch = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+    branch = branch if ok else "?"
+    ok, porcelain = _git(["status", "--porcelain"])
+    dirty = len([l for l in porcelain.splitlines() if l.strip()]) if ok and porcelain else 0
+    lines.append(f"branch `{branch}` · {dirty} uncommitted file(s)")
+    if not (sync_check or fetch):
+        return lines  # default path is fully local + read-only
+    if fetch:
+        fok, fout = _git(["fetch", "origin", branch], timeout=20.0)
+        if not fok:
+            lines.append(f"⚠ git fetch failed (offline?) — comparing against existing refs ({fout[:60]})")
+    ok, counts = _git(["rev-list", "--left-right", "--count", f"origin/{branch}...HEAD"])
+    parts = counts.split() if ok else []
+    if len(parts) == 2:
+        behind, ahead = parts
+        flag = "  → reconcile per AGENTS.md §7" if behind != "0" else ""
+        lines.append(f"vs origin/{branch}: {ahead} ahead, {behind} behind{flag}")
+    else:
+        lines.append(f"no origin/{branch} ref to compare (try --fetch)")
+    return lines
+
+
 # --- Typer sub-app ----------------------------------------------------------
-app = typer.Typer(help="Obsidian vault maintenance: validate / heartbeat / hot (pure Python, no plugins).")
+app = typer.Typer(help="Obsidian vault maintenance: validate / heartbeat / hot / catch-up (pure Python, no plugins).")
 
 
 @app.command()
@@ -352,4 +436,58 @@ def hot() -> None:
     (ROOT / "_HOT.md").write_text(render_hot(memory, latest_session_log(), today), encoding="utf-8")
     console.print(
         f"[green]vault hot: wrote _HOT.md[/green] (stale_after {today + timedelta(days=HOT_STALE_DAYS)})."
+    )
+
+
+@app.command(name="catch-up")
+def catch_up(
+    sync_check: bool = typer.Option(
+        False, "--sync-check", help="Compare local branch vs EXISTING origin refs (no network)."
+    ),
+    fetch: bool = typer.Option(
+        False, "--fetch", help="git fetch origin first (network, bounded), then compare. Implies --sync-check."
+    ),
+) -> None:
+    """Cold-start briefing: prints the generated _HOT.md digest + live local git state + top gotchas.
+
+    A NON-AUTHORITATIVE printer over _HOT.md (AGENTS.md §5) — it never re-derives state from MEMORY.md.
+    Local + read-only by default; --sync-check / --fetch add the git ahead/behind compare that
+    automates the §7 stale-working-copy protocol.
+    """
+    today = date.today()
+    hot_text, stale_after = read_hot()
+    console.print("[bold cyan]═══ leadpipe catch-up ═══[/bold cyan]")
+
+    if not hot_text:
+        console.print(
+            "[yellow]_HOT.md missing — run `leadpipe vault hot`, or use the manual read-path "
+            "in AGENTS.md §5.[/yellow]"
+        )
+    else:
+        console.print(f"[bold]Phase:[/bold] {_phase(hot_text)}")
+        console.print("\n[bold]First active task(s):[/bold]")
+        console.print(_top_lines(_section(hot_text, "active tasks"), 3))
+        console.print("\n[bold]Blockers:[/bold]")
+        console.print(_section(hot_text, "blockers") or "_none_")
+        console.print("\n[bold]Latest session:[/bold]")
+        console.print(_section(hot_text, "latest session") or "_none_")
+        if stale_after and today > stale_after:
+            console.print(
+                f"\n[yellow]⚠ _HOT.md is STALE (stale_after {stale_after}). Read MEMORY.md "
+                "directly or run `leadpipe vault hot`.[/yellow]"
+            )
+
+    console.print("\n[bold]Git:[/bold]")
+    for line in git_state(sync_check, fetch):
+        console.print(f"  {line}")
+
+    gotchas = top_gotchas(3)
+    if gotchas:
+        console.print("\n[bold]Top gotchas (past_mistakes.md):[/bold]")
+        for g in gotchas:
+            console.print(f"  • {g}")
+
+    console.print(
+        "\n[dim]Authority: MEMORY.md. This is a printer over the generated _HOT.md — not a second "
+        "state source. Full read-path: AGENTS.md §5.[/dim]"
     )

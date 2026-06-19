@@ -177,7 +177,7 @@ session logs under `docs/project/`, `docs/research/`, or root daily notes.
 - **Google Places API requires "Places API (New)"** — a 403 `SERVICE_DISABLED` usually means the
   legacy API was enabled instead of the new one.
 - **Docs/memory must stay synchronized** — `AGENTS.md` and `MEMORY.md` are canonical; run
-  `context-transfer` at session end.
+  `wb-context-transfer` at session end.
 
 ---
 

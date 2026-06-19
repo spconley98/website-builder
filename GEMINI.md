@@ -24,7 +24,7 @@ their own clone path (links are absolute-path — not portable, hence not git-tr
 
 ```powershell
 # Skills — link (not copy) so updates to the source stay in sync
-gemini skills link "<your-clone-path>\.claude\skills\context-transfer" --scope workspace --consent
+gemini skills link "<your-clone-path>\.claude\skills\wb-context-transfer" --scope workspace --consent
 gemini skills link "<your-clone-path>\.claude\skills\reference-visualizer" --scope workspace --consent
 
 # Firecrawl MCP — use YOUR OWN key from your local .env (never share/commit it)
@@ -32,5 +32,5 @@ gemini mcp add firecrawl npx -y firecrawl-mcp -e "FIRECRAWL_API_KEY=<your-own-ke
   --description "Web scraping/search — Lead Prioritizer enrichment fallback"
 ```
 
-Verify: `gemini skills list` should show `context-transfer` + `reference-visualizer`;
+Verify: `gemini skills list` should show `wb-context-transfer` + `reference-visualizer`;
 `gemini mcp list` should show `firecrawl ... Connected`.

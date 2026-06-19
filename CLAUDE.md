@@ -11,7 +11,7 @@
 
 ## Claude-specific notes
 
-- **Skills auto-load** from `.claude/skills/` — currently `context-transfer`, `reference-visualizer`.
+- **Skills auto-load** from `.claude/skills/` — currently `wb-context-transfer`, `reference-visualizer`.
   They trigger on phrases (see `AGENTS.md` §4) or proactively. Skills are reactive; `AGENTS.md` is the
   thing you read on entry.
 - **Claude private memory** lives at `.claude/projects/<this-project>/memory/` (notes + `MEMORY.md`

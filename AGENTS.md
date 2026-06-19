@@ -92,7 +92,7 @@ is **not** a decision to use it. Each doc has three tiers:
   offers** (asks first, never auto-generates) to build the `(Mind Map)` + `(Visualization)` tiers.
   Response branches: **Yes** → generate · **No** → skip · **Unsure** (e.g. Matt) → log to
   `docs/_reference-library/_PENDING_APPROVALS.md` for **Sean's** approval. Only Sean processes the queue.
-- **`context-transfer`** — session wrap-up: health check, write a contributor-owned handoff under
+- **`wb-context-transfer`** — session wrap-up: health check, write a contributor-owned handoff under
   `docs/session-logs/<sean|matt>/`, update `MEMORY.md` only when protocol allows, upload to the
   NotebookLM brain, commit. Run it at the end of a work session.
 - Full menu of available + recommended skills: `docs/_reference-library/(Raw Text) Master_Skills_Catalog.md`.
@@ -103,7 +103,7 @@ aas-section-builder, aas-seo-content, frontend-design, impeccable, ui-ux-pro-max
 ugc, storytelling, etc.) are **not relevant** and should not be invoked here. Relevant skills:
 - `vercel:*` (nextjs, deploy, env-vars, vercel-storage, ai-sdk for any LLM enrichment/scoring)
 - `run`, `verify`, `code-review`, `simplify`, `security-review`
-- `context-transfer`, `three-brain`, `grill-me`
+- `wb-context-transfer`, `three-brain`, `grill-me`
 - `caveman:*`
 - `claude-api` (if calling an LLM for lead enrichment/scoring)
 - `website-intelligence` (if scraping/researching lead sources)
@@ -347,12 +347,16 @@ folders. All new agent/human handoffs must use `docs/session-logs/<contributor>/
 
 ## 8. Session protocol
 
-**Start:** follow the cold-start read-path in §5 — `AGENTS.md` → `_HOT.md` → `_HOME.md` →
-`docs/_working-context/<proj>.md` → `past_mistakes.md` → `MEMORY.md` — then check for pending
-approvals/onboarding.
+**Start:** run **`uv run leadpipe vault catch-up`** — the executable cold-start briefing (prints the
+current `_HOT.md` digest + live local git state + top gotchas in one shot; add `--sync-check` to compare
+against `origin`, `--fetch` to refresh remote refs first). It is a non-authoritative *printer* over the
+existing generated `_HOT.md`, not a second state surface. The manual read-path in §5 (`AGENTS.md` →
+`_HOT.md` → `_HOME.md` → `docs/_working-context/<proj>.md` → `past_mistakes.md` → `MEMORY.md`) is the
+fallback when `uv`/Python is unavailable. Then check for pending approvals/onboarding.
 
-**End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `context-transfer`
-skill ("wrap up" / "/context-transfer"). It runs the health check (`uv run pytest tests/ -q` — this is a
+**End — MANDATORY for every contributor (Sean AND Matt), every session:** run the `wb-context-transfer`
+skill ("/wb-context-transfer" — **not** the bare `/context-transfer`, which resolves to a global
+AAS-WEBSITE skill pointed at the wrong project brain). It runs the health check (`uv run pytest tests/ -q` — this is a
 Python/uv project, not npm), writes a contributor-owned handoff under `docs/session-logs/<sean|matt>/`,
 regenerates the brain spine (`uv run leadpipe vault hot` + `uv run leadpipe vault heartbeat`), updates
 shared `MEMORY.md` only when allowed by the protocol above, mirrors **`MEMORY.md` only** to the NotebookLM

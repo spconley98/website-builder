@@ -120,11 +120,11 @@ We each use our **own** keys. They live in a local `.env` (gitignored — never 
 
 ## Step 5 — Skills
 - [ ] Project skills travel in the repo (`.claude/skills/`) — `git pull` and you have
-      `context-transfer` + `reference-visualizer`. Nothing to install for those — **for Claude Code.**
+      `wb-context-transfer` + `reference-visualizer`. Nothing to install for those — **for Claude Code.**
 - [ ] **You use Gemini — it needs separate one-time setup** (Gemini doesn't read `.claude/skills/`
       or `.mcp.json` natively). Run these once, pointing at YOUR clone path + YOUR OWN Firecrawl key:
       ```powershell
-      gemini skills link "<your-clone-path>\.claude\skills\context-transfer" --scope workspace --consent
+      gemini skills link "<your-clone-path>\.claude\skills\wb-context-transfer" --scope workspace --consent
       gemini skills link "<your-clone-path>\.claude\skills\reference-visualizer" --scope workspace --consent
       gemini mcp add firecrawl npx -y firecrawl-mcp -e "FIRECRAWL_API_KEY=<your-own-key>" --scope user
       ```
@@ -151,7 +151,7 @@ uv run leadpipe vault validate    # frontmatter schema on the allowlisted notes
 uv run leadpipe vault heartbeat   # broken [[links]] / stale / missing frontmatter
 uv run leadpipe vault hot         # regenerate _HOT.md from MEMORY.md
 ```
-`context-transfer` runs these for you at wrap-up — you don't have to remember them.
+`wb-context-transfer` runs these for you at wrap-up — you don't have to remember them.
 
 **Optional per-person enhancers (NONE are required for repo health):**
 - **Bases** (core plugin, already enabled) renders `docs/_bases/` dashboards (Sessions, Research,
@@ -171,10 +171,11 @@ provenance clear (same per-contributor rule the `context-transfer` skill uses fo
 
 ---
 
-## ⚠️ THE ONE HABIT TO LOCK IN — run `context-transfer` at the END of every session
+## ⚠️ THE ONE HABIT TO LOCK IN — run `wb-context-transfer` at the END of every session
 
-This is **mandatory for both of us, every single session** — say "wrap up" or "/context-transfer"
-to your agent before you close out. It:
+This is **mandatory for both of us, every single session** — say `/wb-context-transfer`
+to your agent before you close out (use the `wb-` name, **not** the bare `/context-transfer`,
+which fires a different project's global skill). It:
 1. Writes your session handoff under `docs/session-logs/matt/` with your name + timestamp.
 2. Syncs the shared NotebookLM brain (with the `[Matt]` attribution from the rule above).
 3. Reflects in the Obsidian vault.

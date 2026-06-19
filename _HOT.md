@@ -5,7 +5,7 @@ status: active
 created: 2026-06-19
 updated: 2026-06-19
 topic: hot-cache
-generated: 2026-06-19T00:41:24
+generated: 2026-06-19T01:12:41
 stale_after: 2026-06-24
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -36,25 +36,29 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
    areas/industries, then run `leadpipe run --profile sean --use-firecrawl` or profile-specific one-offs.
 
 ## Blockers
-- **Codex three-brain route DOWN** — `~/.codex/config.toml` has `service_tier = default`, invalid for
-  codex-cli 0.128 (expects `fast`/`flex`; OpenAI account rejects both with "Unsupported service_tier").
-  Codex review/rescue routes unavailable until the config is fixed; use Gemini as the adversarial brain
-  meanwhile. Fix = set a valid/supported `service_tier` (or remove the line) in `~/.codex/config.toml`.
+- ~~**Codex three-brain route DOWN**~~ ✅ **RESOLVED 2026-06-19** — was `service_tier` invalid for
+  codex-cli **0.128**; the CLI is now **0.139.0** and a live `codex exec` call succeeded this session.
+  Codex is back as the cross-architecture review/rescue brain. (Minor: occasional "Reconnecting…" noise
+  before a valid reply — non-fatal.) If it ever recurs, the fix remains: set a supported `service_tier`
+  (or remove the line) in `~/.codex/config.toml`.
 - NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and `MEMORY.md` was
   uploaded successfully.
-- **Skill collision** — invoking `context-transfer` resolves to the GLOBAL AAS-WEBSITE skill
-  (`~/.claude/skills/context-transfer`: npm/tsc + AAS notebook) instead of this project's
-  `.claude/skills/context-transfer`. The AAS skill is project-specific but lives in global skills, so it
-  shadows every repo. Fix = move it into the AAS repo's `.claude/skills/`. Workaround: run the
-  website-builder project skill manually (done this session).
+- ~~**Skill collision** (`context-transfer` → global AAS skill)~~ ✅ **RESOLVED 2026-06-19** — the
+  project skill is renamed to **`wb-context-transfer`** (folder + `name:` + every active invocation in
+  AGENTS.md/CLAUDE.md/GEMINI.md/_HOME.md/guides). Canonical invocation is `/wb-context-transfer`; bare
+  `/context-transfer` is documented as banned (it still resolves to the global AAS skill). The global
+  AAS skill was left in place per Sean's "rename + ban bare name" decision — moving it into the AAS repo
+  is a logged future option, not required now.
 
 ## Handoff
-Architecture is locked and built. This session added a committed **graphify knowledge graph** under
-`graphify-out/` and wired it into the AGENTS.md §5 cold-start read-path — **query it (`graphify query
-"<q>"`) before grepping the repo cold (~10x cheaper context); read `graphify-out/GRAPH_REPORT.md` for the
-map.** After any graph rebuild (`/graphify --update`), re-run `python graphify-out/apply_bridges.py` to
-re-apply the 17 doc↔code bridges. Prior lead-pipeline work still open: run `leadpipe find` on the new
-small-town `config/targets.sean.yaml`, then prioritize. Worktree on `nateherk-tiered-llm-sales` (PR #4).
+Architecture locked and built. **Onboarding parity shipped this session:** cold-start is now executable
+— run `uv run leadpipe vault catch-up` (or `/wb-catch-up`) for a one-shot briefing (printer over `_HOT.md`
++ live git + gotchas; `--sync-check`/`--fetch` for ahead/behind). Wrap-up skill renamed to
+**`wb-context-transfer`** — invoke that, NOT bare `/context-transfer` (still hits the global AAS skill).
+**Codex three-brain route is back up** (0.139); use it as the cross-architecture reviewer. Graphify graph
+under `graphify-out/` still applies — query it before grepping; re-run `apply_bridges.py` after any
+`/graphify --update`. Open lead-pipeline work: run `leadpipe find` on the small-town
+`config/targets.sean.yaml`, then prioritize. Branch `nateherk-tiered-llm-sales` (PR #4 → main).
 
 ## Latest session
-`docs/session-logs/sean/2026-06-19-0040-cold-start-readonly-wrapup.md` — Session — cold-start read + read-only wrapup (Sean/Claude, 2026-06-19)
+`docs/session-logs/sean/2026-06-19-0130-ops-onboarding-carryover.md` — Session — ops/onboarding carry-over from website-final-build (Sean/Claude, 2026-06-19)

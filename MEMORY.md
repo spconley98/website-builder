@@ -14,7 +14,7 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-19T00:40:00-07:00 · **Last Agent:** Claude Opus 4.8 — cold-start read + read-only wrapup (Sean); no state change, verified 59/59 + vault clean, committed Bases-plugin churn
+**Last updated:** 2026-06-19T01:30:00-07:00 · **Last Agent:** Claude Opus 4.8 — ops/onboarding carry-over from sister repo `website-final-build` (Sean): renamed `context-transfer`→`wb-context-transfer` (kills the skill-collision blocker), added `leadpipe vault catch-up` + `wb-catch-up` skill (executable cold-start briefing), flipped the now-stale Codex-route blocker. Codex-sparred (FIX-FIRST → all 8 findings folded in).
 **Phase:** operational with active safety/ops hardening. This session added a persistent **graphify**
 knowledge graph of the whole repo (committed under `graphify-out/`, wired into the AGENTS.md cold-start
 read-path) + 17 curated doc↔code bridges. Branch `nateherk-tiered-llm-sales` (PR #4 → main) still carries
@@ -28,6 +28,21 @@ next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Ops/onboarding parity carry-over from `website-final-build` — Sean/Claude, 2026-06-19**: Audited
+  the sister repo's framework (+ its NotebookLM brain) for reusable tooling. Verdict: design/build skills
+  are out of scope (AGENTS.md §4); Agent OS/Hermes/graphify are global or already present; only the
+  ops/onboarding layer was worth porting. Shipped, Python-native (not the sister's Node): (1) renamed the
+  project skill `context-transfer`→**`wb-context-transfer`** and scrubbed every active invocation —
+  closes the long-standing skill-collision blocker (bare name still hit the global AAS skill). (2) Added
+  **`leadpipe vault catch-up`** — an executable cold-start briefing that is a *non-authoritative printer*
+  over the generated `_HOT.md` (+ live local git + top `past_mistakes.md` gotchas), NOT a second
+  MEMORY.md digest. Local/read-only by default; `--sync-check` compares existing origin refs (no
+  network), `--fetch` refreshes first. (3) Added the thin **`wb-catch-up`** skill wrapper (delegates
+  entirely to the CLI so Codex/Gemini get the same briefing). Updated AGENTS.md §8 start/end protocol.
+  Stress-tested via three-brain → **Codex** (route confirmed back up; the 0.128 `service_tier` blocker
+  was killed by the 0.139 bump): verdict FIX-FIRST, all 8 findings folded in (catch-up = printer not
+  digest; edit MEMORY→regen _HOT not hand-edit; rename everywhere active; split git modes; trivial
+  wrapper). Review filed at `three-brain-out/2026-06-19-carryover-proposal/`.
 - **Graphify knowledge graph + doc↔code bridges — Sean/Claude, 2026-06-13**: Built a persistent
   knowledge graph of the whole repo via `/graphify` (142 files → 789 nodes/1437 edges/41 communities;
   ~10.8x token reduction/query). Finding: the graph was **16 disconnected islands** — a 361-node code
@@ -162,7 +177,7 @@ next larger engine upgrades.
   Nothing to change.
 - GitHub repo (public, shared) + `.gitignore` + `.mcp.json.example` + `.env.example`.
 - Multi-agent constitution: `AGENTS.md` (canonical), `CLAUDE.md` + `GEMINI.md` (pointers), this file.
-- Skills: `context-transfer`, `reference-visualizer`.
+- Skills: `wb-context-transfer` (wrap-up), `wb-catch-up` (session-start briefing), `reference-visualizer`.
 - Reference library `docs/_reference-library/` — 8 raw docs total; 7 have the full 3-tier treatment.
   New raw reference added this session: `(Raw Text) Local_AI_Agents_for_Leadpipe.md`.
 - NotebookLM brain `website-builder-brain` (`bd83690f-e997-46c5-b054-6ff3139e11d6`) + project visuals
@@ -231,22 +246,23 @@ next larger engine upgrades.
 - Sean — plan SQLite migration and async/pooling work as separate larger engine upgrades.
 - Sean — evaluate a free/open bulk-seeding spike after the current branch/data diffs are settled:
   likely `leadpipe seed-osm` first, then Overture Maps Places or public permit/license datasets.
-- Sean — fix Codex `service_tier` config to restore three-brain Codex routes (see Blocked).
 - Sean — optionally generate `(Mind Map)` + `(Visualization)` tiers for the new token-economy
   reference doc via `reference-visualizer`.
 
 ## 🚫 Blocked / waiting
-- **Codex three-brain route DOWN** — `~/.codex/config.toml` has `service_tier = default`, invalid for
-  codex-cli 0.128 (expects `fast`/`flex`; OpenAI account rejects both with "Unsupported service_tier").
-  Codex review/rescue routes unavailable until the config is fixed; use Gemini as the adversarial brain
-  meanwhile. Fix = set a valid/supported `service_tier` (or remove the line) in `~/.codex/config.toml`.
+- ~~**Codex three-brain route DOWN**~~ ✅ **RESOLVED 2026-06-19** — was `service_tier` invalid for
+  codex-cli **0.128**; the CLI is now **0.139.0** and a live `codex exec` call succeeded this session.
+  Codex is back as the cross-architecture review/rescue brain. (Minor: occasional "Reconnecting…" noise
+  before a valid reply — non-fatal.) If it ever recurs, the fix remains: set a supported `service_tier`
+  (or remove the line) in `~/.codex/config.toml`.
 - NotebookLM auth was refreshed after the 2026-06-07 Agent 3 context transfer and `MEMORY.md` was
   uploaded successfully.
-- **Skill collision** — invoking `context-transfer` resolves to the GLOBAL AAS-WEBSITE skill
-  (`~/.claude/skills/context-transfer`: npm/tsc + AAS notebook) instead of this project's
-  `.claude/skills/context-transfer`. The AAS skill is project-specific but lives in global skills, so it
-  shadows every repo. Fix = move it into the AAS repo's `.claude/skills/`. Workaround: run the
-  website-builder project skill manually (done this session).
+- ~~**Skill collision** (`context-transfer` → global AAS skill)~~ ✅ **RESOLVED 2026-06-19** — the
+  project skill is renamed to **`wb-context-transfer`** (folder + `name:` + every active invocation in
+  AGENTS.md/CLAUDE.md/GEMINI.md/_HOME.md/guides). Canonical invocation is `/wb-context-transfer`; bare
+  `/context-transfer` is documented as banned (it still resolves to the global AAS skill). The global
+  AAS skill was left in place per Sean's "rename + ban bare name" decision — moving it into the AAS repo
+  is a logged future option, not required now.
 
 ## ✅ Architecture (approved 2026-06-07 via /grill-me) — NOW BUILT
 Local-AI **lead pipeline** (Python/uv). Lead Finder → Lead Prioritizer → future agents. Google Places
@@ -283,7 +299,9 @@ Markdown reports. Typer CLI. Full detail: [`docs/project/ARCHITECTURE.md`](./doc
     needed, then fast-forward `main`, run `uv sync --group dev`, and run `uv run pytest tests/ -q`.
 
 ## 📋 REQUIRED — every session, every contributor
-Run the **`context-transfer`** skill at the END of every session (say "wrap up" / "/context-transfer").
+**Start:** run `uv run leadpipe vault catch-up` (or the `wb-catch-up` skill / "catch me up") for the
+one-shot cold-start briefing. **End:** run the **`wb-context-transfer`** skill (say
+"/wb-context-transfer" — **not** the bare `/context-transfer`, which fires the global AAS skill).
 It writes a contributor-owned handoff under `docs/session-logs/<sean|matt>/`, updates this file
 only when protocol allows, syncs the NotebookLM brain, and syncs Obsidian. **This applies to Matt too
 — first thing to know after his first `git pull`.**
@@ -323,18 +341,21 @@ does; don't "simplify" them away without re-reading the reasoning).
   `qwen2.5-coder:14b`, and `nomic-embed-text`.
 
 ## Context for next agent
-Architecture is locked and built. This session added a committed **graphify knowledge graph** under
-`graphify-out/` and wired it into the AGENTS.md §5 cold-start read-path — **query it (`graphify query
-"<q>"`) before grepping the repo cold (~10x cheaper context); read `graphify-out/GRAPH_REPORT.md` for the
-map.** After any graph rebuild (`/graphify --update`), re-run `python graphify-out/apply_bridges.py` to
-re-apply the 17 doc↔code bridges. Prior lead-pipeline work still open: run `leadpipe find` on the new
-small-town `config/targets.sean.yaml`, then prioritize. Worktree on `nateherk-tiered-llm-sales` (PR #4).
+Architecture locked and built. **Onboarding parity shipped this session:** cold-start is now executable
+— run `uv run leadpipe vault catch-up` (or `/wb-catch-up`) for a one-shot briefing (printer over `_HOT.md`
++ live git + gotchas; `--sync-check`/`--fetch` for ahead/behind). Wrap-up skill renamed to
+**`wb-context-transfer`** — invoke that, NOT bare `/context-transfer` (still hits the global AAS skill).
+**Codex three-brain route is back up** (0.139); use it as the cross-architecture reviewer. Graphify graph
+under `graphify-out/` still applies — query it before grepping; re-run `apply_bridges.py` after any
+`/graphify --update`. Open lead-pipeline work: run `leadpipe find` on the small-town
+`config/targets.sean.yaml`, then prioritize. Branch `nateherk-tiered-llm-sales` (PR #4 → main).
 
 ## 👤 Contributors this session
-- **Sean** — asked to graphify the repo, then to bridge the doc↔code islands and point new agents at the
-  graph for efficiency.
-- **Claude (Opus 4.8)** — built the graph, added curated bridges + `apply_bridges.py`, wired graphify into
-  AGENTS.md §5, committed the graph artifacts, ran the incremental refresh, and ran context transfer.
+- **Sean** — asked to audit the sister repo `website-final-build` (+ its NotebookLM brain) and decide
+  what ops/onboarding tooling to carry over; chose "rename + ban bare name" + "build all 3 parts".
+- **Claude (Opus 4.8)** — audited both repos + the sister brain, proposed the carry-over, stress-tested
+  it via three-brain→Codex (FIX-FIRST, 8 findings folded in), then shipped: `wb-context-transfer` rename,
+  `leadpipe vault catch-up`, `wb-catch-up` skill, blocker flips, +4 tests. Ran context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
