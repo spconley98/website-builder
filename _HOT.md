@@ -5,7 +5,7 @@ status: active
 created: 2026-06-19
 updated: 2026-06-19
 topic: hot-cache
-generated: 2026-06-19T01:12:41
+generated: 2026-06-19T02:21:51
 stale_after: 2026-06-24
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
@@ -15,17 +15,17 @@ related: ["[[MEMORY]]", "[[AGENTS]]"]
 
 # Right now
 
-**Phase:** operational with active safety/ops hardening. This session added a persistent **graphify**
+**Phase:** operational with active safety/ops hardening. Lead store grew Sean 92→279 (187 found 2026-06-19).
 
 ## Active tasks
-- Sean — run `leadpipe check --google` + `leadpipe find` (no Firecrawl) on the new
-  small-town targets in `config/targets.sean.yaml`, then regenerate reports.
+- ✅ **DONE 2026-06-19 (Sean/Claude)** — ran `leadpipe check --google` + `leadpipe find` on the
+  small-town `config/targets.sean.yaml` (187 leads) + a 9-town plumbers pipeline; reports regenerated.
+- Sean — **fix the prioritizer industry-mismatch bug** (TOP code follow-up): `find` LLM-normalizes the
+  industry label (`plumbers`→`plumbing`/`plumbing services`), but `lead_prioritizer._matches_target` does
+  an exact `lead.industry in target.industries`, so `run`/`prioritize --industry X` finds leads but
+  ranks ZERO (silently). Needs a family/substring match in `_matches_target` (over-match risk → its own
+  reviewed change). Worked around manually this session by prioritizing 8 plumbing leads by place_id.
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
-  last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
-- Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
-- Sean — review the 25 generated Northern CA Website Briefs in `reports/Sean - Website Briefs.md`
-  before using them for sales outreach; fallback-generated briefs are conservative and still need human
-  review.
 
 ## Next
 1. ~~Build the scaffold~~ ✅ **DONE — working end-to-end on real data.**
@@ -57,8 +57,10 @@ Architecture locked and built. **Onboarding parity shipped this session:** cold-
 **`wb-context-transfer`** — invoke that, NOT bare `/context-transfer` (still hits the global AAS skill).
 **Codex three-brain route is back up** (0.139); use it as the cross-architecture reviewer. Graphify graph
 under `graphify-out/` still applies — query it before grepping; re-run `apply_bridges.py` after any
-`/graphify --update`. Open lead-pipeline work: run `leadpipe find` on the small-town
-`config/targets.sean.yaml`, then prioritize. Branch `nateherk-tiered-llm-sales` (PR #4 → main).
+`/graphify --update`. **Top open code task:** fix `lead_prioritizer._matches_target` so `run`/`prioritize
+--industry X` actually ranks leads (the finder LLM-normalizes the label, e.g. `plumbers`→`plumbing`, and
+the current exact-match silently ranks zero). **Firecrawl credits are live** (4101/5000). Small-town +
+plumber hunts are done (Sean store 279). Branch `nateherk-tiered-llm-sales` (PR #4 → main, ready to merge).
 
 ## Latest session
-`docs/session-logs/sean/2026-06-19-0130-ops-onboarding-carryover.md` — Session — ops/onboarding carry-over from website-final-build (Sean/Claude, 2026-06-19)
+`docs/session-logs/sean/2026-06-19-0219-leads-hunt-report-fixes.md` — Session — Lead hunts + Obsidian report/category fixes (Sean/Claude, 2026-06-19)

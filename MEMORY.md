@@ -3,7 +3,7 @@ type: project
 contributors: [sean]
 status: active
 created: 2026-06-07
-updated: 2026-06-09
+updated: 2026-06-19
 topic: project-state
 tags: [canon, state]
 ---
@@ -14,12 +14,11 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-19T01:30:00-07:00 · **Last Agent:** Claude Opus 4.8 — ops/onboarding carry-over from sister repo `website-final-build` (Sean): renamed `context-transfer`→`wb-context-transfer` (kills the skill-collision blocker), added `leadpipe vault catch-up` + `wb-catch-up` skill (executable cold-start briefing), flipped the now-stale Codex-route blocker. Codex-sparred (FIX-FIRST → all 8 findings folded in).
-**Phase:** operational with active safety/ops hardening. This session added a persistent **graphify**
-knowledge graph of the whole repo (committed under `graphify-out/`, wired into the AGENTS.md cold-start
-read-path) + 17 curated doc↔code bridges. Branch `nateherk-tiered-llm-sales` (PR #4 → main) still carries
-Nate Herk tiered-LLM/sales-methodology work plus existing lead/report diffs; SQLite + `asyncio` remain the
-next larger engine upgrades.
+**Last updated:** 2026-06-19T02:19:00-07:00 · **Last Agent:** Claude Opus 4.8 — lead hunts + Obsidian report/category fixes (Sean): ran the deferred small-town batch `find` (187 new leads) + a 9-town plumbers pipeline; fixed Obsidian table rendering (`<details>`→`###` headings) and added a `Nursery & Garden` category. Codex-reviewed; committed `adc8775`, pushed, PR #4 updated.
+**Phase:** operational with active safety/ops hardening. Lead store grew Sean 92→279 (187 found 2026-06-19).
+A real prioritizer bug surfaced (industry-label mismatch — see Blocked/known-issues) and is the top code
+follow-up. Branch `nateherk-tiered-llm-sales` (PR #4 → main) carries Nate Herk tiered-LLM/sales work, the
+graphify graph, and these report/category fixes; SQLite + `asyncio` remain the next larger engine upgrades.
 
 ---
 
@@ -28,6 +27,19 @@ next larger engine upgrades.
 - **Matt** (mp214gitty / mpitto214@gmail.com) — collaborator. Onboarding complete (invites accepted, local apps/MCP/env set up).
 
 ## ✅ What exists now
+- **Small-town + plumber lead hunts and Obsidian report/category fixes — Sean/Claude, 2026-06-19**:
+  Executed the long-deferred small-town hunt — `leadpipe find --profile sean` (Google Places only, 0
+  Firecrawl) on the 12-town `config/targets.sean.yaml` found **187 new no-website leads** (Sean store
+  92→279). Also ran a scoped **9-town plumbers** full pipeline (Davis, Dixon, Winters, Rio Vista,
+  Dunnigan, Colusa, Ord Bend, Sutter, Yuba City): 8 plumbing prospects found + ranked (manual scoped
+  prioritize; Firecrawl 4101→4093). **Firecrawl credits are LIVE** (4101/5000, monthly reset 2026-06-07) —
+  the prior "out of credits" note was stale. Shipped (`adc8775`, PR #4): (1) **Obsidian table fix** —
+  `_grouped_leads_sections`/`_grouped_shared_sections` now emit `###` headings, NOT `<details>`/`<summary>`
+  (Obsidian won't render Markdown tables inside raw HTML → they showed as literal pipe text); (2) **new
+  `Nursery & Garden` industry category** (23 nursery/garden leads no longer in "Other") + `concrete`/`curbing`
+  → Trades ("Other" now empty); `plant nursery` not bare `plant` per Codex review. **63 tests pass**, vault
+  validate (49) + heartbeat (0 broken) clean, Codex cross-reviewed. **Found but did NOT fix** the prioritizer
+  industry-mismatch bug (see Blocked). Session log: `docs/session-logs/sean/2026-06-19-0219-leads-hunt-report-fixes.md`.
 - **Ops/onboarding parity carry-over from `website-final-build` — Sean/Claude, 2026-06-19**: Audited
   the sister repo's framework (+ its NotebookLM brain) for reusable tooling. Verdict: design/build skills
   are out of scope (AGENTS.md §4); Agent OS/Hermes/graphify are global or already present; only the
@@ -138,10 +150,12 @@ next larger engine upgrades.
   (broad category → keyword match, e.g. "Trades" ← plumb/electric/hvac/roof/handyman/landscap;
   "Food & Beverage" ← coffee/cafe/restaurant/bakery/bar/brewery; falls back to "Other") +
   `src/leadpipe/industries.py` (`load_industry_categories`, `industry_group`).
-  `render_all_leads`/`render_shared_all` now render a "## By Category" section of collapsible
-  `<details>` blocks per category above the unchanged "## Full List" master table. Pure
-  reporting change, no new agent. 47/47 tests pass (4 new in `tests/test_industries.py`, 2 new
-  in `tests/test_reports.py`). Grow the YAML as new industries appear from hunts.
+  `render_all_leads`/`render_shared_all` render a "## By Category" section per category above the
+  unchanged "## Full List" master table. **As of 2026-06-19 each category is a `###` heading, NOT a
+  `<details>` block** — Obsidian does not render Markdown tables inside raw HTML (they showed as literal
+  pipe text); headings render natively and still fold from the gutter. Categories now include `Trades`
+  (+concrete/curbing), `Nursery & Garden`, `Food & Beverage`, fallback `Other`. Pure reporting change,
+  no new agent. Grow the YAML as new industries appear from hunts.
 - **Deterministic §1 scoring signals implemented** — Google Places Details now captures
   `phone_present`, `recent_review_count`, `hours_present`, and `staleness_flags` as acquisition
   facts on newly found leads. Lead Prioritizer writes a bounded 0-100 `lead_score` from photo count
@@ -233,8 +247,13 @@ next larger engine upgrades.
   `docs/session-logs/sean/2026-06-09-lead-hunt-norcal-trades.md`.
 
 ## 🔨 In progress
-- Sean — run `leadpipe check --google` + `leadpipe find` (no Firecrawl) on the new
-  small-town targets in `config/targets.sean.yaml`, then regenerate reports.
+- ✅ **DONE 2026-06-19 (Sean/Claude)** — ran `leadpipe check --google` + `leadpipe find` on the
+  small-town `config/targets.sean.yaml` (187 leads) + a 9-town plumbers pipeline; reports regenerated.
+- Sean — **fix the prioritizer industry-mismatch bug** (TOP code follow-up): `find` LLM-normalizes the
+  industry label (`plumbers`→`plumbing`/`plumbing services`), but `lead_prioritizer._matches_target` does
+  an exact `lead.industry in target.industries`, so `run`/`prioritize --industry X` finds leads but
+  ranks ZERO (silently). Needs a family/substring match in `_matches_target` (over-match risk → its own
+  reviewed change). Worked around manually this session by prioritizing 8 plumbing leads by place_id.
 - Sean — decide fate of stray React/Vite scaffold on `matt-wip-2026-06-09` (delete vs separate repo) —
   last open item from that branch's triage; `get_credit_usage()` + pause guard now done on `main`.
 - Sean — reviewing Matt's imported leads in `data/matt/leads.jsonl`.
@@ -347,15 +366,19 @@ Architecture locked and built. **Onboarding parity shipped this session:** cold-
 **`wb-context-transfer`** — invoke that, NOT bare `/context-transfer` (still hits the global AAS skill).
 **Codex three-brain route is back up** (0.139); use it as the cross-architecture reviewer. Graphify graph
 under `graphify-out/` still applies — query it before grepping; re-run `apply_bridges.py` after any
-`/graphify --update`. Open lead-pipeline work: run `leadpipe find` on the small-town
-`config/targets.sean.yaml`, then prioritize. Branch `nateherk-tiered-llm-sales` (PR #4 → main).
+`/graphify --update`. **Top open code task:** fix `lead_prioritizer._matches_target` so `run`/`prioritize
+--industry X` actually ranks leads (the finder LLM-normalizes the label, e.g. `plumbers`→`plumbing`, and
+the current exact-match silently ranks zero). **Firecrawl credits are live** (4101/5000). Small-town +
+plumber hunts are done (Sean store 279). Branch `nateherk-tiered-llm-sales` (PR #4 → main, ready to merge).
 
 ## 👤 Contributors this session
-- **Sean** — asked to audit the sister repo `website-final-build` (+ its NotebookLM brain) and decide
-  what ops/onboarding tooling to carry over; chose "rename + ban bare name" + "build all 3 parts".
-- **Claude (Opus 4.8)** — audited both repos + the sister brain, proposed the carry-over, stress-tested
-  it via three-brain→Codex (FIX-FIRST, 8 findings folded in), then shipped: `wb-context-transfer` rename,
-  `leadpipe vault catch-up`, `wb-catch-up` skill, blocker flips, +4 tests. Ran context transfer.
+- **Sean** — directed lead generation: "get more leads" (→ ran the deferred small-town batch) and an
+  explicit 9-town plumbers pipeline; reported the Obsidian "ugly"/raw-table display + nurseries-in-Other;
+  approved concrete→Trades, Codex review, commit, push, and PR.
+- **Claude (Opus 4.8)** — ran the hunts, diagnosed the prioritizer industry-mismatch bug (worked around,
+  not fixed), fixed Obsidian table rendering (`<details>`→`###`) + added `Nursery & Garden` category,
+  Codex-reviewed the diff, committed `adc8775`, pushed, updated PR #4, corrected the stale Firecrawl
+  credits memory, ran this context transfer.
 
 ## Active design decisions
 - Default local runtime model is **`gemma4-fast`**.
