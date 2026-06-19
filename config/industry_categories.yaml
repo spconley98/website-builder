@@ -1,7 +1,8 @@
 # Broad-category groupings for the "AI Leads" reports (reports.py renders each
-# category as a collapsible <details> section). Matching is case-insensitive
-# substring matching against Lead.industry — add keywords as new industries
-# show up from hunts. Anything that matches nothing falls into `other_label`.
+# category as a `###` heading section). Matching is case-insensitive substring
+# matching against Lead.industry, first rule wins — add keywords as new
+# industries show up from hunts. Anything that matches nothing falls into
+# `other_label`.
 
 categories:
   - label: Trades
@@ -13,6 +14,15 @@ categories:
       - handyman
       - landscap
       - contractor
+      - concrete
+      - curbing
+
+  - label: Nursery & Garden
+    match:
+      - nursery
+      - garden
+      - plant nursery   # not bare "plant" — avoids "power plant"/"plant hire" false matches
+      - irrigation       # "irrigation supply" lands here; "irrigation contractor" -> Trades (matched first)
 
   - label: Food & Beverage
     match:

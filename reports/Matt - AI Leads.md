@@ -13,17 +13,13 @@ tags: [report, leads]
 
 ## By Category
 
-<details>
-<summary>Food & Beverage (1)</summary>
+### Food & Beverage (1)
 
 | Business | Industry | Location | Status | Maps |
 |---|---|---|---|---|
 | Fresh Brew Cafe | coffee shops | 250 University Blvd, Round Rock, TX 78665, USA | found | [map](https://maps.google.com/?cid=2399732349834515401&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 
-</details>
-
-<details>
-<summary>Trades (47)</summary>
+### Trades (47)
 
 | Business | Industry | Location | Status | Maps |
 |---|---|---|---|---|
@@ -75,10 +71,7 @@ tags: [report, leads]
 | Steel Top Roofing & Construction | roofing | 206 Kincall Rd, Wichita Falls, TX 76305, USA | found | [map](https://maps.google.com/?cid=9249557664249707254&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Williams Brothers Roofing & Construction | roofing | 203 E Kingsley Rd, Garland, TX 75041, USA | prioritized | [map](https://maps.google.com/?cid=17811259189073216260&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 
-</details>
-
-<details>
-<summary>Other (118)</summary>
+### Other (118)
 
 | Business | Industry | Location | Status | Maps |
 |---|---|---|---|---|
@@ -200,8 +193,6 @@ tags: [report, leads]
 | Mesquite Veterinary Clinic | veterinarians | 371 Riverside Rd A, Mesquite, NV 89027, USA | found | [map](https://maps.google.com/?cid=11275644467110993784&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | South Congress Veterinary | veterinarians | 3300 S Congress Ave, Austin, TX 78704, USA | prioritized | [map](https://maps.google.com/?cid=15813020930823930948&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
 | Westgate Veterinary Hospital | veterinarians | 4501 Mesa Dr, Denton, TX 76207, USA | prioritized | [map](https://maps.google.com/?cid=8360248269876131286&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA) |
-
-</details>
 
 ## Full List
 

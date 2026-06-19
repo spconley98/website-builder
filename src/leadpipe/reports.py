@@ -108,9 +108,10 @@ def _grouped_leads_sections(leads: list[Lead]) -> str:
     for label in sorted(groups, key=lambda x: _category_sort_key(x, other_label)):
         members = sorted(groups[label], key=lambda x: (x.industry, x.name))
         rows = list(_ALL_LEADS_HEADER) + [_all_leads_row(l) for l in members]
-        sections.append(
-            f"<details>\n<summary>{label} ({len(members)})</summary>\n\n" + "\n".join(rows) + "\n\n</details>\n"
-        )
+        # Plain `###` heading, NOT <details>: Obsidian does not render Markdown
+        # tables inside raw HTML blocks (they show as literal pipe text). A
+        # heading renders the table natively and still folds from the gutter.
+        sections.append(f"### {label} ({len(members)})\n\n" + "\n".join(rows) + "\n")
     return "\n".join(sections)
 
 
@@ -245,9 +246,9 @@ def _grouped_shared_sections(rows_with_owners: list[tuple[Lead, list[str]]]) -> 
     for label in sorted(groups, key=lambda x: _category_sort_key(x, other_label)):
         members = sorted(groups[label], key=lambda x: (x[0].industry, x[0].name))
         rows = list(_SHARED_ALL_HEADER) + [_shared_all_row(lead, owners) for lead, owners in members]
-        sections.append(
-            f"<details>\n<summary>{label} ({len(members)})</summary>\n\n" + "\n".join(rows) + "\n\n</details>\n"
-        )
+        # Plain `###` heading, NOT <details>: Obsidian does not render Markdown
+        # tables inside raw HTML blocks (they show as literal pipe text).
+        sections.append(f"### {label} ({len(members)})\n\n" + "\n".join(rows) + "\n")
     return "\n".join(sections)
 
 

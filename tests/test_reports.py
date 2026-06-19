@@ -117,8 +117,10 @@ def test_all_leads_groups_by_category_and_keeps_full_list():
 
     assert "## By Category" in rendered
     assert "## Full List" in rendered
-    assert "<summary>Food & Beverage (1)</summary>" in rendered
-    assert "<summary>Trades (1)</summary>" in rendered
+    # Plain headings, not <details> — Obsidian won't render tables inside raw HTML.
+    assert "### Food & Beverage (1)" in rendered
+    assert "### Trades (1)" in rendered
+    assert "<details>" not in rendered
     # full list still has both rows, ungrouped
     assert rendered.count("Fresh Brew Cafe") == 2  # once in grouped section, once in full list
     assert rendered.count("Acme Plumbing") == 2
@@ -132,8 +134,9 @@ def test_shared_all_groups_by_category_and_keeps_full_list():
 
     assert "## By Category" in rendered
     assert "## Full List" in rendered
-    assert "<summary>Food & Beverage (1)</summary>" in rendered
-    assert "<summary>Trades (1)</summary>" in rendered
+    assert "### Food & Beverage (1)" in rendered
+    assert "### Trades (1)" in rendered
+    assert "<details>" not in rendered
 
 
 def test_reports_carry_valid_report_frontmatter():

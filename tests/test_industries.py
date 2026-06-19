@@ -28,5 +28,12 @@ def test_load_industry_categories_reads_repo_config():
     assert other_label == "Other"
     labels = [c.label for c in categories]
     assert "Trades" in labels
+    assert "Nursery & Garden" in labels
     assert industry_group("plumbing", categories, other_label) == "Trades"
     assert industry_group("coffee shops", categories, other_label) == "Food & Beverage"
+    # nurseries/garden centers are their own niche, not "Other" (regression guard)
+    assert industry_group("plant nursery", categories, other_label) == "Nursery & Garden"
+    assert industry_group("garden center", categories, other_label) == "Nursery & Garden"
+    # landscaping still wins for Trades (rule order: Trades before Nursery & Garden)
+    assert industry_group("landscaping", categories, other_label) == "Trades"
+    assert industry_group("concrete curbing", categories, other_label) == "Trades"
