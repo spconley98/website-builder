@@ -2,11 +2,11 @@
 type: context
 contributors: [sean]
 status: active
-created: 2026-06-13
-updated: 2026-06-13
+created: 2026-06-19
+updated: 2026-06-19
 topic: hot-cache
-generated: 2026-06-13T09:21:16
-stale_after: 2026-06-18
+generated: 2026-06-19T00:41:24
+stale_after: 2026-06-24
 tags: [hot, onboarding]
 related: ["[[MEMORY]]", "[[AGENTS]]"]
 ---
@@ -57,4 +57,4 @@ re-apply the 17 doc↔code bridges. Prior lead-pipeline work still open: run `le
 small-town `config/targets.sean.yaml`, then prioritize. Worktree on `nateherk-tiered-llm-sales` (PR #4).
 
 ## Latest session
-`docs/session-logs/sean/2026-06-13-0920-graphify-knowledge-graph.md` — Session — graphify knowledge graph + doc↔code bridges (Sean/Claude, 2026-06-13)
+`docs/session-logs/sean/2026-06-19-0040-cold-start-readonly-wrapup.md` — Session — cold-start read + read-only wrapup (Sean/Claude, 2026-06-19)

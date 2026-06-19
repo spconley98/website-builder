@@ -14,7 +14,7 @@ tags: [canon, state]
 > shared source of truth for project state across Claude / Codex / Gemini. Constitution lives in
 > [`AGENTS.md`](./AGENTS.md).
 
-**Last updated:** 2026-06-13T09:20:00-07:00 · **Last Agent:** Claude Opus 4.8 — graphify knowledge graph + doc↔code bridges (Sean)
+**Last updated:** 2026-06-19T00:40:00-07:00 · **Last Agent:** Claude Opus 4.8 — cold-start read + read-only wrapup (Sean); no state change, verified 59/59 + vault clean, committed Bases-plugin churn
 **Phase:** operational with active safety/ops hardening. This session added a persistent **graphify**
 knowledge graph of the whole repo (committed under `graphify-out/`, wired into the AGENTS.md cold-start
 read-path) + 17 curated doc↔code bridges. Branch `nateherk-tiered-llm-sales` (PR #4 → main) still carries
