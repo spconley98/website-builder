@@ -18,6 +18,7 @@ Degradation:
 """
 from __future__ import annotations
 
+import re
 from datetime import date
 
 from .. import llm
@@ -145,14 +146,86 @@ def _gather_listing_urls(lead) -> list[tuple[str, str]]:
     return urls
 
 
+# Industry-family matching: the Finder LLM-normalizes stored labels
+# ("plumbers" search -> "plumbing" / "plumbing services" on the lead), so an
+# exact `lead.industry in target.industries` silently ranked ZERO leads for
+# `run` / `prioritize --industry X`. Matching is deterministic stem-token
+# intersection — no LLM in the scoping path, so re-runs stay stable.
+#
+# Filler tokens carry business *form* or generic marketing modifiers, not
+# trade ("plumbing services" must not match "cleaning services" via
+# "services"; "24 hour plumbing" must not match "24 hour locksmith" via
+# "hour"). Suffix stripping unifies the trade families actually seen in
+# stores: plumbers/plumbing -> plumb, electricians/electrician/electrical
+# -> electric, landscaping/landscapers -> landscap. Known accepted
+# over-match (Codex-reviewed): same-stem retail/supply labels ("electrical
+# supply" under "electricians", "landscaping supplies" under "landscapers")
+# — those leads came from that same search, so scoping them in mirrors what
+# the search itself returned.
+_FILLER_TOKENS = {
+    "service", "services", "supply", "supplies", "contractor", "contractors",
+    "shop", "shops", "store", "stores", "company", "companies", "co", "llc", "inc",
+    # generic modifiers (Codex finding: any-token intersection over-matched)
+    "hour", "hours", "emergency", "commercial", "residential", "industrial",
+    "local", "mobile", "professional", "certified", "licensed", "affordable",
+}
+# Longest-first so "ers" wins over "er"/"s"; a stripped stem must keep >= 4
+# chars ("metal" never becomes "met").
+_STEM_SUFFIXES = ("ians", "ian", "ing", "ers", "ors", "er", "or", "al", "es", "s")
+
+
+def _stem(token: str) -> str:
+    for suffix in _STEM_SUFFIXES:
+        if token.endswith(suffix) and len(token) - len(suffix) >= 4:
+            token = token[: -len(suffix)]
+            break
+    # Terminal-e normalization (Codex finding): "landscape" must meet
+    # "landscaping" at "landscap", "tree" must meet "trees" at "tre",
+    # "appliance" must meet "appliances" at "applianc".
+    if token.endswith("e") and len(token) >= 5:
+        token = token[:-1]
+    return token
+
+
+def _industry_stems(label: str) -> set[str]:
+    """Non-filler trade stems for a label. Drops 1-char fragments (the "s" in
+    "men's" bridged EVERY possessive pair — Codex finding) and pure numbers
+    ("24" in "24 hour plumbing")."""
+    tokens = re.findall(r"[a-z0-9]+", label.lower())
+    return {
+        _stem(t)
+        for t in tokens
+        if len(t) > 1 and not t.isdigit() and t not in _FILLER_TOKENS
+    }
+
+
+def _industry_matches(lead_industry: str, target_industries: list[str]) -> bool:
+    """True when the lead's (LLM-normalized) industry label belongs to the same
+    trade family as any requested target industry."""
+    if not target_industries:
+        return True
+    lead_label = (lead_industry or "").strip().lower()
+    lead_stems = _industry_stems(lead_label)
+    for wanted in target_industries:
+        wanted_label = wanted.strip().lower()
+        if lead_label == wanted_label:
+            return True
+        wanted_stems = _industry_stems(wanted_label)
+        # Both sides need a non-filler stem — an all-filler label (e.g. bare
+        # "services") only ever matches exactly, never by family.
+        if lead_stems and wanted_stems and lead_stems & wanted_stems:
+            return True
+    return False
+
+
 def _matches_target(lead, target: Target) -> bool:
     """Scope found leads to the requested target. Google Places addresses start
-    with street numbers, so match the city/area anywhere in the formatted address."""
+    with street numbers, so match the city/area anywhere in the formatted address.
+    Industries match by family (see _industry_matches), not exact string."""
     area_name = target.area.split(",", 1)[0].strip().lower()
     location = lead.location.lower()
     in_area = area_name in location if area_name else True
-    in_industry = not target.industries or lead.industry in target.industries
-    return in_area and in_industry
+    return in_area and _industry_matches(lead.industry, target.industries)
 
 
 def _credit_pause_error(settings) -> str | None:

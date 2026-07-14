@@ -11,6 +11,7 @@ from datetime import date
 from leadpipe.agents.base import AgentResult
 from leadpipe.agents import website_intelligence
 from leadpipe.agents.lead_prioritizer import (
+    _industry_matches,
     _matches_target,
     _parse_photo_count_response,
     rate_from_count,
@@ -187,6 +188,70 @@ def test_prioritizer_empty_industries_still_scopes_to_area():
 
     assert _matches_target(lead, round_rock_all)
     assert not _matches_target(lead, austin_all)
+
+
+def test_industry_family_match_bridges_finder_normalized_labels():
+    # The Finder LLM normalizes search terms into stored labels — these are the
+    # real pairs from data/sean/leads.jsonl vs config/targets.sean.yaml.
+    assert _industry_matches("plumbing", ["plumbers"])
+    assert _industry_matches("plumbing services", ["plumbers"])
+    assert _industry_matches("electrician", ["electricians"])
+    assert _industry_matches("electrical services", ["electricians"])
+    assert _industry_matches("hvac services", ["HVAC contractors"])
+    assert _industry_matches("hvac contractor", ["HVAC contractors"])
+    assert _industry_matches("handyman services", ["handyman"])
+    assert _industry_matches("landscapers", ["landscaping"])
+    assert _industry_matches("coffee shop", ["coffee shops"])
+
+
+def test_industry_family_match_rejects_cross_trade_labels():
+    assert not _industry_matches("plumbing", ["electricians"])
+    assert not _industry_matches("hvac contractors", ["plumbers"])
+    # Filler tokens must not bridge unrelated trades.
+    assert not _industry_matches("plumbing services", ["cleaning services"])
+    assert not _industry_matches("landscaping supplies", ["irrigation supply"])
+    assert not _industry_matches("plant nursery", ["garden center"])
+
+
+def test_industry_family_match_all_filler_label_needs_exact_match():
+    assert _industry_matches("services", ["services"])
+    assert not _industry_matches("services", ["plumbing services"])
+
+
+def test_industry_family_match_codex_regressions():
+    # Possessive "s" fragment must not bridge unrelated industries.
+    assert not _industry_matches("men's clothing", ["women's salon"])
+    # Numbers / generic marketing modifiers must not bridge trades.
+    assert not _industry_matches("24 hour plumbing", ["24 hour locksmith"])
+    assert not _industry_matches("commercial cleaning", ["commercial landscaping"])
+    # Terminal-e derivations must land on the same stem.
+    assert _industry_matches("landscape contractor", ["landscaping"])
+    assert _industry_matches("fence installation", ["fencing"])
+    assert _industry_matches("appliance repair", ["appliances"])
+    assert _industry_matches("tree services", ["trees"])
+    # Documented over-match boundary: same-stem supply/retail stays in scope.
+    assert _industry_matches("landscaping supplies", ["landscapers"])
+    # New vertical: ag-drone label variants form one family.
+    assert _industry_matches("agricultural drones", ["agricultural drone spraying"])
+    assert _industry_matches("agricultural drone spraying", ["agricultural drone applicator"])
+
+
+def test_industry_family_match_empty_targets_matches_everything():
+    assert _industry_matches("plumbing", [])
+
+
+def test_prioritizer_target_match_uses_industry_family():
+    lead = Lead(
+        place_id="p1",
+        name="Placerville Plumbing Co",
+        industry="plumbing",  # Finder-normalized from a "plumbers" search
+        found_date=date(2026, 6, 19),
+        location="123 Main St, Placerville, CA 95667, USA",
+        has_website=False,
+    )
+    target = Target(area="Placerville, CA", radius="8km", industries=["plumbers"])
+
+    assert _matches_target(lead, target)
 
 
 def test_parse_photo_count_response():
